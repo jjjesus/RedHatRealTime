@@ -1,0 +1,12 @@
+*.aux
+*.fdb_latexmk
+*.fls
+*.gz
+*.html
+*.log
+*.pdf
+*.swp
+*.synctex.gz
+*.toc
+*.~vsdx
+reference/
