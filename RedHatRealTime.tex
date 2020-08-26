@@ -1,181 +1,424 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Journal Article
-% LaTeX Template
-% Version 1.4 (15/5/16)
-%
-% This template has been downloaded from:
-% http://www.LaTeXTemplates.com
-%
-% Original author:
-% Frits Wenneker (http://www.howtotex.com) with extensive modifications by
-% Vel (vel@LaTeXTemplates.com)
-%
-% License:
-% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
 
-%----------------------------------------------------------------------------------------
-%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
-%----------------------------------------------------------------------------------------
+\usepackage{caption}
+\usepackage{changepage} % adjustwidth
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{listings} % Code listings
+\usepackage{multicol}
+\usepackage{multirow}
 
-\documentclass[twoside,twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
 
-\usepackage{blindtext} % Package to generate dummy text throughout this template
+\usepackage[dvips,letterpaper,margin=1in]{geometry}
 
-\usepackage[sc]{mathpazo} % Use the Palatino font
-\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
-\linespread{1.05} % Line spacing - Palatino needs more space between lines
-\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\setlength{\parindent}{15pt}
+\setlength{\headheight}{15pt} % fancyhdr wants at least 14.5pt
 
-\usepackage[english]{babel} % Language hyphenation and typographical rules
+% Header
+\pagestyle{fancy}
+\lhead{K3 Migration to Red Hat Real-Time Linux}
+\rhead{August 28, 2020}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
 
-\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
-\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
-\usepackage{booktabs} % Horizontal rules in tables
-
-\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
-
-\usepackage{enumitem} % Customized lists
-\setlist[itemize]{noitemsep} % Make itemize lists more compact
-
-\usepackage{abstract} % Allows abstract customization
-\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
-\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
-
-\usepackage{titlesec} % Allows customization of titles
-\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
-\renewcommand\thesubsection{\roman{subsection}} % roman numerals for subsections
-\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
-\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
-
-\usepackage{fancyhdr} % Headers and footers
-\pagestyle{fancy} % All pages have headers and footers
-\fancyhead{} % Blank out the default header
-\fancyfoot{} % Blank out the default footer
-\fancyhead[C]{Running title $\bullet$ May 2016 $\bullet$ Vol. XXI, No. 1} % Custom header text
-\fancyfoot[RO,LE]{\thepage} % Custom footer text
-
-\usepackage{titling} % Customizing the title section
-
-\usepackage[breaklinks]{hyperref} % For hyperlinks in the PDF
-
-%----------------------------------------------------------------------------------------
-%	TITLE SECTION
-%----------------------------------------------------------------------------------------
-
-\setlength{\droptitle}{-4\baselineskip} % Move the title up
-
-\pretitle{\begin{center}\Huge\bfseries} % Article title formatting
-\posttitle{\end{center}} % Article title closing formatting
-\title{Article Title} % Article title
-\author{%
-\textsc{John Smith}\thanks{A thank you or further information} \\[1ex] % Your name
-\normalsize University of California \\ % Your institution
-\normalsize \href{mailto:john@smith.com}{john@smith.com} % Your email address
-%\and % Uncomment if 2 authors are required, duplicate these 4 lines if more
-%\textsc{Jane Smith}\thanks{Corresponding author} \\[1ex] % Second author's name
-%\normalsize University of Utah \\ % Second author's institution
-%\normalsize \href{mailto:jane@smith.com}{jane@smith.com} % Second author's email address
-}
-\date{\today} % Leave empty to omit a date
-\renewcommand{\maketitlehookd}{%
-\begin{abstract}
-\noindent \blindtext % Dummy abstract text - replace \blindtext with your abstract text
-\end{abstract}
-}
-
-%----------------------------------------------------------------------------------------
-
+% Start document
 \begin{document}
 
-% Print the title
-\maketitle
+%%%%%%%%%%%%%%%%%%%% Title Page %%%%%%%%%%%%%%%%%%%%%%%%
+\thispagestyle{empty}
+\begin{titlepage}
+\begin{center}
+        \vspace*{1cm}
 
-%----------------------------------------------------------------------------------------
-%	ARTICLE CONTENTS
-%----------------------------------------------------------------------------------------
+        \LARGE{Ku Band Radio Frequency System Version 3 (K3) \\
+        Migration from Concurrent RedHawk Linux to \\
+        Red Hat Real-Time Linux}
 
-\section{Introduction}
+        \vspace{0.5cm}
+        \LARGE
+        % Subtitle
 
-\lettrine[nindent=0em,lines=3]{L} orem ipsum dolor sit amet, consectetur adipiscing elit.
-\blindtext % Dummy text
+        \vspace{1.5cm}
 
-\blindtext % Dummy text
+        \normalsize
 
-%------------------------------------------------
+        John Jesus \\
+        August 28, 2020
 
-\section{Methods}
+        \vfill
 
-Maecenas sed ultricies felis. Sed imperdiet dictum arcu a egestas.
-\begin{itemize}
-\item Donec dolor arcu, rutrum id molestie in, viverra sed diam
-\item Curabitur feugiat
-\item turpis sed auctor facilisis
-\item arcu eros accumsan lorem, at posuere mi diam sit amet tortor
-\item Fusce fermentum, mi sit amet euismod rutrum
-\item sem lorem molestie diam, iaculis aliquet sapien tortor non nisi
-\item Pellentesque bibendum pretium aliquet
-\end{itemize}
-\blindtext % Dummy text
 
-Text requiring further explanation\footnote{Example footnote}.
 
-%------------------------------------------------
+        \vspace{0.8cm}
 
-\section{Results}
 
-\begin{table}
-\caption{Example table}
-\centering
-\begin{tabular}{llr}
-\toprule
-\multicolumn{2}{c}{Name} \\
-\cmidrule(r){1-2}
-First name & Last Name & Grade \\
-\midrule
-John & Doe & $7.5$ \\
-Richard & Miles & $2$ \\
-\bottomrule
-\end{tabular}
+
+
+\end{center}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%% Start of Body %%%%%%%%%%%%%%%%%%%%%%%%
+\section{Scope}
+\subsection{Identification}
+This document is a Raytheon internal document describing existing interfaces
+between two components of the Ku Band Radio Frequency System Version 3 (K3), the
+System Controller Unit Single Board Computer (SCU-SBC) and the System Controller
+Unit Interface Module (SCIM).
+
+\subsection{System overview}
+KRFS is a radar system that supports the counter- rocket, artillery, and mortar (CRAM) mission.
+KRFS has four radar apertures each operating as an Active Electronically
+Scanned Array (AESA).  Each aperture has its own receiver/exciter and signal processing
+subsystem called the Array Backend Electronics Unit (ABEU).  The arrays are arranged to
+provide 360 degree coverage in azimuth and horizon to 90-degree coverage in elevation.
+
+The System Controller Unit (SCU) is a 3-U VPX/VME shelf with commercial-off-the-self (COTS)
+cards and one custom card assembly (CCA).  The SCU is the central controller for K3 and
+has responsibilities in both the data plane and the control plane.
+
+
+In the data plane, the SCU schedules radar dwells among the arrays,
+processes received detections, and transmits track information.
+
+In the control plane, the SCU manages environmental sensors, power,
+and other control signals throughout the rest of the radar.  Within the SCU,
+the SCIM card and the SBC Processor card together manage the control plane; the
+SCIM functions as a kind of I/O device hub and the SBC provides the management logic.
+
+The SBC Processor is a Extreme Engineering (XES) Xpedite7674 card based on the Xeon-D
+System-on-a-Chip (SOC) running the Linux operating system.  The SCIM is a custom card
+developed by Raytheon based on the Microsemi SmartFusion 2 (SF2) System-on-a-Chip FPGA
+(part number M2S090TS-1FG676I).  The SCIM software runs without an operating system as
+a C-language event loop handler on an ARM processor embedded in the SCIM SOCF.
+
+
+\subsection{Document Purpose}
+This document describes the interfaces between the
+SCU-SBC and the SCIM as \emph{originally} planned for K3 based on the K2 design.
+These existing interfaces may be eliminated; if so, this document helps to answer
+the questions:
+\vspace{0.4cm}
+
+{\emph{What is the impact of severing the existing interfaces between the SCU
+SBC and the SCIM in K3? What must change in response?}
+
+\subsection{Document overview}
+The structure of this document:
+
+\begin{enumerate}
+    \item Document scope (this section)
+    \item References
+    \item Interfaces
+    \item Analysis of impact of severing the interfaces between the SCU
+    SBC and the SCIM in K3
+\end{enumerate}
+
+
+
+\section{References}
+
+\begin{enumerate}
+    \item XPedite7674 Users Manual Revision C (Extreme Engineering Solutions, February 1, 2018) \label{ref:board_man}
+    \item XPedite7674 Schematic Diagram SCH90030490 Revision C (Extreme Engineering Solutions, February 28, 2020) \label{ref:7674schematic}
+    \item System Controller Unit Interface Module - Schematic Diagram SDD0862497 (Raytheon, May 14, 2020) \label{ref:scim_schematic}
+    \item Development Specification for the Ku Band RF System (KRFS) System Controller Unit (SCU) B4597324 (Raytheon, March 30, 2017) \label{ref:dev_scu}
+    \item Development Specification for the Ku Band RF System (KRFS) System Controller Interface Module (SCIM) B4805956 (Raytheon, April 11, 2017) \label{ref:dev_scim}
+    \item Ku-Band RF System (KRFS) Power Control Software Thin Specification (Raytheon, April 7, 2017) \label{ref:power_control_sw}
+    \item Ku-Band RF System (KRFS) System Controller Interface Module (SCIM) FPGA Design Document (FDD) U1011477 (Raytheon, February 6, 2017) \label{ref:scim_fdd}
+\end{enumerate}
+
+
+\section{Interfaces between the SCU-SBC and the SCIM}
+\label{sec:interfaces}
+
+The interfaces between the SCU-SBC and the SCIM are depicted in Figure \ref{fig:interface}.
+Applications on the SBC can access one of the two drivers that each expose an interface between
+the SBC and the SCIM:
+
+\begin{enumerate}
+    \item Serial port interface through device \texttt{/dev/ttyS2}
+    \item PCIe interface through device \texttt{/dev/drvScimFpgaChar0}
+\end{enumerate}
+
+
+Each of these interfaces are custom Linux kernel modules (device drivers) software from
+Raytheon.
+The serial port interface is based on exchanging a data structure over file \emph{reads/writes}.
+The PCIe interface is based on exchanging a different data structure from that of the serial port using the file \emph{ioctl} operation.
+
+\subsection{Serial port interface}
+
+To use the serial port interface to the SCIM, software invokes file operations to open \texttt{/dev/ttyS2} and write data to it. The structure
+of the data is in Listing \ref{lst:serial_msg}.
+
+% Default formatting for C++ listing
+\lstset
+{
+    language=C++,
+    basicstyle=\footnotesize\ttfamily,
+    linewidth=7in,
+    %basicstyle=\small\ttfamily,
+    numbers=left,
+    stepnumber=1,
+    showstringspaces=false,
+    tabsize=1,
+    breaklines=true,
+    breakatwhitespace=false,
+}
+
+\begin{adjustwidth}{0.0in}{0.0in}
+\begin{lstlisting}[firstnumber=143, caption={\texttt{exeCswBoot/SerialCommonTypes.h} Serial Port message (variable length)}, label={lst:serial_msg}]
+//********************************************************************//
+//           HEADER STRUCTURE FOR SENDING/RECV MSG                    //
+//********************************************************************//
+#pragma pack(1)
+typedef struct
+{
+   UInt8     headerChecksum;    //Package header checksum
+   UInt8     dataChecksum;      //Package data checksum
+   UInt16    sf2Cmd;            //Type of the command or response
+   UInt8     isACommand;        //Use on ensure if this is a response of command package
+   UInt8     Src_LRU;           //Source
+   UInt8     Src_SLOT;          //Source
+   UInt8     Dst_LRU;           //Used in command response  to match
+   UInt8     Dst_SLOT;          //Used in command response to match
+   UInt16    msgSize;           //The whole message size (header + data payload)
+   UInt8     cmdIndex;          //Increasing every command of the same type. Used in command response to match
+} SF2PacketHeader_Type;
+#pragma pack(8)
+
+//********************************************************************//
+//             RECEIVING MESSAGE STRUCTURE WITH HEADER                //
+//********************************************************************//
+#pragma pack(1)
+typedef struct
+{
+   SF2PacketHeader_Type    sf2Header;
+   void*                   sf2Payload;
+} SF2DataMsg_type;
+#pragma pack(8)
+
+\end{lstlisting}
+\end{adjustwidth}
+
+
+The message sent over the serial port has a command word (Line 151 of Listing \ref{lst:serial_msg}) to either query data (get version,
+write-protect status, or system mode) or to send a signal to the rest of the radar (set maintenance mode, set write-protect, shutdown radar).
+
+\begin{table}[H]
+    \captionsetup{width=.9\linewidth}
+    \caption{Serial port commands from exeCswBoot/SerialCommonTypes.h}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{p{4.0in}p{3.0in}}
+    \hline
+        Command & Description/Purpose \\
+    \hline
+        SF2CMD\_DISCOVER&
+        \multirow{3}{=}{Query for the tuple containing (my LRU id, my Slot id, write-protect status, system mode)}\\
+        SF2CMD\_DISCOVER\_RESP\\
+        \\
+    \hline
+        SF2CMD\_GET\_OPERATION\_MODE&
+        \multirow{4}{=}{Get/Set System Mode (Tactical/Maintenance)}\\
+        SF2CMD\_GET\_OPERATION\_MODE\_RESP\\
+        SF2CMD\_SET\_OPERATION\_MODE\\
+        SF2CMD\_SET\_OPERATION\_MODE\_RESP\\
+    \hline
+        SF2CMD\_GET\_WRITE\_PROTECT&
+        \multirow{4}{=}{Get/Set Write-protect Status}\\
+        SF2CMD\_GET\_WRITE\_PROTECT\_RESP\\
+        SF2CMD\_SET\_WRITE\_PROTECT\\
+        SF2CMD\_SET\_WRITE\_PROTECT\_RESP\\
+    \hline
+        SF2CMD\_SHUTDOWN&
+        \multirow{2}{=}{Shutdown radar}\\
+        SF2CMD\_SHUTDOWN\_RESP\\
+    \hline
+        SF2CMD\_GET\_VERSION&
+        \multirow{6}{=}{Miscellaneous status (version, flash CRC, uptime)}\\
+        SF2CMD\_GET\_VERSION\_RESP\\
+        SF2CMD\_FLASH\_CRC\\
+        SF2CMD\_FLASH\_CRC\_RESP\\
+        SF2CMD\_UPTIME\\
+        SF2CMD\_UPTIME\_RESP\\
+    \hline
+        SF2CMD\_PROGRAM&
+        \multirow{6}{=}{Unused at SCU (the ABEU uses these to download or re-program its FPGA flash)}\\
+        SF2CMD\_PROGRAM\_RESP\\
+        SF2CMD\_VERIFY\\
+        SF2CMD\_VERIFY\_RESP\\
+        SF2CMD\_SET\_WRITE\_PROTECT\_FACTORY\\
+        SF2CMD\_SET\_OPERATION\_MODE\_FACTORY\\
+        SF2CMD\_UPLOAD\\
+        SF2CMD\_UPLOAD\_RESP\\
+        SF2CMD\_DOWNLOAD\\
+        SF2CMD\_DOWNLOAD\_RESP\\
+
+    \hline
+    \end{tabular}%
+    }
+    \label{tab:serial_cmd}
 \end{table}
 
-\blindtext % Dummy text
+\subsubsection{Applications using the serial port interface}
+On the SCU-SBC, only one or two command-line executables use the serial port interfaces, and, these are only used in a terminal or ssh session as troubleshooting or debug commands. The serial port interface seems to be used more on the ABEU rather than on the SCU; software on the SCU seems to prefer using its exclusive PCIe interface instead of the serial port.
 
-\begin{equation}
-\label{eq:emc}
-e = mc^2
-\end{equation}
+The serial port commands depicted as \emph{SF2 App} near the upper-right of Figure \ref{fig:interface} are:
 
-\blindtext % Dummy text
+\begin{enumerate}
+    \item \texttt{sf2shutdown}
+    \item \texttt{sf2network}
+\end{enumerate}
 
-%------------------------------------------------
 
-\section{Discussion}
+\subsection{PCIe interface}
 
-\subsection{Subsection One}
+See Reference \ref{ref:scim_fdd}.
 
-A statement requiring citation \cite{Figueredo:2009dg}.
-\blindtext % Dummy text
+\begin{table}[H]
+    \captionsetup{width=.9\linewidth}
+    \caption{SCIM registers available over PCIe from drvScimFpga/drvScimIoctl.h}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{p{2.0in}p{5.0in}}
+    \hline
+        \textbf{Register} & \textbf{Description/Purpose} \\
+    \hline
+        Test Register & Scratch register, no operational role \\[1.0mm]
+        Firmware version & SCIM firmware version string \\[1.0mm]
+        Power discretes & Bitmap with each bit indicating the status of
+                          a power rail (see Table \ref{tab:power_discretes})\\[1.0mm]
+        System discretes & Bitmap used to manage and detect cooling flow to each APSU, ABEU, Array, and the SCU \\[1.0mm]
+        CCA discretes & Bitmap used to manage the LEDs on the SCIM \\[1.0mm]
+        Temperature, voltage, and humidity & Measurement values from various
+                            environmental sensors on the SCIM, including high-low-snapshot values on each power rail, high-low-snapshot temperature values, humidity, and accelerometer.  \\[1.0mm]
+        Zeroize & Bitmap to zeroize the SCU solid-state drive, GPS, and Ethernet switch.\\[1.0mm]
+        Power status & Bitmap to monitor the lift and to indicate good/fail of 3.3V, 5V, 8V, 12V, Core Power Supply and each APSU \\[1.0mm]
+        LPDDR status & Status of the Low-Power Dual Data Rate (LPDDR) memory on the SCIM, include memory test command and results \\[1.0mm]
+        Software CSR & Control and status register of SCIM software.  Bitmap that communicates important conditions (see Table \ref{tab:scim_csr}) \\[1.0mm]
+        Application Software CSR & Control and status register (CSR) of application software.  Bit 0 indicates that the application software has compelted a graceful shutdown.\\[1.0mm]
+        Platform ID, Version information and uptime & Five registers contain Platform ID (K2, K3, XBAEU), SCIM software version, SCU serial number, SCIM serial number, and SCIM elapsed uptime \\[1.0mm]
+        PMBus control and status & Power Management Bus control and status registers \\[1.0mm]
+        PDCU control and status & The SCIM uses these registers to communicate on a serial port with the Power Distribution Control Unit (PDCU) \\
+    \hline
+    \end{tabular}%
+    }
+    \label{tab:pcie_regs}
+\end{table}
 
-\subsection{Subsection Two}
+\begin{table}[H]
+    \captionsetup{width=.9\linewidth}
+    \caption{Power discretes}
+    %\resizebox{\textwidth}{!}{%
+    \begin{tabular}{p{0.5in}p{5.5in}}
+    \hline
+        Bit & Description \\
+    \hline
+        8& Set bit to enable the Beacon Power Supply.\\
+        7& Clear bit to reset and configure the GPS.\\
+        6& Clear bit to disable the GPS Auxiliary Power Supply.\\
+        5& Clear bit to disable the GPS Primary Power Supply.\\
+        4& Clear bit to enable the GPS Primary Power Supply.\\
+        3-0& Set each bit to enable the corresponding ABEU (3:0) Power Supply.\\
+    \hline
+    \end{tabular}%
+    %}
+    \label{tab:power_discretes}
+\end{table}
 
-\blindtext % Dummy text
+\begin{table}[H]
+    \captionsetup{width=.9\linewidth}
+    \caption{Power discretes}
+    %\resizebox{\textwidth}{!}{%
+    \begin{tabular}{p{0.5in}p{5.5in}}
+    \hline
+        Bit & Description \\
+    \hline
+        5 & Over-temperature fault exists.  The SCIM will cut power in two minutes if ABEUs are powered on or immediately cuts power if ABEUs are powered off. \\
+        4 & PMBus interface test has failed. The 28V voltage value read from the power supply is out of range. \\
+        3 & PMBus interface test has passed.  The 28V voltage value read from the power supply is OK. \\
+        2 &  Hard drive is inserted into SCU. The NVMRO (write-protect) cannot be enabled if this bit indicates that the hard drive is still inserted in the SCU. \\
+        1 & SCIM flash memory CRC check failed. \\
+        0 & SCIM flash memory CRC check passed. \\
+    \hline
+    \end{tabular}%
+    %}
+    \label{tab:scim_csr}
+\end{table}
 
-%----------------------------------------------------------------------------------------
-%	REFERENCE LIST
-%----------------------------------------------------------------------------------------
+\subsubsection{Applications using the PCIe interface}
+Any software application can open the device \texttt{/dev/drvScimFpgaChar0} and invoke \emph{ioctl} on it to interface with the SCIM.  Only one application on the SCU-SBC actually does so, the \emph{PowerControl} application.  This application originally used the interface to provide a safety-interlock feature for power (checks that coolant is flowing before powering up an ABEU), but, has morphed into a kind of server for access to any/all of the registers and features of the SCIM (given this expanded role, the application seems to have outgrown its original \emph{PowerControl} name).
 
-\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
 
-\bibitem[Figueredo and Wolf, 2009]{Figueredo:2009dg}
-Figueredo, A.~J. and Wolf, P. S.~A. (2009).
-\newblock Assortative pairing and life history strategy - a cross-cultural
-  study.
-\newblock {\em Human Nature}, 20:317--330.
+The \emph{PowerControl} application fulfills requests received as Common Operating Environment (COE) messages from external applications
+(see Table \ref{tab:coe_msgs}).  In a sense, these COE messages have become the \emph{real} API to the SCIM.  This API is especially
+important in powering up the radar system as discussed in Section \ref{sec:power-up}.
 
-\end{thebibliography}
+\begin{table}[H]
+    \captionsetup{width=.9\linewidth}
+    \caption{COE Messages for the PowerControl software}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{p{2.1in}p{1.2in}p{1.2in}p{2.0in}}
+    \hline
+        Message & Sender & Receiver & Description \\
+    \hline
+PCU\_KRFS\_Command & TRUI & Power Control & This command powers on the radar system.  \\
+PCU\_Status & Power Control & TRUI, MFRFS\_Health & This message is sent every 1 second to send coolant flow status to the TRUI.  \\
+    \hline
+PCU\_ClearStatusReq & TRUI & Power Control & The TRUI is acknowledging the fault latches and requesting to clear the latches.\\
+PCU\_ClearStatusResp & Power Control & TRUI & PowerControl returns the value of the fault latches. \\
+    \hline
+PCU\_GPS\_PowerReq & TRUI & Power Control & The TRUI is requesting a power change on the GPS.  Some safety interlock logic is applied within the Power Control application. \\
+PCU\_GPS\_PowerResp & Power Control & TRUI & Status result from the GPS power request. \\
+    \hline
+PCU\_SCU\_PowerSupplyCmd & MFRFS\_Health & Power Control & This message is used by BIT to request a shutdown of the radar. \\
+    \hline
+PCU\_ControlCommand & TRUI & Power Control & This command is used to request zeroize of the GPS. \\
+PCU\_ControlStatus & Power Control & TRUI & Response to the zeroize command is to send back power status. \\
 
-%----------------------------------------------------------------------------------------
+    \hline
+    \end{tabular}%
+    }
+    \label{tab:coe_msgs}
+\end{table}
+
+\subsubsection{Use Case: Powering on the KRFS radar}
+\label{sec:power-up}.
+
+Powering on the KRFS radar is depicted in the sequence diagram of Figure \ref{fig:power-up}.  As indicated in the figure, the Operator throws circuit breakers
+that power on the cooling system and the SCU (which includes the SBC, SCIM, Hard Drive, Ethernet Switch).  The Operator also connects the Tactical Radar User Interface (TRUI) laptop to the Ethernet switch to establish connection between the TRUI and the SCU SBC.
+
+The sequence then proceeds as described in the diagram, with the PowerControl application on the SBC exchanging COE messages with the laptop and accessing the SCIM over the PCIe interface.
+
+The bottom of Figure \ref{fig:power-up} depicts the periodic (1 Hz) polling
+by the PowerControl application of various discrete status on the SCIM that
+are broadcast to the TRUI over COE; these messages are also consumed by a
+system health/BIT application running on the SCU SBC (not shown).
+
+Eventually, logic in PowerControl determines from status of the discretes (from Figure \ref{fig:power-up} Message 14) that the system is ready to power on the arrays and exchanges messages with the SCIM to effect power on of the ABEUs.
+
+
+\section{Analysis of required interface changes}
+
+
+\subsection{What must change: SCU-SBC Serial Port and PCIe interfaces to the SCIM interfaces are eliminated}
+
+For K3, the existing SCU-SBC PCIe and Serial Port interfaces to the SCIM are eliminated.
+
+There was some initial thinking that we might be able to operate with reduced functionality (for example, with degraded power/health reporting), but, the content of Section \ref{sec:interfaces} indicates that we need the SBC-SCIM interface even to turn the system on, among other things.
+
+\subsection{Proposed solution: Replace SCIM PCIe interface with Ethernet}
+The proposed solution is to replace the SBC-SCIM PCIe interface with Ethernet.
+This solution would not require hardware change on the SBC which already supports several Ethernet connections.
+It does require a change to the SCIM SOCF and IO Flex to route Ethernet instead of PCIe.  The SCIM SOCF (Microsemi SmartFusion 2 (SF2) System-on-a-Chip FPGA) is depicted in \ref{fig:socf-eth}; this figure from the vendor indicates available modules for triple-speed Ethernet (TSE) over SERDES (without magnetics).
+
+
 
 \end{document}
+

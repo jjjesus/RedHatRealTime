@@ -1,0 +1,175 @@
+EFI Boot Principles
+-----
+https://www.rodsbooks.com/efi-bootloaders/principles.html
+
+
+Linux boot
+-----
+https://0xax.gitbooks.io/linux-insides/content/Booting/
+
+Assembly language entry
+-----
+arch/x86/kernel/head_64.S
+
+     * We come here either directly from a 64bit bootloader, or from
+     * arch/x86/boot/compressed/head_64.S.
+     *
+     * We only come here initially at boot nothing else comes here.
+
+arch/x86/include/asm/setup.h
+arch/x86/kernel/head64.c
+
+The call to start_kernel() is here in head64.c
+Entry point to kernel is start_kernel()
+
+
+/home/jjesus/ccur/usr/src/linux-4.4.220RedHawk7.3.11/include/linux/start_kernel.h
+/home/jjesus/ccur/usr/src/linux-4.4.220RedHawk7.3.11/init/main.c
+
+
+Linux boot documentation
+-----
+/home/jjesus/ccur/usr/src/linux-4.4.220RedHawk7.3.11/Documentation/x86/boot.txt
+
+
+
+
+Feature from Concurrent Red Hawk we don't use
+-----
+
+The affinity of cores, LLC, and memory within a domain are expressed using the usual NUMA affinity parameters to the OS, which can take SNC domains into account in scheduling tasks and allocating memory to a process for optimal performance.
+
+
+
+A realtime preemption overview
+-----
+https://lwn.net/Articles/146861/
+
+The key point of the PREEMPT_RT patch is to minimize the amount of kernel code that is non-preemptible, while also minimizing the amount of code that must be changed in order to provide this added preemptibility. In particular, critical sections, interrupt handlers, and interrupt-disable code sequences are normally preemptible. The PREEMPT_RT patch leverages the SMP capabilities of the Linux kernel to add this extra preemptibility without requiring a complete kernel rewrite. In a sense, one can loosely think of a preemption as the addition of a new CPU to the system, and then use the normal locking primitives to synchronize with any action taken by the preempting task.
+
+
+Read-copy update (RCU) is a synchronization mechanism that was added to the Linux kernel in October of 2002. RCU achieves scalability improvements by allowing reads to occur concurrently with updates. In contrast with conventional locking primitives that ensure mutual exclusion among concurrent threads regardless of whether they be readers or updaters, or with reader-writer locks that allow concurrent reads but not in the presence of updates, RCU supports concurrency between a single updater and multiple readers. RCU ensures that reads are coherent by maintaining multiple versions of objects and ensuring that they are not freed up until all pre-existing read-side critical sections complete. RCU defines and uses efficient and scalable mechanisms for publishing and reading new versions of an object, and also for deferring the collection of old versions. These mechanisms distribute the work among read and update paths in such a way as to make read paths extremely fast. In some cases (non-preemptable kernels), RCU's read-side primitives have zero overhead.
+
+
+
+Download the RT patch from kernel.org
+-----
+https://mirrors.edge.kernel.org/pub/linux/kernel/projects/rt/
+
+
+
+The main wiki page for the RT patch
+-----
+https://rt.wiki.kernel.org/index.php/CONFIG_PREEMPT_RT_Patch
+
+
+How cpuset for CPU Affinity works
+-----
+https://github.com/lpechacek/cpuset/blob/master/doc/tutorial.txt
+
+
+
+The thinking behind original RT Linux
+-----
+
+https://lwn.net/Articles/143323/
+
+Explains shielding in this section: 7.  Migration Within OS
+
+Some (but not all!) of
+the CPUs are designated as realtime CPUs.  If a task running on a
+realtime CPU executes a trap or system call that contains non-deterministic
+code sequences, the task is migrated to a non-realtime CPU to complete
+execution of the trap or system call, then migrated back.  This prevents
+any non-realtime execution of a given realtime task from interfering
+with that of other realtime tasks.
+
+Good explanation of priority inversion in this section: 1.  PRIORITY INVERSION PROBLEM STATEMENT
+
+
+
+
+
+
+Scheduling
+
+http://manpages.ubuntu.com/manpages/bionic/man7/sched.7.html
+
+https://trepo.tuni.fi/bitstream/handle/10024/96864/GRADU-1428493916.pdf
+
+https://man7.org/linux/man-pages/man3/pthread_attr_init.3.html
+
+
+
+The origin of Red Hat Real Time
+-----
+https://www.redhat.com/sysadmin/real-time-kernel
+
+From RHEL 7 onward, the MRG product was deprecated, and  "RHEL for Real-Time" was introduced as a separate product.
+
+ It is an optimized kernel designed to maintain low latency, consistent response time, and determinism. By way of comparison, a standard RHEL kernel focuses on throughput-oriented operations and fair scheduling of tasks. The real-time kernel is also known as kernel-rt or preempt-rt.
+ 
+Some important kernel-rt mechanisms include:
+
+A task's priority is checked (1-99) under heavy load.
+High priority (99) tasks are given preference for CPU execution.
+Does not use the Completely Fair Scheduling (CFS) policy.
+Scheduling policies in-use are SCHED_FIFO or SCHED_RR.
+Maintains low latency execution time.
+Offers an opportunity to measure, record, and configure response time.
+
+Kexec and vmcore - Installation and configuration are the same as standard RHEL.
+Third-party modules - All modules must be recompiled with kernel-rt before being used.
+irqbalance daemon - Disabled by default.
+Scheduling policy - Only SCHED_FIFO or SCHED_RR is used.
+Interrupt (IRQs) - Uses dedicated CPUs to isolate processes from each other.
+
+This rt-setup package is responsible for configuring and running the rt-entsk daemon, which prevents IPI generation and delay of real-time tasks.
+
+The following bullet points display some of the key features of rt-setup (v2.0-6):
+
+Creates real-time groups.
+Adds real-time limits configuration for PAM.
+Adds /usr/bin/rt-setup-kdump to configure kdump in RT.
+Adds udev-specific rules for threaded irqs and /dev/rtc access.
+Adds /usr/bin/slub_cpu_partial_off to turn off cpu_partials in SLUB.
+Adds net-socket timestamp static key daemon (rt-entsk).
+
+Consistent latency
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_time/7/html/installation_guide/chap-why_use_rt_to_optimize_latency?intcmp=701f20000012ngPAAQ&extIdCarryOver=true&sc_cid=701f2000001OH7JAAW
+
+
+Kernel memory allocators
+-----
+SLOB, SLAB, SLUB
+https://en.wikipedia.org/wiki/SLOB
+
+
+
+
+The RT Path
+-----
+https://www.linuxfoundation.org/blog/2013/03/intro-to-real-time-linux-for-embedded-developers/
+When embedded projects call for for a real-time operating system, Linux developers often turn to PREEMPT-RT, the real-time kernel patch, to get it done.
+
+“The PREEMPT_RT patch (aka the -rt patch or RT patch) makes Linux into a real-time system,” said Steven Rostedt, a Linux kernel developer at Red Hat and maintainer of the stable version of the real-time Linux kernel patch.
+
+With unbounded latencies comes non-deterministic behavior.
+
+For example, with unfair reader writer locks, where the writer has to wait for there to be no readers before it can take the lock. Because new readers can continually take the lock at any time while the writer is waiting, the writer may never get the lock. This is a prime example of an unbounded latency on the writer.
+
+A bounded latency is the fair reader writer lock, where new readers will block if there’s a writer waiting. This way the writer has to wait for at most a fixed number of readers (at most one per CPU minus the one the writer is on).
+
+There’s also the case of priority inversion, but I covered that in my talk at ELC,
+
+The biggest change still outside of mainline is the conversion of spin_locks into mutexes. That changes a lot of assumptions about spin_lock side effects. For example, they no longer disable preemption. There’s some code in the kernel that assumes that.
+
+
+
+Download the RT patch and recompile kernel source
+-----
+
+https://hungpham2511.github.io/setup/install-rtlinux/
+
+
+

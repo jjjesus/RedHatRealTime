@@ -1,0 +1,28 @@
+Add Architect tool
+-----
+
+
+Real-Time Features
+-----
+Processor Shielding - yes.  cpuset
+Processor Affinity - yes. set affinity
+User-level Preemption Control - no non-preempt spinlock, resched_cntl
+Fast Block/Wake Services - no pw_wait
+RCIM Driver - no 400ns clock source
+Frequency-Based Scheduler - no
+/proc Modifications - no (same as usermap)
+Kernel Trace Facility - no (Nighthawk)
+ptrace Extensions - no (Nighthawk usermap)
+Kernel Preemption - (built-in) since 2009 https://kernelnewbies.org/FAQ/Preemption)
+Real-Time Scheduler - (built-in) fixed-length context switch, non-CFS (Completely Fair Scheduler)
+Low Latency Enhancements - (built-in, tunable) kernel spinlock
+Priority Inheritance - (built-in)
+High Resolution Process Accounting - no
+Capabilities Support - (built-in)
+Kernel Debuggers - (built-in)
+Kernel Core Dumps/Crash and Live Analysis  (built-in)
+User-level Spin Locks - no
+usermap and /proc mmap - no
+Hyper-threading - (built-in, tunable)
+XFS Journaling File System - no
+
