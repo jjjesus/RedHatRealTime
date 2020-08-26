@@ -67,47 +67,11 @@
 %%%%%%%%%%%%%%%%% Start of Body %%%%%%%%%%%%%%%%%%%%%%%%
 \section{Scope}
 \subsection{Identification}
-This document is a Raytheon internal document describing existing interfaces
-between two components of the Ku Band Radio Frequency System Version 3 (K3), the
-System Controller Unit Single Board Computer (SCU-SBC) and the System Controller
-Unit Interface Module (SCIM).
+This document is a Raytheon internal document analyzing an opportunity to change the version of Linux operating system used in the Ku Band Radio Frequency System Version 3 (K3).
 
-\subsection{System overview}
-KRFS is a radar system that supports the counter- rocket, artillery, and mortar (CRAM) mission.
-KRFS has four radar apertures each operating as an Active Electronically
-Scanned Array (AESA).  Each aperture has its own receiver/exciter and signal processing
-subsystem called the Array Backend Electronics Unit (ABEU).  The arrays are arranged to
-provide 360 degree coverage in azimuth and horizon to 90-degree coverage in elevation.
+\subsection{Linux operating system overview}
 
-The System Controller Unit (SCU) is a 3-U VPX/VME shelf with commercial-off-the-self (COTS)
-cards and one custom card assembly (CCA).  The SCU is the central controller for K3 and
-has responsibilities in both the data plane and the control plane.
-
-
-In the data plane, the SCU schedules radar dwells among the arrays,
-processes received detections, and transmits track information.
-
-In the control plane, the SCU manages environmental sensors, power,
-and other control signals throughout the rest of the radar.  Within the SCU,
-the SCIM card and the SBC Processor card together manage the control plane; the
-SCIM functions as a kind of I/O device hub and the SBC provides the management logic.
-
-The SBC Processor is a Extreme Engineering (XES) Xpedite7674 card based on the Xeon-D
-System-on-a-Chip (SOC) running the Linux operating system.  The SCIM is a custom card
-developed by Raytheon based on the Microsemi SmartFusion 2 (SF2) System-on-a-Chip FPGA
-(part number M2S090TS-1FG676I).  The SCIM software runs without an operating system as
-a C-language event loop handler on an ARM processor embedded in the SCIM SOCF.
-
-
-\subsection{Document Purpose}
-This document describes the interfaces between the
-SCU-SBC and the SCIM as \emph{originally} planned for K3 based on the K2 design.
-These existing interfaces may be eliminated; if so, this document helps to answer
-the questions:
-\vspace{0.4cm}
-
-{\emph{What is the impact of severing the existing interfaces between the SCU
-SBC and the SCIM in K3? What must change in response?}
+\subsection{Document purpose}
 
 \subsection{Document overview}
 The structure of this document:
