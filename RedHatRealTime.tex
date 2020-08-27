@@ -4,6 +4,7 @@
 \usepackage{caption}
 \usepackage{changepage} % adjustwidth
 \usepackage{colortbl} %
+\usepackage{enumitem} %
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{graphicx}
@@ -11,6 +12,7 @@
 \usepackage{listings} % Code listings
 \usepackage{multicol}
 \usepackage{multirow}
+\usepackage{xurl}
 
 \usepackage[utf8]{inputenc}
 \usepackage{setspace}
@@ -19,6 +21,7 @@
 
 \setlength{\parindent}{15pt}
 \setlength{\headheight}{15pt} % fancyhdr wants at least 14.5pt
+\setlist{noitemsep}
 
 \definecolor{light-gray}{gray}{0.95}
 
@@ -108,12 +111,14 @@ In KRFS K3, the SBC Processor is a very similar Extreme Engineering (XES) Xpedit
 \subsection{Linux operating system}
 The Linux operating system is free, open-source software (FOSS) underlying platforms from the smallest devices (Android phones are based on Linux) to supercomputers. Although the source code for the software is freely available, some commercial vendors charge fee to provide the software pre-compiled for a particular device, board, or machine, and charge for support and additional documentation or other tools.
 
-
-\subsubsection{Linux operating system in KRFS K2}
-
+\subsubsection{Real-time patch for the Linux operating system}
 
 
-\subsubsection{Linux operating system in KRFS K3}
+
+\subsubsection{RedHawk Linux}
+
+
+\subsubsection{RedHat Linux for Real-Time (Red Hat RT)}
 
 
 \subsection{Document purpose}
@@ -128,7 +133,7 @@ The structure of this document:
 \begin{enumerate}
     \item Document scope (this section)
     \item References
-    \item Real-time features from RedHawk in current K2 software
+    \item Real-time features from RedHawk used in current KRFS software
     \item Creating the Linux operating system image
     \item Hardening the Linux operating system image
     \item Migrating to Red Hat Real-Time in K3
@@ -142,7 +147,9 @@ The structure of this document:
 
 \begin{enumerate}
     \item RedHawk Linux Users Guide 0898004-780 (Concurrent Computer Corporation, March 2016) \label{ref:red_hawk_guide}
-    \item RedHawk Architect Users Guide  0898601-7.2-1 (Concurrent Computer Corporation, December 2016) \label{ref:architect}
+    \item RedHawk Architect Users Guide 0898601-7.2-1 (Concurrent Computer Corporation, December 2016) \label{ref:architect}
+    \item Red Hat Enterprise Linux for Real Time 7 Reference Guide (Red Hat Corporation, November 6, 2015) \label{ref:architect}
+    \item Red Hat Enterprise Linux for Real Time 7 Installation Guide (Red Hat Corporation, November 6, 2015) \label{ref:architect}
     \item \textit{Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl Weis, Global Supply Chain Program Lead, Raytheon}
     \item \textit{Source for Red Hat Real-Time costs in Table \ref{tab:license_costs} was Lynn Bonenfant, IT Program Lead, Raytheon}
 \end{enumerate}
@@ -150,7 +157,7 @@ The structure of this document:
 
 %%%%%%%%%%%%%%%%% RedHawk Features %%%%%%%%%%%%%%%%%%%%%%%%
 %
-\section{Real-time features from RedHawk}
+\section{Real-time features from RedHawk in KRFS}
 \label{sec:redhawk_features}
 
 \begin{table}[H]
@@ -159,7 +166,7 @@ The structure of this document:
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{p{3.2in}p{1.2in}p{2.6in}}
     \hline
-        \textbf{Feature} & \textbf{Used} & \textbf{Description} \\
+        \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
     \hline
         \rowcolor{light-gray} Processor Shielding & \textbf{Yes} & cpuset \\
         \rowcolor{light-gray} Processor Affinity & \textbf{Yes} & set affinity \\
@@ -188,12 +195,14 @@ XFS Journaling File System & No & \\
     \label{tab:redhawk_features}
 \end{table}
 
+\subsection{Equivalent real-time features from RedHat RT for K3}
 
 %%%%%%%%%%%%%%%%% Image creation %%%%%%%%%%%%%%%%%%%%%%%%
 %
 \section{Creating the Linux operating system image}
 \label{sec:image_creation}
 
+\subsection{Creating the Linux operating system image in K3}
 
 
 %%%%%%%%%%%%%%%%% Hardening %%%%%%%%%%%%%%%%%%%%%%%%
@@ -201,6 +210,7 @@ XFS Journaling File System & No & \\
 \section{Hardening the Linux operating system image}
 \label{sec:image_hardening}
 
+\subsection{Hardening the Linux operating system image in K3}
 
 
 %%%%%%%%%%%%%%%%% Migrating to Red Hat %%%%%%%%%%%%%%%%%%%%%%%%
@@ -208,24 +218,6 @@ XFS Journaling File System & No & \\
 \section{Migrating to Red Hat Real-Time in K3}
 \label{sec:redhat_migration}
 
-
-%Red Hawk:
-%\$281,000 a year covers quarterly maintenance updates
-%\$300 each for perpetual run times per instance
-
-%\footnote{Source for Red Hawk costs: Karl Weis, Global Supply Chain Program Lead, Raytheon}
-%\footnote{Source for Red Hat Real-Time costs: Lynn Bonenfant, IT Program Lead, Raytheon}
-
-%Red Hat:
-%\$400 yearly run time/maintenance fee per instance
-
-%Development
-%NE \$20,796.00 per year for 2 users
-%TX \$20,796.00 per year for 2 users
-
-
-%Red Hat Real-Time yearly per instance
-%\$2,703.54
 
 \begin{table}[H]
 \captionsetup{width=.9\linewidth}
@@ -236,7 +228,7 @@ XFS Journaling File System & No & \\
     >{\raggedleft\arraybackslash}p{1.0in}%
     >{\raggedleft\arraybackslash}p{1.0in}}
 \hline
-    & Red Hawk & Red Hat RT \\
+                                 & Red Hawk & Red Hat RT \\
 \hline
     Product Maintenance (yearly) & 281,000 & 0 \\
     Development License (yearly) &  20,796 & 2,700 \\

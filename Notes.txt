@@ -1,3 +1,41 @@
+Concurrent
+-----
+
+RedHawk Linux user-level commands, utilities and system administration are fully compatible with Red Hat Enterprise Linux, CentOS and Ubuntu. RedHawk achieves its superior real-time performance by integrating the latest official release from kernel.org with key open source patches and kernel enhancements developed by Concurrent. RedHawk user libraries provide access to value-add features that are not part of other Linux offerings. RedHawk is fully compatible with standard Linux user level APIs, thus Linux applications written for other Linux distributions will run on RedHawk without modification.
+
+RedHawk’s Architect is a powerful tool with an easy-to-use GUI that lets a developer choose the Linux and application modules to be included in RedHawk target images. Designed especially for embedded applications, users can select as few or as many packages as desired from many different package groups. Architect allows the file system to be customized and minimized for diskless operation using flash. 
+
+
+
+Real-time Linux
+-----
+
+The PREEMPT_RT patch of the Linux kernel is actually a set of patches developed by a group
+of kernel developers. The project was started by Ingo Molnár and the first release was based on
+kernel version 2.6.11 (March 2005). The goal of this project is to trade the throughput of the system
+with low latencies and predictability, while maintaining the single-kernel approach, to allow the
+developers to easily write (user-space) real-time applications.
+
+https://lwn.net/Articles/572740/
+
+The original realtime patches came about due to a contract that IBM and Red Hat had with the US Navy
+
+Thomas Gleixner
+
+ Red Hat pays him to work half-time on realtime development and it pays the messaging, realtime, and grid (MRG) team to test and productize the realtime patch set. Beyond that, there are a few other contributors, including McKenney for read-copy-update (RCU) development as well as Hart and Gortmaker. Both of the latter two indicated they would try to encourage their employers (Intel and Wind River, respectively) to contribute more to realtime development moving forward. 
+
+
+Documentation/stable_kernel_rules.txt 
+
+https://wiki.linuxfoundation.org/realtime/start
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=70e6e1b971e46f5c1c2d72217ba62401a2edc22b
+
+https://wiki.linuxfoundation.org/realtime/rtl/blog#the_jury_has_spoken/
+
+
+
+
 EFI Boot Principles
 -----
 https://www.rodsbooks.com/efi-bootloaders/principles.html
