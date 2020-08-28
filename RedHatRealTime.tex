@@ -75,7 +75,8 @@
 %
 \section{Scope}
 \subsection{Identification}
-This document is a Raytheon internal document analyzing an opportunity to change the version of Linux operating system used in the Ku Band Radio Frequency System (KRFS) Version 3 (K3).
+This document is a Raytheon internal document analyzing an opportunity to change the version of
+Linux operating system used in the Ku Band Radio Frequency System (KRFS) Version 3 (K3).
 
 \subsection{System overview}
 KRFS is a radar system that supports the counter- rocket, artillery, and mortar (CRAM) mission.
@@ -106,10 +107,14 @@ and the main control software within the SCU runs in its SBC card (Figure \ref{f
 
 In KRFS K2, the SBC Processor is a Extreme Engineering (XES) Xpedite7672 card based on the Xeon-D
 System-on-a-Chip (SOC) running the Linux operating system.
-In KRFS K3, the SBC Processor is a very similar Extreme Engineering (XES) Xpedite7674 card also based on the Xeon-D SOC and running the Linux operating system.
+In KRFS K3, the SBC Processor is a very similar Extreme Engineering (XES) Xpedite7674 card also based on the Xeon-D SOC
+and running the Linux operating system.
 
 \subsection{Linux operating system}
-The Linux operating system is free, open-source software (FOSS) underlying platforms from the smallest devices (Android phones are based on Linux) to supercomputers. Although the source code for the software is freely available, some commercial vendors charge fee to provide the software pre-compiled for a particular device, board, or machine, and charge for support and additional documentation or other tools.
+The Linux operating system is a free, open-source software (FOSS) operating system underlying platforms from the smallest devices
+(Android phones are based on Linux) to supercomputers. Although the source code for the software is freely available,
+some commercial vendors charge fee to provide the software pre-compiled for a particular device, board, or machine,
+and charge for support and additional documentation or other tools.
 
 \subsubsection{Real-time patch for the Linux operating system}
 
@@ -122,7 +127,8 @@ The Linux operating system is free, open-source software (FOSS) underlying platf
 
 
 \subsection{Document purpose}
-To integrate NE software, we need to be able to build Linux from source.  NE currently uses Red Hat Real-Time.  We use Red Hawk from Concurrent RTI.  NE builds from source using tools from Red Hat.  We do not build from source.
+To integrate NE software, we need to be able to build Linux from source.  NE currently uses Red Hat Real-Time.
+ We use Red Hawk from Concurrent RTI.  NE builds from source using tools from Red Hat.  We do not build from source.
 
 Produce a document that helps us decide how to get our Linux image created.
 
@@ -146,12 +152,12 @@ The structure of this document:
 \section{References}
 
 \begin{enumerate}
-    \item RedHawk Linux Users Guide 0898004-780 (Concurrent Computer Corporation, March 2016) \label{ref:red_hawk_guide}
-    \item RedHawk Architect Users Guide 0898601-7.2-1 (Concurrent Computer Corporation, December 2016) \label{ref:architect}
-    \item Red Hat Enterprise Linux for Real Time 7 Reference Guide (Red Hat Corporation, November 6, 2015) \label{ref:architect}
-    \item Red Hat Enterprise Linux for Real Time 7 Installation Guide (Red Hat Corporation, November 6, 2015) \label{ref:architect}
-    \item \textit{Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl Weis, Global Supply Chain Program Lead, Raytheon}
-    \item \textit{Source for Red Hat Real-Time costs in Table \ref{tab:license_costs} was Lynn Bonenfant, IT Program Lead, Raytheon}
+    \item \textit{RedHawk Linux Users Guide 0898004-780} (Concurrent Computer Corporation, March 2016) \label{ref:red_hawk_guide}
+    \item \textit{RedHawk Architect Users Guide 0898601-7.2-1} (Concurrent Computer Corporation, December 2016) \label{ref:architect}
+    \item \textit{Red Hat Enterprise Linux for Real Time 7 Reference Guide} (Red Hat Corporation, November 6, 2015) \label{ref:architect}
+    \item \textit{Red Hat Enterprise Linux for Real Time 7 Installation Guide} (Red Hat Corporation, November 6, 2015) \label{ref:architect}
+    \item Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl Weis, Global Supply Chain Program Lead, Raytheon \label{ref:karl}
+    \item Source for Red Hat Real-Time costs in Table \ref{tab:license_costs} was Lynn Bonenfant, IT Program Lead, Raytheon \label{ref:lynn}
 \end{enumerate}
 
 
@@ -219,6 +225,16 @@ XFS Journaling File System & No & \\
 \label{sec:redhat_migration}
 
 
+\subsection{Build artifact changes}
+
+
+\subsection{Source code changes}
+
+
+\subsection{License costs}
+
+Table \ref{tab:license_costs} summarizes license costs.\footnote{Source for license costs are from Reference \ref{ref:karl} and \ref{ref:lynn}.}
+
 \begin{table}[H]
 \captionsetup{width=.9\linewidth}
 \caption{License costs}
@@ -232,6 +248,7 @@ XFS Journaling File System & No & \\
 \hline
     Product Maintenance (yearly) & 281,000 & 0 \\
     Development License (yearly) &  20,796 & 2,700 \\
+\hline
     Run-time License (perpetual, per-instance) & 300 & 0 \\
     Run-time License (yearly, per-instance) & 400 & 2,700 \\
 \hline
