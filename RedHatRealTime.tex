@@ -180,7 +180,7 @@ The structure of this document:
 User-level Preemption Control & No & User control of preemption of userspace synchronization mechanisms like POSIX semaphores using a system function call \emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from userspace. \\
 Fast Block/Wake Services & No & A preemptible semaphore in the kernel available from RT Patch since 2007. \\
 RCIM Driver & No & Concurrent sells a PCI card called the Real-time Clock Interface Module (RCIM).  The card provides can provide a 400ns clock signal to the operating system through an interrupt handler to enable a high-resolution timer feature. \\
-Frequency-Based Scheduler & No & Source code provided by Concurrent is actually copied without attribution from the original SUSE Linux Real-Time Extensions released in 2006. \\
+Frequency-Based Scheduler (FBS) & No & Source code for the FBS provided by Concurrent is actually copied without attribution from the original SUSE Linux Real-Time Extensions released in 2006. \\
 /proc Modifications & No & This feature is part of the \emph{usermap} feature (see below) that can be used by Nightstar or even regular users.\\
 Kernel Trace Facility & No & This feature is combined with the standard kernel debuggers to support enhanced kernel debugging features using Nightstar \\
 ptrace Extensions & No & This feature is combined with the \emph{usermap} feature (below) to support Nightstar debugging) \\
@@ -199,15 +199,15 @@ ptrace Extensions & No & This feature is combined with the \emph{usermap} featur
     \hline
         \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
     \hline
-Kernel Preemption & (Yes,built-in) &  \\[4.5mm]
-Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default Completely Fair Scheduler (CFS) have been part of the RT Patch since 2007. \\[4.5mm]
+Kernel Preemption & (Yes,built-in) & The RT Patch is listed as a Concurrent RedHawk feature though it obviously is sourced from the RT Patch (and now the Linux mainline, see Appendix A). \\[4.5mm]
+Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default Completely Fair Scheduler (CFS) like SCHED\_FIFO (deadline-based) and SCHED\_RR (round-robin) have been part of the RT Patch since 2007. \\[4.5mm]
 Low Latency Enhancements & (Yes,built-in) & Some kernel tuning derived from Red Hat's TUNA and SUSE Linux tools have been added as default. \\[4.5mm]
 Priority Inheritance & (Yes,built-in) & This has been part of SUSE Linux and the RT Patch since 2007.  \\[4.5mm]
 High Resolution Process Accounting & No & This feature follows from the use of the RCIM card and driver (above).\\[4.5mm]
 Capabilities Support & No & Permission files (\emph{capabilities} files) for features like the \emph{usermap} and \emph{/proc mmap} features (below). \\[4.5mm]
 Kernel Debuggers & (Yes,built-in) & The built-in kernel debuggers \emph{kdb} and \emph{kgdb} can be configured to work with Nightstar. \\[4.5mm]
 Kernel Core Dumps/Crash and Live Analysis & (Yes,built-in) &  This feature supports Nightstar, allowing it to directly map and introspect kernel memory. \\[4.5mm]
-User-level Spin Locks & No & \\[4.5mm]
+User-level Spin Locks & No &  User control of preemption of spinlocks in the kernel provided by a special system function call \emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from userspace. \\[4.5mm]
 usermap and /proc mmap & No & This feature supports Nightstar, allowing it to directly map and introspect any user process.  \\[4.5mm]
 Hyper-threading & (Yes,built-in) & This is a setting in the CPU hardware that is controlled in the BIOS or bootloader that allows in-core multi-processor.  Support in mainline Linux for hyper-threading and symmetric multi-processing (SMP) has been since 2004.  \\[4.5mm]
 XFS Journaling File System & (Yes,built-in) & %
@@ -253,7 +253,7 @@ The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been a
 
 \subsection{License costs}
 
-Table \ref{tab:license_costs} summarizes license costs.\footnote{Source for license costs are from Reference \ref{ref:karl} and \ref{ref:lynn}.}
+Table \ref{tab:license_costs} summarizes license costs.\footnote{Source for license costs are from References \ref{ref:karl} and \ref{ref:lynn}.}
 
 \begin{table}[H]
 \captionsetup{width=.9\linewidth}
@@ -341,6 +341,7 @@ Pull CONFIG_PREEMPT_RT stub config from Thomas Gleixner:
   to detect hard to trigger issues, you could at least view it as a QA
   tool if nothing else"
 \end{verbatim}
+
 
 \end{document}
 

@@ -11,7 +11,7 @@
 <node CREATED="1598626838659" ID="ID_787474491" MODIFIED="1598626842326" TEXT="priority scheduling"/>
 </node>
 </node>
-<node CREATED="1598625333885" FOLDED="true" ID="ID_212633623" MODIFIED="1598702668932" TEXT="PREEMPT_RT patch">
+<node CREATED="1598625333885" FOLDED="true" ID="ID_212633623" MODIFIED="1598706704423" TEXT="PREEMPT_RT patch">
 <node CREATED="1598627180272" ID="ID_1267578113" MODIFIED="1598627199759" TEXT="Thomas Gleixner at Red Hat"/>
 <node CREATED="1598696506834" ID="ID_1972556637" MODIFIED="1598696523783" TEXT="July 20, 2019">
 <node CREATED="1598696501001" ID="ID_950904222" MODIFIED="1598696502610" TEXT="&#x9;Linus Torvalds &lt;torvalds@linux-foundation.org&gt;&#x9;2019-07-20 10:33:44 -0700"/>
@@ -30,6 +30,7 @@
 <node CREATED="1598628075133" ID="ID_1195480865" MODIFIED="1598628080657" TEXT="&#xa;&#x2022; High precision timers and process accounting: The POSIX kernel timer service has a resolution of about 40 milliseconds and it was replaced by a high precision timer that has a&#xa;resolution in nanosecond interval."/>
 <node CREATED="1598628080657" ID="ID_1453781164" MODIFIED="1598628080657" TEXT="&#xa;&#x2022; Low latency connections: The product uses Infiniband [21] as a low latency node connection&#xa;which improves network connectivity and throughput."/>
 </node>
+<node CREATED="1598706651809" ID="ID_118894727" MODIFIED="1598706652814" TEXT="https://chrisdonnan.com/wombat-pushing-the-envelope-and-suse-linux-enterprise-real-time-568a8422ae64"/>
 </node>
 <node CREATED="1598625346615" ID="ID_1148126672" MODIFIED="1598703231488" TEXT="Red Hat Real-Time">
 <node CREATED="1598627209238" ID="ID_483754072" MODIFIED="1598627256556" TEXT="Started as RedHat MRG (clusters)">
@@ -43,6 +44,7 @@
 <node CREATED="1598627316530" ID="ID_1832562003" MODIFIED="1598704337423" TEXT="Nightstar tools"/>
 <node CREATED="1598704338883" ID="ID_1023501935" MODIFIED="1598704347768" TEXT="Announced RedHawk">
 <node CREATED="1598704349140" ID="ID_76327120" MODIFIED="1598704358644" TEXT="Some criticism from Linux community"/>
+<node CREATED="1598706634499" ID="ID_1701051372" MODIFIED="1598706677637" TEXT="Comments below this post: https://chrisdonnan.com/wombat-pushing-the-envelope-and-suse-linux-enterprise-real-time-568a8422ae64"/>
 </node>
 <node CREATED="1598627296472" ID="ID_1356697550" MODIFIED="1598627315269" TEXT="Stopped original development, using PREEMPT_RT patch source code now"/>
 </node>
