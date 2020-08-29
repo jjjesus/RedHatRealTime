@@ -177,7 +177,7 @@ The structure of this document:
     \hline
         \rowcolor{light-gray} Processor Shielding & \textbf{Yes} & cpuset \\
         \rowcolor{light-gray} Processor Affinity & \textbf{Yes} & set affinity \\[4.5mm]
-User-level Preemption Control & No & A non-preemptible spinlock in the kernel available to be called from user space as a function call \emph{resched\_cntl} \\
+User-level Preemption Control & No & User control of preemption of userspace synchronization mechanisms like POSIX semaphores using a system function call \emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from userspace. \\
 Fast Block/Wake Services & No & A preemptible semaphore in the kernel available from RT Patch since 2007. \\
 RCIM Driver & No & Concurrent sells a PCI card called the Real-time Clock Interface Module (RCIM).  The card provides can provide a 400ns clock signal to the operating system through an interrupt handler to enable a high-resolution timer feature. \\
 Frequency-Based Scheduler & No & Source code provided by Concurrent is actually copied without attribution from the original SUSE Linux Real-Time Extensions released in 2006. \\
