@@ -19,6 +19,7 @@ RedHawk’s Architect is a powerful tool with an easy-to-use GUI that lets a devel
 
 Real-time Linux
 -----
+https://lwn.net/Articles/146861/
 
 The PREEMPT_RT patch of the Linux kernel is actually a set of patches developed by a group
 of kernel developers. The project was started by Ingo Molnár and the first release was based on
@@ -65,6 +66,8 @@ The company seems to be very quiet on these obligations, to judge from their web
 SUSE Linux
 
 https://chrisdonnan.com/wombat-pushing-the-envelope-and-suse-linux-enterprise-real-time-568a8422ae64
+
+https://www.suse.com/releasenotes/?_ga=2.9292725.1220308137.1598702453-1851676818.1596657225
 
 
 

@@ -69,10 +69,10 @@
 \end{titlepage}
 
 \tableofcontents
-\newpage
 
 %%%%%%%%%%%%%%%%% Scope %%%%%%%%%%%%%%%%%%%%%%%%
 %
+\newpage
 \section{Scope}
 \subsection{Identification}
 This document is a Raytheon internal document analyzing an opportunity to change the version of
@@ -110,7 +110,7 @@ System-on-a-Chip (SOC) running the Linux operating system.
 In KRFS K3, the SBC Processor is a very similar Extreme Engineering (XES) Xpedite7674 card also based on the Xeon-D SOC
 and running the Linux operating system.
 
-\subsection{Linux operating system}
+\subsection{Overview of Linux operating system and real-time features}
 The Linux operating system is a free, open-source software (FOSS) operating system underlying platforms from the smallest devices
 (Android phones are based on Linux) to supercomputers. Although the source code for the software is freely available,
 some commercial vendors charge fees to provide the software pre-compiled for a particular device, board, or machine,
@@ -118,6 +118,7 @@ and charge for support and additional documentation or other tools.
 
 \subsubsection{Real-time patch (RT Patch) for the Linux operating system}
 
+\subsubsection{SUSE Linux Enterprise Real Time}
 
 
 \subsubsection{RedHawk Linux}
@@ -125,6 +126,8 @@ and charge for support and additional documentation or other tools.
 
 \subsubsection{RedHat Linux for Real-Time (Red Hat RT)}
 
+
+\subsubsection{Merge of RT Patch to Linux mainline in July 2019}
 
 \subsection{Document purpose}
 To integrate NE software, we need to be able to build Linux from source.  NE currently uses Red Hat Real-Time.
@@ -149,6 +152,7 @@ The structure of this document:
 
 %%%%%%%%%%%%%%%%% References %%%%%%%%%%%%%%%%%%%%%%%%
 %
+\newpage
 \section{References}
 
 \begin{enumerate}
@@ -159,11 +163,13 @@ The structure of this document:
     \item \textit{Red Hat Enterprise Linux for Real Time 7 Installation Guide} (Red Hat Corporation, November 6, 2015) \label{ref:rhel7_install}
     \item Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl Weis, Global Supply Chain Program Lead, Raytheon \label{ref:karl}
     \item Source for Red Hat Real-Time costs in Table \ref{tab:license_costs} was Lynn Bonenfant, IT Program Lead, Raytheon \label{ref:lynn}
+    \item \textit{Pull CONFIG\_PREEMPT\_RT stub config from Thomas Gleixner} commit message from the web view of the Linux git repository at \url{https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=70e6e1b971e46f5c1c2d72217ba62401a2edc22b} \label{ref:commit}
 \end{enumerate}
 
 
 %%%%%%%%%%%%%%%%% RedHawk Features %%%%%%%%%%%%%%%%%%%%%%%%
 %
+\newpage
 \section{Real-time features from RedHawk in KRFS}
 \label{sec:redhawk_features}
 
@@ -175,11 +181,11 @@ The structure of this document:
     \hline
         \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
     \hline
-        \rowcolor{light-gray} Processor Shielding & \textbf{Yes} & cpuset \\
-        \rowcolor{light-gray} Processor Affinity & \textbf{Yes} & set affinity \\[4.5mm]
+        \rowcolor{light-gray} Processor Shielding & \textbf{Yes} & The term and mechanisms for \emph{shielded CPU} comes from the SUSE Linux Enterprise Real Time release of April 2008 for constaining the running of operating system threads on certain CPUs in a multicore/multiprocessor system. KRFS uses this feature to protect or \emph{shield} certain CPUs from running Linux kernel lower-priority operations and lower-priority interrupts so that those CPUs thus shielded can be dedicated to real-time application (radar processing) code.  The standard Linux kernel equivalent is named \emph{cpuset} and works in a similar way.\\
+        \rowcolor{light-gray} Processor Affinity & \textbf{Yes} & This feature enables workload to be spread among multiple CPUs to exploit concurrent processing.  This assignment of application processes to \emph{cpusets} is specified and completely controlled in userspace (that is, the application programmer decides this partitioning).  In KRFS, signal processing application threads can be distributed among shielded CPUs so dedicated and network communications can be partitioned onto other cores/CPUs. \\[4.5mm]
 User-level Preemption Control & No & User control of preemption of userspace synchronization mechanisms like POSIX semaphores using a system function call \emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from userspace. \\
 Fast Block/Wake Services & No & A preemptible semaphore in the kernel available from RT Patch since 2007. \\
-RCIM Driver & No & Concurrent sells a PCI card called the Real-time Clock Interface Module (RCIM).  The card provides can provide a 400ns clock signal to the operating system through an interrupt handler to enable a high-resolution timer feature. \\
+RCIM Driver & No & Concurrent sells a PCI card called the Real-time Clock Interface Module (RCIM).  The card can provide a 400ns clock signal to the operating system through an interrupt handler to enable a high-resolution timer feature. \\
 Frequency-Based Scheduler (FBS) & No & Source code for the FBS provided by Concurrent is actually copied without attribution from the original SUSE Linux Real-Time Extensions released in 2006. \\
 /proc Modifications & No & This feature is part of the \emph{usermap} feature (see below) that can be used by Nightstar or even regular users.\\
 Kernel Trace Facility & No & This feature is combined with the standard kernel debuggers to support enhanced kernel debugging features using Nightstar \\
@@ -200,7 +206,7 @@ ptrace Extensions & No & This feature is combined with the \emph{usermap} featur
         \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
     \hline
 Kernel Preemption & (Yes,built-in) & The RT Patch is listed as a Concurrent RedHawk feature though it obviously is sourced from the RT Patch (and now the Linux mainline, see Appendix A). \\[4.5mm]
-Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default Completely Fair Scheduler (CFS) like SCHED\_FIFO (deadline-based) and SCHED\_RR (round-robin) have been part of the RT Patch since 2007. \\[4.5mm]
+Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default Completely Fair Scheduler (CFS) like priority-based SCHED\_FIFO and SCHED\_RR (round-robin) have been part of the RT Patch since 2007.  SCHED\_DEADLINE is available in Linux 3.6 (Red Hat 7.6) and later. \\[4.5mm]
 Low Latency Enhancements & (Yes,built-in) & Some kernel tuning derived from Red Hat's TUNA and SUSE Linux tools have been added as default. \\[4.5mm]
 Priority Inheritance & (Yes,built-in) & This has been part of SUSE Linux and the RT Patch since 2007.  \\[4.5mm]
 High Resolution Process Accounting & No & This feature follows from the use of the RCIM card and driver (above).\\[4.5mm]
@@ -209,11 +215,9 @@ Kernel Debuggers & (Yes,built-in) & The built-in kernel debuggers \emph{kdb} and
 Kernel Core Dumps/Crash and Live Analysis & (Yes,built-in) &  This feature supports Nightstar, allowing it to directly map and introspect kernel memory. \\[4.5mm]
 User-level Spin Locks & No &  User control of preemption of spinlocks in the kernel provided by a special system function call \emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from userspace. \\[4.5mm]
 usermap and /proc mmap & No & This feature supports Nightstar, allowing it to directly map and introspect any user process.  \\[4.5mm]
-Hyper-threading & (Yes,built-in) & This is a setting in the CPU hardware that is controlled in the BIOS or bootloader that allows in-core multi-processor.  Support in mainline Linux for hyper-threading and symmetric multi-processing (SMP) has been since 2004.  \\[4.5mm]
+Hyper-threading & (Yes,built-in) & This is a setting in the CPU hardware that is controlled in the BIOS or bootloader that allows in-core multi-processing.  Support in mainline Linux for hyper-threading and symmetric multi-processing (SMP) has been since 2004.  \\[4.5mm]
 XFS Journaling File System & (Yes,built-in) & %
-%Like some of the other features above, not sure why Concurrent lists this feature as part if it were uniquely available in their own product offering.%
 The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been available for the Linux kernel since 2001.%
-% In 2014, XFS became the default filesystem for RedHat Enterprise Linux 7.
 \\
     \hline
     \end{tabular}%
@@ -225,6 +229,7 @@ The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been a
 
 %%%%%%%%%%%%%%%%% Image creation %%%%%%%%%%%%%%%%%%%%%%%%
 %
+\newpage
 \section{Creating the Linux operating system image}
 \label{sec:image_creation}
 
@@ -233,6 +238,7 @@ The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been a
 
 %%%%%%%%%%%%%%%%% Hardening %%%%%%%%%%%%%%%%%%%%%%%%
 %
+\newpage
 \section{Hardening the Linux operating system image}
 \label{sec:image_hardening}
 
@@ -241,6 +247,7 @@ The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been a
 
 %%%%%%%%%%%%%%%%% Migrating to Red Hat %%%%%%%%%%%%%%%%%%%%%%%%
 %
+\newpage
 \section{Migrating to Red Hat Real-Time in K3}
 \label{sec:redhat_migration}
 
@@ -253,7 +260,7 @@ The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been a
 
 \subsection{License costs}
 
-Table \ref{tab:license_costs} summarizes license costs.\footnote{Source for license costs are from References \ref{ref:karl} and \ref{ref:lynn}.}
+Table \ref{tab:license_costs} summarizes license costs (see References \ref{ref:karl} and \ref{ref:lynn}).
 
 \begin{table}[H]
 \captionsetup{width=.9\linewidth}
@@ -278,14 +285,13 @@ Table \ref{tab:license_costs} summarizes license costs.\footnote{Source for lice
 \end{table}
 
 
-%%%%%%%%%%%%%%%%% Appendix A merge to mainline %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% Appendix A: Merge to mainline %%%%%%%%%%%%%%%%%%%%%%%%
 %
 \newpage
 \section{Appendix A: July 2019 Merge of RT to Linux mainline}
 
 The git commit message from Linus Torvalds merging the real-time patch
-into the Linux mainline on July 20, 2019 is below.%
-\footnote{From the web view of the Linux git repository at \url{https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=70e6e1b971e46f5c1c2d72217ba62401a2edc22b}}
+into the Linux mainline on July 20, 2019 is below (Reference \ref{ref:commit}).
 
 \begin{verbatim}
 Pull CONFIG_PREEMPT_RT stub config from Thomas Gleixner:

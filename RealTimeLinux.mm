@@ -3,12 +3,30 @@
 <node CREATED="1598625321651" ID="ID_1817868886" MODIFIED="1598625333380" TEXT="Real Time Linux">
 <node CREATED="1598625385856" ID="ID_971409813" MODIFIED="1598625388014" POSITION="right" TEXT="Overview">
 <node CREATED="1598626522223" ID="ID_1643481303" MODIFIED="1598626529994" TEXT="Original Linux">
+<node CREATED="1598710185503" ID="ID_1933348994" MODIFIED="1598710188439" TEXT="The Linux operating system is a free, open-source software (FOSS) operating system underlying platforms from the smallest devices (Android phones are based on Linux) to supercomputers. Although the source code for the software is freely available, some commercial vendors charge fees to provide the software pre-compiled for a particular device, board, or machine, and charge for support and additional documentation or other tools."/>
 <node CREATED="1598626531886" ID="ID_972101361" MODIFIED="1598626593496" TEXT="Multi-user system similar to Unix that ran on PC hardware">
 <node CREATED="1598626807755" ID="ID_1688634625" MODIFIED="1598626815737" TEXT="single user"/>
-</node>
-<node CREATED="1598626601622" ID="ID_1713846202" MODIFIED="1598626611452" TEXT="Fair scheduling">
+<node CREATED="1598626601622" ID="ID_1713846202" MODIFIED="1598710220604" TEXT="Fair scheduling">
 <node CREATED="1598626799759" ID="ID_1634954358" MODIFIED="1598626805471" TEXT="deadline scheduling"/>
 <node CREATED="1598626838659" ID="ID_787474491" MODIFIED="1598626842326" TEXT="priority scheduling"/>
+</node>
+</node>
+</node>
+<node CREATED="1598708128930" ID="ID_1628359568" MODIFIED="1598708132913" TEXT="Version numbering">
+<node CREATED="1598708161970" ID="ID_701404592" MODIFIED="1598708164163" TEXT="Linux">
+<node CREATED="1598708398786" ID="ID_1163959303" MODIFIED="1598708400256" TEXT="https://en.wikipedia.org/wiki/Linux_kernel_version_history"/>
+</node>
+<node CREATED="1598708133733" ID="ID_1752847708" MODIFIED="1598708139073" TEXT="Fedora">
+<node CREATED="1598708410080" ID="ID_363586787" MODIFIED="1598708411109" TEXT="https://en.wikipedia.org/wiki/Fedora_(operating_system)"/>
+</node>
+<node CREATED="1598708142755" ID="ID_1844009550" MODIFIED="1598708432087" TEXT="RedHat">
+<node CREATED="1598708427173" ID="ID_1966076549" MODIFIED="1598708428499" TEXT="https://en.wikipedia.org/wiki/Red_Hat_Enterprise_Linux"/>
+</node>
+<node CREATED="1598708140322" ID="ID_712364071" MODIFIED="1598708142007" TEXT="CentOS">
+<node CREATED="1598708465683" ID="ID_814445200" MODIFIED="1598708467299" TEXT="https://en.wikipedia.org/wiki/CentOS"/>
+</node>
+<node CREATED="1598708145639" ID="ID_785243002" MODIFIED="1598708147124" TEXT="SUSE">
+<node CREATED="1598708575071" ID="ID_1077895808" MODIFIED="1598708663696" TEXT="https://en.wikipedia.org/wiki/SUSE_Linux_Enterprise_Server"/>
 </node>
 </node>
 <node CREATED="1598625333885" FOLDED="true" ID="ID_212633623" MODIFIED="1598706704423" TEXT="PREEMPT_RT patch">
