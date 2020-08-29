@@ -116,7 +116,7 @@ The Linux operating system is a free, open-source software (FOSS) operating syst
 some commercial vendors charge fee to provide the software pre-compiled for a particular device, board, or machine,
 and charge for support and additional documentation or other tools.
 
-\subsubsection{Real-time patch for the Linux operating system}
+\subsubsection{Real-time patch (RT Patch) for the Linux operating system}
 
 
 
@@ -154,8 +154,9 @@ The structure of this document:
 \begin{enumerate}
     \item \textit{RedHawk Linux Users Guide 0898004-780} (Concurrent Computer Corporation, March 2016) \label{ref:red_hawk_guide}
     \item \textit{RedHawk Architect Users Guide 0898601-7.2-1} (Concurrent Computer Corporation, December 2016) \label{ref:architect}
-    \item \textit{Red Hat Enterprise Linux for Real Time 7 Reference Guide} (Red Hat Corporation, November 6, 2015) \label{ref:architect}
-    \item \textit{Red Hat Enterprise Linux for Real Time 7 Installation Guide} (Red Hat Corporation, November 6, 2015) \label{ref:architect}
+    \item \textit{NightStar RT Tutorial Version 4.4 0898009-090} (Concurrent Computer Corporation, May 2014) \label{ref:nightstar}
+    \item \textit{Red Hat Enterprise Linux for Real Time 7 Reference Guide} (Red Hat Corporation, November 6, 2015) \label{ref:rhel7_ref}
+    \item \textit{Red Hat Enterprise Linux for Real Time 7 Installation Guide} (Red Hat Corporation, November 6, 2015) \label{ref:rhel7_install}
     \item Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl Weis, Global Supply Chain Program Lead, Raytheon \label{ref:karl}
     \item Source for Red Hat Real-Time costs in Table \ref{tab:license_costs} was Lynn Bonenfant, IT Program Lead, Raytheon \label{ref:lynn}
 \end{enumerate}
@@ -168,37 +169,56 @@ The structure of this document:
 
 \begin{table}[H]
     \captionsetup{width=.9\linewidth}
-    \caption{RedHawk real-time feature list}
+    \caption{RedHawk real-time feature list (Part 1)}
     \resizebox{\textwidth}{!}{%
-    \begin{tabular}{p{3.2in}p{1.2in}p{2.6in}}
+    \begin{tabular}{p{2.8in}p{1.2in}p{3.6in}}
     \hline
         \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
     \hline
         \rowcolor{light-gray} Processor Shielding & \textbf{Yes} & cpuset \\
-        \rowcolor{light-gray} Processor Affinity & \textbf{Yes} & set affinity \\
-User-level Preemption Control & No & non-preempt spinlock, resched\_cntl \\
-Fast Block/Wake Services & No & pw\_wait \\
-RCIM Driver & No & 400ns clock source \\
-Frequency-Based Scheduler & No & \\
-/proc Modifications & No & (same as usermap) \\
-Kernel Trace Facility & No & (Nighthawk) \\
-ptrace Extensions & No & (Nighthawk usermap) \\
-Kernel Preemption & (Yes,built-in) &  \\
-Real-Time Scheduler & (Yes,built-in) & fixed-length context switch, non-CFS (Completely Fair Scheduler) \\
-Low Latency Enhancements & (Yes,built-in) & tunable kernel spinlock \\
-Priority Inheritance & (Yes,built-in) & \\
-High Resolution Process Accounting & No & \\
-Capabilities Support & (Yes,built-in) & \\
-Kernel Debuggers & (Yes,built-in) & \\
-Kernel Core Dumps/Crash and Live Analysis & (Yes,built-in) & \\
-User-level Spin Locks & No & \\
-usermap and /proc mmap & No & \\
-Hyper-threading & (Yes,built-in) & tunable \\
-XFS Journaling File System & No & \\
+        \rowcolor{light-gray} Processor Affinity & \textbf{Yes} & set affinity \\[4.5mm]
+User-level Preemption Control & No & A non-preemptible spinlock in the kernel available to be called from user space as a function call \emph{resched\_cntl} \\
+Fast Block/Wake Services & No & A preemptible semaphore in the kernel available from RT Patch since 2007. \\
+RCIM Driver & No & Concurrent sells a PCI card called the Real-time Clock Interface Module (RCIM).  The card provides can provide a 400ns clock signal to the operating system through an interrupt handler to enable a high-resolution timer feature. \\
+Frequency-Based Scheduler & No & Source code provided by Concurrent is actually copied without attribution from the original SUSE Linux Real-Time Extensions released in 2006. \\
+/proc Modifications & No & This feature is part of the \emph{usermap} feature (see below) that can be used by Nightstar or even regular users.\\
+Kernel Trace Facility & No & This feature is combined with the standard kernel debuggers to support enhanced kernel debugging features using Nightstar \\
+ptrace Extensions & No & This feature is combined with the \emph{usermap} feature (below) to support Nightstar debugging) \\
     \hline
     \end{tabular}%
     }
-    \label{tab:redhawk_features}
+    \label{tab:redhawk_features_1}
+\end{table}
+
+
+\begin{table}[H]
+    \captionsetup{width=.9\linewidth}
+    \caption{RedHawk real-time feature list (Part 2)}
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{p{2.8in}p{1.2in}p{3.6in}}
+    \hline
+        \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
+    \hline
+Kernel Preemption & (Yes,built-in) &  \\[4.5mm]
+Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default Completely Fair Scheduler (CFS) have been part of the RT Patch since 2007. \\[4.5mm]
+Low Latency Enhancements & (Yes,built-in) & Some kernel tuning derived from Red Hat's TUNA and SUSE Linux tools have been added as default. \\[4.5mm]
+Priority Inheritance & (Yes,built-in) & This has been part of SUSE Linux and the RT Patch since 2007.  \\[4.5mm]
+High Resolution Process Accounting & No & This feature follows from the use of the RCIM card and driver (above).\\[4.5mm]
+Capabilities Support & No & Permission files (\emph{capabilities} files) for features like the \emph{usermap} and \emph{/proc mmap} features (below). \\[4.5mm]
+Kernel Debuggers & (Yes,built-in) & The built-in kernel debuggers \emph{kdb} and \emph{kgdb} can be configured to work with Nightstar. \\[4.5mm]
+Kernel Core Dumps/Crash and Live Analysis & (Yes,built-in) &  This feature supports Nightstar, allowing it to directly map and introspect kernel memory. \\[4.5mm]
+User-level Spin Locks & No & \\[4.5mm]
+usermap and /proc mmap & No & This feature supports Nightstar, allowing it to directly map and introspect any user process.  \\[4.5mm]
+Hyper-threading & (Yes,built-in) & This is a setting in the CPU hardware that is controlled in the BIOS or bootloader that allows in-core multi-processor.  Support in mainline Linux for hyper-threading and symmetric multi-processing (SMP) has been since 2004.  \\[4.5mm]
+XFS Journaling File System & (Yes,built-in) & %
+%Like some of the other features above, not sure why Concurrent lists this feature as part if it were uniquely available in their own product offering.%
+The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been available for the Linux kernel since 2001.%
+% In 2014, XFS became the default filesystem for RedHat Enterprise Linux 7.
+\\
+    \hline
+    \end{tabular}%
+    }
+    \label{tab:redhawk_features_2}
 \end{table}
 
 \subsection{Equivalent real-time features from RedHat RT for K3}
@@ -256,6 +276,71 @@ Table \ref{tab:license_costs} summarizes license costs.\footnote{Source for lice
 }
 \label{tab:license_costs}
 \end{table}
+
+
+%%%%%%%%%%%%%%%%% Appendix A merge to mainline %%%%%%%%%%%%%%%%%%%%%%%%
+%
+\newpage
+\section{Appendix A: July 2019 Merge of RT to Linux mainline}
+
+The git commit message from Linus Torvalds merging the real-time patch
+into the Linux mainline on July 20, 2019 is below.%
+\footnote{From the web view of the Linux git repository at \url{https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=70e6e1b971e46f5c1c2d72217ba62401a2edc22b}}
+
+\begin{verbatim}
+Pull CONFIG_PREEMPT_RT stub config from Thomas Gleixner:
+ "The real-time preemption patch set exists for almost 15 years now and
+  while the vast majority of infrastructure and enhancements have found
+  their way into the mainline kernel, the final integration of RT is
+  still missing.
+
+  Over the course of the last few years, we have worked on reducing the
+  intrusivenness of the RT patches by refactoring kernel infrastructure
+  to be more real-time friendly. Almost all of these changes were
+  benefitial to the mainline kernel on their own, so there was no
+  objection to integrate them.
+
+  Though except for the still ongoing printk refactoring, the remaining
+  changes which are required to make RT a first class mainline citizen
+  are not longer arguable as immediately beneficial for the mainline
+  kernel. Most of them are either reordering code flows or adding RT
+  specific functionality.
+
+  But this now has hit a wall and turned into a classic hen and egg
+  problem:
+
+     Maintainers are rightfully wary vs. these changes as they make only
+     sense if the final integration of RT into the mainline kernel takes
+     place.
+
+  Adding CONFIG_PREEMPT_RT aims to solve this as a clear sign that RT
+  will be fully integrated into the mainline kernel. The final
+  integration of the missing bits and pieces will be of course done with
+  the same careful approach as we have used in the past.
+
+  While I'm aware that you are not entirely enthusiastic about that, I
+  think that RT should receive the same treatment as any other widely
+  used out of tree functionality, which we have accepted into mainline
+  over the years.
+
+  RT has become the de-facto standard real-time enhancement and is
+  shipped by enterprise, embedded and community distros. It's in use
+  throughout a wide range of industries: telecommunications, industrial
+  automation, professional audio, medical devices, data acquisition,
+  automotive - just to name a few major use cases.
+
+  RT development is backed by a Linuxfoundation project which is
+  supported by major stakeholders of this technology. The funding will
+  continue over the actual inclusion into mainline to make sure that the
+  functionality is neither introducing regressions, regressing itself,
+  nor becomes subject to bitrot. There is also a lifely user community
+  around RT as well, so contrary to the grim situation 5 years ago, it's
+  a healthy project.
+
+  As RT is still a good vehicle to exercise rarely used code paths and
+  to detect hard to trigger issues, you could at least view it as a QA
+  tool if nothing else"
+\end{verbatim}
 
 \end{document}
 

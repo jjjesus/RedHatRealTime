@@ -46,6 +46,26 @@ https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=70
 https://wiki.linuxfoundation.org/realtime/rtl/blog#the_jury_has_spoken/
 
 
+Concurrent Linux
+-----
+https://lwn.net/Articles/82387/
+
+Concurrent releases RedHawk Linux 2.1
+[Posted April 28, 2004 by corbet]
+Concurrent has announced the availability of Red Hawk Real-Time Linux 2.1. "Concurrent's refinements include kernel-level priority inheritance support, a Frequency Based Scheduler (FBS), process and IRQ shielding extensions, user-level real-time Hyper-Treading control for Intel Xeon platforms, user-level spin locks, significant real-time performance tuning and many additional improvements." We have sent them a query as to when they will release source for their kernel enhancements - which certainly fall under the GPL - but have not yet received a response.
+
+They don't *have* to release source code to the world, just to those they give binaries to. They can't restrict further redistribution, see the GPL.
+
+Of course, it is nice gesture to make the source freely available to the world.
+
+They do not have to release source to the world, but, they certainly do have the obligation to make source available to those to whom they're distributing these customized Linux kernels.
+
+The company seems to be very quiet on these obligations, to judge from their web site. I think it's entirely appropriate that they get some scrutiny from the folks whose code they've customized.
+
+SUSE Linux
+
+https://chrisdonnan.com/wombat-pushing-the-envelope-and-suse-linux-enterprise-real-time-568a8422ae64
+
 
 
 EFI Boot Principles
