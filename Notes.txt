@@ -5,6 +5,10 @@ https://www.businesswire.com/news/home/20040420005095/en/Raytheon-Australia-Sele
 
 https://www-03.ibm.com/press/us/en/pressrelease/21033.wss
 
+Version information
+
+https://www.osadl.org/Realtime-Linux.projects-realtime-linux.0.html
+
 
 
 
@@ -37,6 +41,10 @@ Thomas Gleixner
 
 
 Documentation/stable_kernel_rules.txt 
+
+Linux 5.3 and 5.4 had the PREEMPT_RT merge
+
+https://news.ycombinator.com/item?id=22284232
 
 
 

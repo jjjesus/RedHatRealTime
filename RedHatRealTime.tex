@@ -111,17 +111,30 @@ In KRFS K3, the SBC Processor is a very similar Extreme Engineering (XES) Xpedit
 and running the Linux operating system.
 
 \subsection{Overview of Linux operating system and real-time features}
-The Linux operating system is a free, open-source software (FOSS) operating system underlying platforms from the smallest devices
+The Linux operating system is a free, open-source software (FOSS) operating system originally authored by Linus Torvalds in September 1991 as a Unix system for his personal computer.  Linux eventually became the operating system underlying platforms from the smallest devices
 (Android phones are based on Linux) to supercomputers. Although the source code for the software is freely available,
 some commercial vendors charge fees to provide the software pre-compiled for a particular device, board, or machine,
 and charge for support and additional documentation or other tools.
+Linux initially resembled the Unix systems of its time; it supported multiple users and multiple simultaneously running programs, and, used a \emph{completely fair scheduler} (CFS) to insure equality among the running processes.
 
 \subsubsection{Real-time patch (RT Patch) for the Linux operating system}
+In 2005, a patch was released for the Linux source code to support real-time processing.
+In a real-time system like a radar, some processing has deadlines, for example, transmitting pulses or processing signal returns, where instead of emphasizing fair scheduling among all processes, a real-time operaing system (RTOS) must assign priorities to tasks and interrupt (preempt) not only the currently running task but even its own internal mechanisms (spinlocks, semaphores, and interrupt handling) to meet the real-time deadlines.
+The original patch was originally named \emph{PREMPT\_RT} or \emph{CONFIG\_PREEMPT\_RT} and authored by some of the most important Linux kernel developers ever, Ingo Molnar and Thomas Gleixner of Red Hat and Paul McKenny of IBM.
+The source code for the RT Patch has been actively maintained separately from the mainline Linux source code over the last 15 years by teams led by these same developers and has been downloaded and incorporated in thousands of systems and other Linux software distributions.
 
-\subsubsection{SUSE Linux Enterprise Real Time}
+\subsubsection{SuSE Linux Enterprise Real Time}
+Also around 2005, the German firm \emph{Software und System-Entwicklung} (SuSE) released \emph{SuSE Linux Enterprise Real Time} which built on the RT Patch and added some features:
+
+\begin{enumerate}
+    \item CPU shielding - in multiprocessing systems, CPUs can be shielded from interrupt processing and operaing system background tasks so that they can be dedicated to real-time processing
+    \item Support for a Real-Time Clock and Interrupt Module (RCIM) - a PCI card that provided programmable timers and 12 input and output external interrupt lines to synchronize clocks across system.  SuSE provided Linux device drivers for this card.
+    \item A Frequency Based Scheduler (FBS) - SuSE provided a scheduler based on the high-resolution timer provided by the RCIM to support software that performed high-frequency short-deadline processing.  SuSE also released a debugging tool providing a view of system utilization during each frequency slice of the scheduler.
+\end{enumerate}
+\label{ref:suse_rt_features}
 
 
-\subsubsection{RedHawk Linux}
+\subsubsection{Concurrent Computing Corporation RedHawk Linux}
 
 
 \subsubsection{RedHat Linux for Real-Time (Red Hat RT)}
@@ -181,12 +194,12 @@ The structure of this document:
     \hline
         \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
     \hline
-        \rowcolor{light-gray} Processor Shielding & \textbf{Yes} & The term and mechanisms for \emph{shielded CPU} comes from the SUSE Linux Enterprise Real Time release of April 2008 for constaining the running of operating system threads on certain CPUs in a multicore/multiprocessor system. KRFS uses this feature to protect or \emph{shield} certain CPUs from running Linux kernel lower-priority operations and lower-priority interrupts (such as disk I/O) so that the shielded CPUs can be dedicated to real-time application (radar processing) code.  The standard Linux kernel equivalent is named \emph{cpuset} and works in a similar way.\\
+        \rowcolor{light-gray} Processor Shielding & \textbf{Yes} & The term and mechanisms for \emph{shielded CPU} comes from the SuSE Linux Enterprise Real Time release of April 2008 for constaining the running of operating system threads on certain CPUs in a multicore/multiprocessor system. KRFS uses this feature to protect or \emph{shield} certain CPUs from running Linux kernel lower-priority operations and lower-priority interrupts (such as disk I/O) so that the shielded CPUs can be dedicated to real-time application (radar processing) code.  The standard Linux kernel equivalent is named \emph{cpuset} and works in a similar way.\\
         \rowcolor{light-gray} Processor Affinity & \textbf{Yes} & This feature enables application workload to be spread among multiple CPUs to exploit concurrent processing.  This assignment of application processes to \emph{cpusets} is specified in userspace (that is, the application programmer decides this partitioning).  In KRFS, signal processing application threads can be distributed among shielded CPUs so dedicated and network communications can be partitioned onto other cores/CPUs. \\[4.5mm]
 User-level Preemption Control & No & User control of preemption of userspace synchronization mechanisms like POSIX semaphores using a system function call \emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from userspace. \\
 Fast Block/Wake Services & No & A preemptible semaphore in the kernel available from RT Patch since 2007. \\
 RCIM Driver & No & Concurrent sells a PCI card called the Real-time Clock Interface Module (RCIM).  The card can provide a 400ns clock signal to the operating system through an interrupt handler to enable a high-resolution timer feature. \\
-Frequency-Based Scheduler (FBS) & No & Source code for the FBS provided by Concurrent is actually copied without attribution from the original SUSE Linux Real-Time Extensions released in 2006. \\
+Frequency-Based Scheduler (FBS) & No & Source code for the FBS provided by Concurrent is actually copied without attribution from the original SuSE Linux Real-Time Extensions released in 2006. \\
 /proc Modifications & No & This feature is part of the \emph{usermap} feature (see below) that can be used by Nightstar or even regular users.\\
 Kernel Trace Facility & No & This feature is combined with the standard kernel debuggers to support enhanced kernel debugging features using Nightstar \\
 ptrace Extensions & No & This feature is combined with the \emph{usermap} feature (below) to support Nightstar debugging) \\
@@ -207,8 +220,8 @@ ptrace Extensions & No & This feature is combined with the \emph{usermap} featur
     \hline
 Kernel Preemption & (Yes,built-in) & The RT Patch is listed as a Concurrent RedHawk feature though it obviously is sourced from the RT Patch (and now the Linux mainline, see Appendix A). \\[4.5mm]
 Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default Completely Fair Scheduler (CFS) like priority-based SCHED\_FIFO and SCHED\_RR (round-robin) have been part of the RT Patch since 2007.  SCHED\_DEADLINE is available in Linux 3.6 (Red Hat 7.6) and later. \\[4.5mm]
-Low Latency Enhancements & (Yes,built-in) & Some kernel tuning derived from Red Hat's TUNA and SUSE Linux tools have been added as default. \\[4.5mm]
-Priority Inheritance & (Yes,built-in) & This has been part of SUSE Linux and the RT Patch since 2007.  \\[4.5mm]
+Low Latency Enhancements & (Yes,built-in) & Some kernel tuning derived from Red Hat's TUNA and SuSE Linux tools have been added as default. \\[4.5mm]
+Priority Inheritance & (Yes,built-in) & This has been part of SuSE Linux and the RT Patch since 2007.  \\[4.5mm]
 High Resolution Process Accounting & No & This feature follows from the use of the RCIM card and driver (above).\\[4.5mm]
 Capabilities Support & No & Permission files (\emph{capabilities} files) for features like the \emph{usermap} and \emph{/proc mmap} features (below). \\[4.5mm]
 Kernel Debuggers & (Yes,built-in) & The built-in kernel debuggers \emph{kdb} and \emph{kgdb} can be configured to work with Nightstar. \\[4.5mm]
