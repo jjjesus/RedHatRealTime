@@ -11,6 +11,7 @@
 <node CREATED="1598626838659" ID="ID_787474491" MODIFIED="1598626842326" TEXT="priority scheduling"/>
 </node>
 </node>
+<node CREATED="1598749797463" ID="ID_1347472930" MODIFIED="1598749893093" TEXT="The first release of Linux as we know it was 2.6.11 on March 2, 2005."/>
 </node>
 <node CREATED="1598708128930" ID="ID_1628359568" MODIFIED="1598708132913" TEXT="Version numbering">
 <node CREATED="1598708161970" ID="ID_701404592" MODIFIED="1598708164163" TEXT="Linux">
@@ -29,7 +30,7 @@
 <node CREATED="1598708575071" ID="ID_1077895808" MODIFIED="1598708663696" TEXT="https://en.wikipedia.org/wiki/SUSE_Linux_Enterprise_Server"/>
 </node>
 </node>
-<node CREATED="1598625333885" FOLDED="true" ID="ID_212633623" MODIFIED="1598706704423" TEXT="PREEMPT_RT patch">
+<node CREATED="1598625333885" FOLDED="true" ID="ID_212633623" MODIFIED="1598749996128" TEXT="PREEMPT_RT patch">
 <node CREATED="1598627180272" ID="ID_1267578113" MODIFIED="1598627199759" TEXT="Thomas Gleixner at Red Hat"/>
 <node CREATED="1598696506834" ID="ID_1972556637" MODIFIED="1598696523783" TEXT="July 20, 2019">
 <node CREATED="1598696501001" ID="ID_950904222" MODIFIED="1598696502610" TEXT="&#x9;Linus Torvalds &lt;torvalds@linux-foundation.org&gt;&#x9;2019-07-20 10:33:44 -0700"/>
@@ -55,14 +56,18 @@
 <node CREATED="1598627544606" ID="ID_391205168" MODIFIED="1598627546634" TEXT="MRG stands for &quot;Messaging Realtime Grid&quot;."/>
 </node>
 <node CREATED="1598659707376" ID="ID_173341993" MODIFIED="1598659708392" TEXT="In December of 2007 Red Hat made a formal product announcement of a product that supports some kinds of real-time extensions. Red Hat was one force of Linux real-time enhancement for several years. This product is called Red Hat MRG (Messaging, Real Time Grid) platform."/>
+<node CREATED="1598750820685" ID="ID_261388316" MODIFIED="1598750862117" TEXT="In 2007, IBM, Red Hat, and Raytheon for US Navy Zumwalt contract"/>
 <node CREATED="1598627257551" ID="ID_245381375" MODIFIED="1598627267948" TEXT="In 2018 became Red Hat RT"/>
+<node CREATED="1598755317025" ID="ID_1794118941" MODIFIED="1598755318114" TEXT="RHEL for Real Time 7&#x9;March 5, 2015"/>
 <node CREATED="1598627458152" ID="ID_471241368" MODIFIED="1598627466356" TEXT="Tuna kernel tuning tool"/>
+<node CREATED="1598755483145" ID="ID_401280238" MODIFIED="1598755483983" TEXT="https://www.redhat.com/sysadmin/real-time-kernel"/>
+<node CREATED="1598755534701" ID="ID_1719463337" MODIFIED="1598755535720" TEXT="Initially, Red Hat introduced a product called &quot;Red Hat Enterprise MRG,&quot; where MRG stood for Messaging, Real-time, and Grid. MRG 2 was based on RHEL 5 and RHEL 6 versions, whereas MRG 3 was based entirely on RHEL 6. From RHEL 7 onward, the MRG product was deprecated, and  &quot;RHEL for Real-Time&quot; was introduced as a separate product."/>
 </node>
 <node CREATED="1598625344046" ID="ID_617230560" MODIFIED="1598659697675" TEXT="Red Hawk">
 <node CREATED="1598627316530" ID="ID_1832562003" MODIFIED="1598704337423" TEXT="Nightstar tools"/>
 <node CREATED="1598704338883" ID="ID_1023501935" MODIFIED="1598704347768" TEXT="Announced RedHawk">
 <node CREATED="1598704349140" ID="ID_76327120" MODIFIED="1598704358644" TEXT="Some criticism from Linux community"/>
-<node CREATED="1598706634499" ID="ID_1701051372" MODIFIED="1598706677637" TEXT="Comments below this post: https://chrisdonnan.com/wombat-pushing-the-envelope-and-suse-linux-enterprise-real-time-568a8422ae64"/>
+<node CREATED="1598706634499" ID="ID_1701051372" MODIFIED="1598757445673" TEXT="Comments below this post: https://lwn.net/Articles/82387/"/>
 </node>
 <node CREATED="1598627296472" ID="ID_1356697550" MODIFIED="1598627315269" TEXT="Stopped original development, using PREEMPT_RT patch source code now"/>
 </node>
