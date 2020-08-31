@@ -12,6 +12,7 @@
 \usepackage{listings} % Code listings
 \usepackage{multicol}
 \usepackage{multirow}
+\usepackage{textcomp}
 \usepackage{xurl}
 \usepackage{setspace}
 \usepackage{etoolbox}
@@ -80,15 +81,17 @@
 \newpage
 \section{Scope}
 \subsection{Identification}
-This document is a Raytheon internal document analyzing an opportunity to change the version of
-Linux operating system used in the Ku Band Radio Frequency System (KRFS) Version 3 (K3).
+This document is a Raytheon internal document analyzing an opportunity to change
+the version of Linux operating system used in the Ku Band Radio Frequency System
+(KRFS) Version 3 (K3).
 
 \subsection{System overview}
-KRFS is a radar system that supports the counter- rocket, artillery, and mortar (CRAM) mission.
-KRFS has four radar apertures each operating as an Active Electronically
-Scanned Array (AESA).  Each aperture has its own receiver/exciter and signal processing
-subsystem called the Array Backend Electronics Unit (ABEU).  The arrays are arranged to
-provide 360 degree coverage in azimuth and horizon to 90-degree coverage in elevation.
+KRFS is a radar system that supports the counter- rocket, artillery, and mortar
+(CRAM) mission.  KRFS has four radar apertures each operating as an Active
+Electronically Scanned Array (AESA).  Each aperture has its own receiver/exciter
+and signal processing subsystem called the Array Backend Electronics Unit
+(ABEU).  The arrays are arranged to provide 360 degree coverage in azimuth and
+horizon to 90-degree coverage in elevation.
 
 \begin{figure}[H]
     \begin{center}
@@ -98,9 +101,10 @@ provide 360 degree coverage in azimuth and horizon to 90-degree coverage in elev
     \end{center}
 \end{figure}
 
-The System Controller Unit (SCU) is a 3-U VPX/VME shelf with commercial-off-the-self (COTS)
-cards and one custom card assembly (CCA).  The SCU is the central controller for the radar system,
-and the main control software within the SCU runs in its SBC card (Figure \ref{fig:scu}).
+The System Controller Unit (SCU) is a 3-U VPX/VME shelf with
+commercial-off-the-self (COTS) cards and one custom card assembly (CCA).  The
+SCU is the central controller for the radar system, and the main control
+software within the SCU runs in its SBC card (Figure \ref{fig:scu}).
 
 \begin{figure}[H]
     \begin{center}
@@ -110,51 +114,120 @@ and the main control software within the SCU runs in its SBC card (Figure \ref{f
     \end{center}
 \end{figure}
 
-In KRFS K2, the SBC Processor is a Extreme Engineering (XES) Xpedite7672 card based on the Xeon-D
-System-on-a-Chip (SOC) running the Linux operating system.
-In KRFS K3, the SBC Processor is a very similar Extreme Engineering (XES) Xpedite7674 card also based on the Xeon-D SOC
-and running the Linux operating system.
+In KRFS K2, the SBC Processor is a Extreme Engineering (XES) Xpedite7672 card
+based on the Xeon-D System-on-a-Chip (SOC) running the Linux operating system.
+In KRFS K3, the SBC Processor is a very similar Extreme Engineering (XES)
+Xpedite7674 card also based on the Xeon-D SOC and running the Linux operating
+system.
 
 \subsection{Overview of Linux operating system and real-time features}
-The Linux operating system is a free, open-source software (FOSS) operating system originally authored by Linus Torvalds in September 1991 as a Unix system for his personal computer.  Linux eventually became the operating system underlying platforms from the smallest devices
-(Android phones are based on Linux) to supercomputers. Although the source code for the software is freely available,
-some commercial vendors charge fees to provide the software pre-compiled for a particular device, board, or machine,
-and charge for support and additional documentation or other tools.
-Linux initially resembled the Unix systems of its time; it supported multiple users and multiple simultaneously running programs and used a \emph{completely fair scheduler} (CFS) to insure equality among the running processes.
+The Linux operating system is a free, open-source software (FOSS) operating
+system originally authored by Linus Torvalds in September 1991 as a Unix system
+for his personal computer.  Linux eventually became the operating system
+underlying platforms from the smallest devices (Android phones are based on
+Linux) to supercomputers. Although the source code for the software is freely
+available, some commercial vendors charge fees to provide the software
+pre-compiled for a particular device, board, or machine, and charge for support
+and additional documentation or other tools.  Linux initially resembled the Unix
+systems of its time; it supported multiple users and multiple simultaneously
+running programs and used a \emph{completely fair scheduler} (CFS) to insure
+equality among the running processes.
 
 \subsubsection{Real-time patch (RT Patch) for the Linux operating system}
-In 2005, a patch was released for the Linux source code to support real-time processing.
-In a real-time system like a radar, some processing has deadlines, for example, transmitting pulses or processing signal returns, where instead of emphasizing fair scheduling among all processes, a real-time operaing system (RTOS) must assign priorities to tasks and interrupt (preempt) not only the currently running task but even its own internal mechanisms (spinlocks, semaphores, and interrupt handling) to meet the real-time deadlines.
-The original patch was originally named \emph{PREMPT\_RT} or \emph{CONFIG\_PREEMPT\_RT} and authored by some of the most important Linux kernel developers, Ingo Molnar and Thomas Gleixner of Red Hat and Paul McKenny of IBM.
-The source code for the RT Patch has been actively maintained separately from the mainline Linux source code over the last 15 years by teams led by these same developers and has been downloaded and incorporated in thousands of systems and other Linux software distributions.
+In the early 2000s, engineers at IBM and Red Hat were working on modifying the
+Linux kernel source code to support real-time applications.  In a real-time
+system like a radar, some processing has deadlines, for example, transmitting
+pulses or processing signal returns, where instead of emphasizing fair
+scheduling among all processes, a real-time operaing system (RTOS) must assign
+priorities to tasks and interrupt (preempt) not only the currently running task
+but even its own internal mechanisms (spinlocks, semaphores, and interrupt
+handling) to meet the real-time deadlines.  This patch was originally named
+\emph{PREMPT\_RT} or \emph{CONFIG\_PREEMPT\_RT} and authored by some of the most
+important Linux kernel developers, Ingo Molnar and Thomas Gleixner of Red Hat
+and Paul McKenny of IBM.  The source code for the RT Patch has been actively
+maintained separately from the mainline Linux source code over the last 15 years
+by teams led by these same developers and has been downloaded and incorporated
+in thousands of systems and other Linux software distributions.
 
 \subsubsection{SuSE Linux Enterprise Real Time}
-Also around 2005, the German firm \emph{Software und System-Entwicklung} (SuSE) released \emph{SuSE Linux Enterprise Real Time} which built on the RT Patch and added some features:
+Also in the early 2000s, German firm \emph{Software und System-Entwicklung}
+(SuSE) released \emph{SuSE Linux Enterprise Real Time} which built on the RT
+Patch and added some features:
 
 \begin{enumerate}
-    \item CPU shielding - in multiprocessing systems, CPUs can be shielded from interrupt processing and operaing system background tasks so that they can be dedicated to real-time processing
-    \item Support for a Real-Time Clock and Interrupt Module (RCIM) - a PCI card that provided programmable timers and 12 input and output external interrupt lines to synchronize clocks across systems.  SuSE provided Linux device drivers for this card.
-    \item A Frequency Based Scheduler (FBS) - SuSE provided a scheduler based on the high-resolution timer provided by the RCIM to support software that performed high-frequency short-deadline processing.  SuSE also released a debugging tool providing a view of system utilization during each frequency slice of the scheduler.
+\item CPU shielding - in multiprocessing systems, CPUs can be shielded from
+interrupt processing and operaing system background tasks so that they can be
+dedicated to real-time processing
+\item Support for a Real-Time Clock and Interrupt Module (RCIM) - a PCI card
+that provided programmable timers and 12 input and output external interrupt
+lines to synchronize clocks across systems.  SuSE provided Linux device drivers
+for this card.
+\item A Frequency Based Scheduler (FBS) - SuSE provided a scheduler based on
+the high-resolution timer provided by the RCIM to support software that
+performed high-frequency short-deadline processing.  SuSE also released a
+debugging tool providing a view of system utilization during each frequency
+slice of the scheduler.
 \end{enumerate}
 \label{ref:suse_rt_features}
 
 
 \subsubsection{Concurrent Computing Corporation RedHawk Linux}
 
+In April 2004, Concurrent Computing Corporation announced a real-time
+Linux product, containing this excerpt:
 
-This comment from the Linux Weekly News online is representative of
-many in the Linux community to Concurrent's announcement of its real-time
-product:
+\begin{quote}
+Concurrent's refinements include kernel-level priority inheritance support,
+a Frequency Based Scheduler (FBS), process and IRQ shielding extensions,
+user-level real-time Hyper-Treading control for Intel Xeon platforms,
+user-level spin locks, significant real-time performance tuning and
+many additional improvements. A prime example of RedHawk's real-time
+superiority is its guaranteed interrupt response time of less than
+30 microseconds on a shielded
+processor.%
+\footnote{\url{https://www.businesswire.com/news/home/20040427005101/en/Concurrent-Announces-Version-2.1-RedHawk-Real-Time-Linux}}
+\end{quote}
+
+It seems fairly obvious that this list of \emph{Concurrent's refinements}
+are inherited from SuSE Real-Time and the RT Patch from IBM and RedHat, and,
+this comment from the Linux Weekly News online was representative of many in the
+Linux community to Concurrent's product announcement:
 
 \begin{quote}
 Parent article: Concurrent releases RedHawk Linux 2.1
 They do not have to release source to the world, but,
 they certainly do have the obligation to make source
 available to those to whom they're distributing these
-customized Linux kernels. The company seems to be very quiet on these obligations,
-to judge from their web site. I think it's entirely
+customized Linux kernels. The company seems to be very quiet on these
+obligations, to judge from their web site. I think it's entirely
 appropriate that they get some scrutiny from the folks
-whose code they've customized.\footnote{\url{https://lwn.net/Articles/82589/}}
+whose code they've customized.%
+\footnote{\url{https://lwn.net/Articles/82589/}}
+\end{quote}
+
+\textbf{Concurrent NightStar tools}\\
+At the same time as the kernel changes, Concurrent released an impressive set of
+tools called \emph{NightStar} that are especially good in tracing the processing
+of data as it travels between boards and over networks:
+
+\begin{quote}
+The RedHawk NightStar Tools allow users on an iHawk system running
+RedHawk Linux to schedule, monitor, debug and analyze the run time behavior of
+their real-time applications as well as the RedHawk Linux operating system
+kernel.  The RedHawk NightStar Tools consist of the NightTrace event analyzer;
+the NightSim frequency-based scheduler; the NightProbe data monitoring tool; the
+NightView symbolic debugger; the NightTune system and application tuner;
+shmdefine, a shared memory configuration aid tool; and the Data Monitoring API
+(Datamon).  NightTrace is a graphical tool for analyzing the dynamic behavior of
+single and multiprocessor applications. NightTrace can log application data
+events from simultaneous processes executing on multiple CPUs or even multiple
+systems. NightTrace combines application events with RedHawk Linux kernel
+events, presenting a synchronized view of the entire system.  Many of the tools
+include a small run-time agent that executes on the RedHawk Linux target system
+in a non-intrusive manner, preserving the deterministic characteristics of the
+application.%
+\footnote{\emph{RedHawk NightStar Tools Version 2.2 Release Notes March 2005
+0898008-2.2}, March 2005}
 \end{quote}
 
 
@@ -164,8 +237,9 @@ whose code they've customized.\footnote{\url{https://lwn.net/Articles/82589/}}
 \subsubsection{Merge of RT Patch to Linux mainline in July 2019}
 
 \subsection{Document purpose}
-To integrate NE software, we need to be able to build Linux from source.  NE currently uses Red Hat Real-Time.
- We use Red Hawk from Concurrent RTI.  NE builds from source using tools from Red Hat.  We do not build from source.
+To integrate NE software, we need to be able to build Linux from source.  NE
+currently uses Red Hat Real-Time.  We use Red Hawk from Concurrent RTI.  NE
+builds from source using tools from Red Hat.  We do not build from source.
 
 Produce a document that helps us decide how to get our Linux image created.
 

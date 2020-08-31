@@ -63,6 +63,12 @@ Red Hawk login
 LA107721
 pFx1PkRd
 
+https://www.businesswire.com/news/home/20040427005101/en/Concurrent-Announces-Version-2.1-RedHawk-Real-Time-Linux
+
+
+Nightstar and Nighthawk
+http://12.220.59.15/docs/root/1Linux/2NightStar/zarchive/0898008-2.2.pdf
+
 
 https://lwn.net/Articles/82387/
 
