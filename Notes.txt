@@ -10,6 +10,45 @@ Version information
 https://www.osadl.org/Realtime-Linux.projects-realtime-linux.0.html
 
 
+Red Hat for Real-Time
+-----
+FAQ
+https://access.redhat.com/solutions/4096521
+
+
+http://www.internetnews.com/dev-news/article.php/3714366
+He went on to note that Novell's latest offering actually uses technology originally developed by Red Hat.
+
+"With their latest release, Novell has moved to the Red Hat-developed real-time patch set," Che said. "If you look at it from a technology standpoint, Novell has moved to a version aligned with what Red Hat is doing. It validates our approach that you have to work with the upstream Linux kernel."
+
+At the London launch of MRG, line of business VP Scott Crenshaw said that the Utah-based rival had used beta versions of Red Hat's code in its offering. "They haven't contributed a line of code", he said. As a result of this change of code, he argued that "all their prior users are cut off" from previous versions.
+
+Raytheon
+https://www-03.ibm.com/press/us/en/pressrelease/21033.wss
+
+http://xml.coverpages.org/RH-MRGV1-AMQP.html
+
+
+Tuning guide excerpt about CPU affinity
+-----
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux_for_real_time/7-beta/html/tuning_guide/isolating_cpus_using_tuned-profiles-realtime
+
+
+Launch of MRG was for Enterprises
+http://www.internetnews.com/ent-news/article.php/3714366/Red+Hat+Finally+Nears+RealTime+Linux+Launch.htm
+
+Real time kernel work by Ingo Molnar of Red Hat
+http://www.internetnews.com/dev-news/article.php/3627831
+
+Red Hat MRG is a clustering product intended for integrated high-performance computing (HPC). The acronym MRG stands for "Messaging Realtime Grid".
+
+Red Hat Enterprise MRG replaces the Red Hat Enterprise Linux RHEL, a Linux distribution developed by Red Hat, kernel in order to provide extra support for real-time computing, together with middleware support for message brokerage and scheduling workload to local or remote virtual machines, grid computing, and cloud computing.[55]
+
+As of 2011, Red Hat works with the Condor High-Throughput Computing System community and also provides support for the software.[56]
+
+The Tuna performance-monitoring tool runs in the MRG environment.[57]
+
+
 
 
 Concurrent

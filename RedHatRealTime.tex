@@ -33,7 +33,8 @@
 
 % Header
 \pagestyle{fancy}
-\lhead{K3 Migration to Red Hat Real-Time Linux}
+%\lhead{K3 Migration to Red Hat Real-Time Linux}
+\lhead{Working title}
 \rhead{August 28, 2020}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -47,9 +48,10 @@
 \begin{center}
         \vspace*{1cm}
 
-        \LARGE{Ku Band Radio Frequency System Version 3 (K3) \\
-        Migration from Concurrent RedHawk Linux to \\
-        Red Hat Real-Time Linux}
+        %\LARGE{Ku Band Radio Frequency System Version 3 (K3) \\
+        %Migration from Concurrent RedHawk Linux to \\
+        %Red Hat Real-Time Linux}
+        \LARGE{Working Title}
 
         \vspace{0.5cm}
         \LARGE
@@ -150,9 +152,10 @@ by teams led by these same developers and has been downloaded and incorporated
 in thousands of systems and other Linux software distributions.
 
 \subsubsection{SuSE Linux Enterprise Real Time}
-Also in the early 2000s, German firm \emph{Software und System-Entwicklung}
-(SuSE) released \emph{SuSE Linux Enterprise Real Time} which built on the RT
-Patch and added some features:
+Soon after IBM and Red Hat released the original Linux RT Patch in the early
+2000s, German firm \emph{Software und System-Entwicklung} (SuSE) released
+\emph{SuSE Linux Enterprise Real Time} which included the RT Patch and added
+some features:
 
 \begin{enumerate}
 \item CPU shielding - in multiprocessing systems, CPUs can be shielded from
@@ -169,6 +172,21 @@ debugging tool providing a view of system utilization during each frequency
 slice of the scheduler.
 \end{enumerate}
 \label{ref:suse_rt_features}
+
+Although SuSE implied that they had implemented the real-time kernel features,
+Red Hat remarked of the SuSE offering:
+
+\begin{quote}
+"With their latest release, (SuSE) has moved to the Red Hat-developed real-time
+patch set," Che said. "If you look at it from a technology standpoint, (SuSE)
+has moved to a version aligned with what Red Hat is doing. It validates our
+approach that you have to work with the upstream Linux kernel." At the London
+launch of MRG, line of business VP Scott Crenshaw said that (SuSE) had used beta
+versions of Red Hat's code in its offering. "They haven't contributed a line of
+code", he said. As a result of this change of code, he argued that "all their
+prior users are cut off" from previous versions.%
+\footnote{\url{http://www.internetnews.com/dev-news/article.php/3714366}}
+\end{quote}
 
 
 \subsubsection{Concurrent Computing Corporation RedHawk Linux}
@@ -189,8 +207,9 @@ processor.%
 \end{quote}
 
 It seems fairly obvious that this list of \emph{Concurrent's refinements}
-are inherited from SuSE Real-Time and the RT Patch from IBM and RedHat, and,
-this comment from the Linux Weekly News online was representative of many in the
+are inherited from SuSE Real-Time which was derived from the RT Patch from IBM
+and RedHat, and, this comment from the Linux Weekly News online was
+representative of many in the
 Linux community to Concurrent's product announcement:
 
 \begin{quote}
@@ -230,17 +249,39 @@ application.%
 \end{quote}
 
 
-\subsubsection{RedHat Linux for Real-Time (Red Hat RT)}
+\subsubsection{Red Hat Real-Time Products}
+The first announcement of Red Hat using their RT Patch work in their own
+products was in February 2007 when IBM and Raytheon IDS of Tewksbury, MA
+announced at the Boston 2007 Red Hat Summit that Red Hat real-time kernels were
+running on IBM Blade Server computing clusters for the DDG 1000 Zumwalt Class
+Destroyer Program.%
+\footnote{https://www-03.ibm.com/press/us/en/pressrelease/21033.wss}
+Later in 2007, RedHat announced their RedHat Messaging-Real-time-Grid (MRG)
+product which bundled the real-time kernel with low-latency messaging components
+and grid computing (\emph{grid computing} allows Linux to automatically spread
+workload across any available CPU in a distributed cluster of machines).  In
+this MRG product, Red Hat seemed to be ignoring customers who did not need the
+enterprise cluster computing features.
 
+When Red Hat released Red Hat Enterprise Linux 7 (RHEL7) in 2014, the MRG
+product was deprecated, and \emph{Red Hat for Real-Time} was introduced as a
+separate product.  Red Hat RT includes the standard Linux kernel with the RT
+patch plus the Red Hat \emph{Tuna} tuning tool and other miscellaneous tools and
+documentation.
 
 \subsubsection{Merge of RT Patch to Linux mainline in July 2019}
+In July 2019, Linux Torvalds merged the RT Patch into the Linux mainline and the
+latest Linux kernel can now be made real-time using a configuration option.%
+\footnote{Linus Torvald's commit message is included in its entirety in Appendix
+A}
+
 
 \subsection{Document purpose}
-To integrate NE software, we need to be able to build Linux from source.  NE
-currently uses Red Hat Real-Time.  We use Red Hawk from Concurrent RTI.  NE
-builds from source using tools from Red Hat.  We do not build from source.
-
-Produce a document that helps us decide how to get our Linux image created.
+%To integrate NE software, we need to be able to build Linux from source.  NE
+%currently uses Red Hat Real-Time.  We use Red Hawk from Concurrent RTI.  NE
+%builds from source using tools from Red Hat.  We do not build from source.
+%
+%Produce a document that helps us decide how to get our Linux image created.
 
 
 \subsection{Document overview}
@@ -252,7 +293,7 @@ The structure of this document:
     \item Real-time features from RedHawk used in current KRFS software
     \item Creating the Linux operating system image
     \item Hardening the Linux operating system image
-    \item Migrating to Red Hat Real-Time in K3
+    %\item Migrating to Red Hat Real-Time in K3
 \end{enumerate}
 
 
@@ -354,9 +395,9 @@ The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been a
 
 %%%%%%%%%%%%%%%%% Migrating to Red Hat %%%%%%%%%%%%%%%%%%%%%%%%
 %
-\newpage
-\section{Migrating to Red Hat Real-Time in K3}
-\label{sec:redhat_migration}
+%\newpage
+%\section{Migrating to Red Hat Real-Time in K3}
+%\label{sec:redhat_migration}
 
 
 \subsection{Build artifact changes}
