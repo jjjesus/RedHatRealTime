@@ -435,6 +435,7 @@ kernel boot parameter to specify one or more CPUs to isolate from the general
 Linux kernel scheduler algorithms (Listing \ref{lst:shield_kernel}).
 
 
+\vspace{0.8cm}
 \lstset{
     language=bash,
     basicstyle=\footnotesize\ttfamily,
@@ -451,10 +452,12 @@ acpi_enforce_resources=lax intel_iommu=on cma=800M nousb isolcpus=1-6
 
 \end{lstlisting}
 \end{adjustwidth}
+\vspace{0.8cm}
 
 To shield CPUs anytime after kernel boot the \emph{cset} command can be used
 (Listing \ref{lst:shield_cmd}).
 
+\vspace{0.8cm}
 \lstset{
     language=bash,
     basicstyle=\footnotesize\ttfamily,
@@ -477,12 +480,14 @@ $ cset proc --move --fromset=root --toset=system
 
 \end{lstlisting}
 \end{adjustwidth}
+\vspace{0.8cm}
 
 \subsubsection{CPU affinity for processes and threads}
 
 To pin a process onto a particular cpu or cpuset, instead of using the RedHawk
 \emph{run} command, use the standard \emph{taskset} command.
 
+\vspace{0.8cm}
 \lstset{
     language=bash,
     basicstyle=\footnotesize\ttfamily,
@@ -503,6 +508,7 @@ $ taskset -c 5,6 /bin/my-app
 
 \end{lstlisting}
 \end{adjustwidth}
+\vspace{0.8cm}
 
 KRFS source code already uses the POSIX \emph{pthreads} to set affinity for
 threads, either in the thread attributes object used at thread creation or using
