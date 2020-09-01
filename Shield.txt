@@ -33,9 +33,13 @@ CPU affinity for processes
 -----
 Instead of "run" use "taskset"
 
+# Run on CPU 5 or 6 (-b stands for "bias")
+$ run -b 5,6 ./mycommand
+
+
 Process
- This command will run the /bin/my-app application on CPU 4:
-~]# taskset -c 4 /bin/my-app
+ This command will run the /bin/my-app application on CPU 5 or 6:
+~]# taskset -c 5,6 /bin/my-app
 
 For further granularity, the priority and policy can also be set. This command runs the /bin/my-app application on CPU 4, with a SCHED_FIFO policy and a priority of 78:
 ~]# taskset -c 5 chrt -f 78 /bin/my-app

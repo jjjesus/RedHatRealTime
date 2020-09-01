@@ -428,7 +428,6 @@ The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been a
 
 \subsection{KRFS source code changes for a non-RedHawk Linux}
 
-
 \subsubsection{Shielding CPUs from low-priority system tasks}
 
 CPUs can be shielded from the kernel command-line by using the \emph{isolcpus}
@@ -480,6 +479,36 @@ $ cset proc --move --fromset=root --toset=system
 \end{adjustwidth}
 
 \subsubsection{CPU affinity for processes and threads}
+
+To pin a process onto a particular cpu or cpuset, instead of using the RedHawk
+\emph{run} command, use the standard \emph{taskset} command.
+
+\lstset{
+    language=bash,
+    basicstyle=\footnotesize\ttfamily,
+    linewidth=7in,
+    showstringspaces=false,
+    keywordstyle=\ttfamily
+}
+\begin{adjustwidth}{0.0in}{0.0in}
+\begin{lstlisting}[caption={Use taskset instead of run},
+label={lst:taskset_cmd}]
+
+# In RedHawk, run a program on CPU 5 or 6 (-b stands for "bias")
+$ run -b 5,6 ./mycommand
+
+# The equivalent of above in conventional Linux
+# This command will run the /bin/my-app application on CPU 5 or 6:
+$ taskset -c 5,6 /bin/my-app
+
+\end{lstlisting}
+\end{adjustwidth}
+
+KRFS source code already uses the POSIX \emph{pthreads} to set affinity for
+threads, either in the thread attributes object used at thread creation or using
+the functions \emph{pthread\_setaffinity\_np()} or
+\emph{pthread\_attr\_setaffinity\_np()}.%
+\footnote{\url{https://man7.org/linux/man-pages//man3/pthread_attr_setaffinity_np.3.html}}
 
 
 %%%%%%%%%%%%%%%%% Image creation %%%%%%%%%%%%%%%%%%%%%%%%
