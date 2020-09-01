@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 
 \usepackage{array} % table right-justify
+%\usepackage{beramono} % listing monospace font
 \usepackage{caption}
 \usepackage{changepage} % adjustwidth
 \usepackage{colortbl} %
@@ -252,9 +253,9 @@ whose code they've customized.%
 \footnote{\url{https://lwn.net/Articles/82589/}}
 \end{quote}
 
-At the same time as the kernel changes, Concurrent released a set of tools
-called \emph{NightStar} that are especially good in tracing the processing of
-data as it travels between boards and over networks:
+At the same time as its repackaging of RT Patch, Concurrent released a set of
+tools called \emph{NightStar} that are especially good in tracing the processing
+of data as it travels between boards and over networks:
 
 \begin{quote}
 The RedHawk NightStar Tools allow users on an iHawk system running
@@ -300,14 +301,14 @@ systems
     \item Red Hat has always had a real-time kernel product, but, it was
 obscured by the enterprise cluster features with which it was packaged within
 the Red Hat's MRG product, effectively hiding Red Hat's real-time kernel from
-embedded systems developers.
+consideration by embedded systems developers.
     \item When Red Hat released Red Hat Enterprise Linux 7 (RHEL7) in 2014, the
 MRG product was deprecated, and \emph{Red Hat for Real-Time} was introduced as a
 separate product.  Red Hat RT includes the standard Linux kernel with the RT
 patch plus the Red Hat \emph{Tuna} tuning tool and other miscellaneous tools and
 documentation, aiming this product at the embedded systems market.
-    \item The RT Patch was merged into mainline in July 2019 and thus available
-to anyone who downloads and builds the kernel source code
+    \item The RT Patch was merged into the Linux Kernel mainline in July 2019
+and thus available to anyone who downloads and builds the kernel source code
 \end{enumerate}
 
 
@@ -340,14 +341,24 @@ The structure of this document:
 \section{References}
 
 \begin{enumerate}
-    \item \textit{RedHawk Linux Users Guide 0898004-780} (Concurrent Computer Corporation, March 2016) \label{ref:red_hawk_guide}
-    \item \textit{RedHawk Architect Users Guide 0898601-7.2-1} (Concurrent Computer Corporation, December 2016) \label{ref:architect}
-    \item \textit{NightStar RT Tutorial Version 4.4 0898009-090} (Concurrent Computer Corporation, May 2014) \label{ref:nightstar}
-    \item \textit{Red Hat Enterprise Linux for Real Time 7 Reference Guide} (Red Hat Corporation, November 6, 2015) \label{ref:rhel7_ref}
-    \item \textit{Red Hat Enterprise Linux for Real Time 7 Installation Guide} (Red Hat Corporation, November 6, 2015) \label{ref:rhel7_install}
-    \item Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl Weis, Global Supply Chain Program Lead, Raytheon \label{ref:karl}
-    \item Source for Red Hat Real-Time costs in Table \ref{tab:license_costs} was Lynn Bonenfant, IT Program Lead, Raytheon \label{ref:lynn}
-    \item \textit{Pull CONFIG\_PREEMPT\_RT stub config from Thomas Gleixner} commit message from the web view of the Linux git repository at \url{https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=70e6e1b971e46f5c1c2d72217ba62401a2edc22b} \label{ref:commit}
+    \item \textit{RedHawk Linux Users Guide 0898004-780} (Concurrent Computer
+Corporation, March 2016) \label{ref:red_hawk_guide}
+    \item \textit{RedHawk Architect Users Guide 0898601-7.2-1} (Concurrent
+Computer Corporation, December 2016) \label{ref:architect}
+    \item \textit{NightStar RT Tutorial Version 4.4 0898009-090} (Concurrent
+Computer Corporation, May 2014) \label{ref:nightstar}
+    \item \textit{Red Hat Enterprise Linux for Real Time 7 Reference Guide} (Red
+Hat Corporation, November 6, 2015) \label{ref:rhel7_ref}
+    \item \textit{Red Hat Enterprise Linux for Real Time 7 Installation Guide}
+(Red Hat Corporation, November 6, 2015) \label{ref:rhel7_install}
+    \item Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl
+Weis, Global Supply Chain Program Lead, Raytheon \label{ref:karl}
+    \item Source for Red Hat Real-Time costs in Table \ref{tab:license_costs}
+was Lynn Bonenfant, IT Program Lead, Raytheon \label{ref:lynn}
+    \item \textit{Pull CONFIG\_PREEMPT\_RT stub config from Thomas Gleixner}
+commit message from the web view of the Linux git repository at
+\url{https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=70e6e1b971e46f5c1c2d72217ba62401a2edc22b}
+\label{ref:commit}
 \end{enumerate}
 
 
@@ -384,13 +395,25 @@ currently uses the old syntax from SuSE and Concurrent \emph{shield} instead of
 the now-standard Linux command \emph{cset} \\
         \rowcolor{light-gray} Processor Affinity & \textbf{Yes} & KRFS code
 uses the POSIX thread interface to set processor affinity \\[4.5mm]
-User-level Preemption Control & No & User control of preemption of userspace synchronization mechanisms like POSIX semaphores using a system function call \emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from userspace. \\
-Fast Block/Wake Services & No & A preemptible semaphore in the kernel available from RT Patch since 2007. \\
-RCIM Driver & No & Concurrent sells a PCI card called the Real-time Clock Interface Module (RCIM).  The card can provide a 400ns clock signal to the operating system through an interrupt handler to enable a high-resolution timer feature. \\
-Frequency-Based Scheduler (FBS) & No & Source code for the FBS provided by Concurrent is actually copied without attribution from the original SuSE Linux Real-Time Extensions released in 2006. \\
-/proc Modifications & No & This feature is part of the \emph{usermap} feature (see below) that can be used by NightStar or even regular users.\\
-Kernel Trace Facility & No & This feature is combined with the standard kernel debuggers to support enhanced kernel debugging features using NightStar \\
-ptrace Extensions & No & This feature is combined with the \emph{usermap} feature (below) to support NightStar debugging) \\
+User-level Preemption Control & No & User control of preemption of userspace
+synchronization mechanisms like POSIX semaphores using a system function call
+\emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from
+userspace. \\
+Fast Block/Wake Services & No & A preemptible semaphore in the kernel available
+from RT Patch since 2007. \\
+RCIM Driver & No & Concurrent sells a PCI card called the Real-time Clock
+Interface Module (RCIM).  The card can provide a 400ns clock signal to the
+operating system through an interrupt handler to enable a high-resolution timer
+feature. \\
+Frequency-Based Scheduler (FBS) & No & Source code for the FBS provided by
+Concurrent is actually copied without attribution from the original SuSE Linux
+Real-Time Extensions released in 2006. \\
+/proc Modifications & No & This feature is part of the \emph{usermap} feature
+(see below) that can be used by NightStar or even regular users.\\
+Kernel Trace Facility & No & This feature is combined with the standard kernel
+debuggers to support enhanced kernel debugging features using NightStar \\
+ptrace Extensions & No & This feature is combined with the \emph{usermap}
+feature (below) to support NightStar debugging) \\
     \hline
     \end{tabular}%
     }
@@ -406,19 +429,39 @@ ptrace Extensions & No & This feature is combined with the \emph{usermap} featur
     \hline
         \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
     \hline
-Kernel Preemption & (Yes,built-in) & Though Kernel Preemption is listed as a Concurrent RedHawk feature, it obviously is sourced from the RT Patch (and now the Linux mainline, see Appendix A). \\[4.5mm]
-Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default Completely Fair Scheduler (CFS) like priority-based SCHED\_FIFO and SCHED\_RR (round-robin) have been part of the RT Patch since 2007.  SCHED\_DEADLINE is available in Linux 3.6 (Red Hat 7.6) and later. \\[4.5mm]
-Low Latency Enhancements & (Yes,built-in) & Some kernel tuning derived from Red Hat's TUNA and SuSE Linux tools have been added as default. \\[4.5mm]
-Priority Inheritance & (Yes,built-in) & This has been part of SuSE Linux and the RT Patch since 2007.  \\[4.5mm]
-High Resolution Process Accounting & No & This feature follows from the use of the RCIM card and driver (above).\\[4.5mm]
-Capabilities Support & No & Permission files (\emph{capabilities} files) for features like the \emph{usermap} and \emph{/proc mmap} features (below). \\[4.5mm]
-Kernel Debuggers & (Yes,built-in) & The built-in kernel debuggers \emph{kdb} and \emph{kgdb} can be configured to work with NightStar. \\[4.5mm]
-Kernel Core Dumps/Crash and Live Analysis & (Yes,built-in) &  This feature supports NightStar, allowing it to directly map and introspect kernel memory. \\[4.5mm]
-User-level Spin Locks & No &  User control of preemption of spinlocks in the kernel provided by a special system function call \emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from userspace. \\[4.5mm]
-usermap and /proc mmap & No & This feature supports NightStar, allowing it to directly map and introspect any user process.  \\[4.5mm]
-Hyper-threading & (Yes,built-in) & This is a setting in the CPU hardware that is controlled in the BIOS or bootloader that allows in-core multi-processing.  Support in mainline Linux for hyper-threading and symmetric multi-processing (SMP) has been since 2004.  \\[4.5mm]
+Kernel Preemption & (Yes,built-in) & Though Kernel Preemption is listed as a
+Concurrent RedHawk feature, it obviously is sourced from the RT Patch (and now
+the Linux mainline, see Appendix A). \\[4.5mm]
+Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default
+Completely Fair Scheduler (CFS) like priority-based SCHED\_FIFO and SCHED\_RR
+(round-robin) have been part of the RT Patch since 2007.  SCHED\_DEADLINE is
+available in Linux 3.6 (Red Hat 7.6) and later. \\[4.5mm]
+Low Latency Enhancements & (Yes,built-in) & Some kernel tuning derived from Red
+Hat's TUNA and SuSE Linux tools have been added as default. \\[4.5mm]
+Priority Inheritance & (Yes,built-in) & This has been part of SuSE Linux and the
+RT Patch since 2007.  \\[4.5mm]
+High Resolution Process Accounting & No & This feature follows from the use of
+the RCIM card and driver (above).\\[4.5mm]
+Capabilities Support & No & Permission files (\emph{capabilities} files) for
+features like the \emph{usermap} and \emph{/proc mmap} features (below).
+\\[4.5mm]
+Kernel Debuggers & (Yes,built-in) & The built-in kernel debuggers \emph{kdb} and
+\emph{kgdb} can be configured to work with NightStar. \\[4.5mm]
+Kernel Core Dumps/Crash and Live Analysis & (Yes,built-in) &  This feature
+supports NightStar, allowing it to directly map and introspect kernel memory.
+\\[4.5mm]
+User-level Spin Locks & No &  User control of preemption of spinlocks in the
+kernel provided by a special system function call \emph{resched\_cntl}.  Makes
+kernel space preemption mechanism invocable from userspace. \\[4.5mm]
+usermap and /proc mmap & No & This feature supports NightStar, allowing it to
+directly map and introspect any user process.  \\[4.5mm]
+Hyper-threading & (Yes,built-in) & This is a setting in the CPU hardware that is
+controlled in the BIOS or bootloader that allows in-core multi-processing.
+Support in mainline Linux for hyper-threading and symmetric multi-processing
+(SMP) has been since 2004.  \\[4.5mm]
 XFS Journaling File System & (Yes,built-in) & %
-The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been available for the Linux kernel since 2001.%
+The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been
+available for the Linux kernel since 2001.%
 \\
     \hline
     \end{tabular}%
@@ -439,19 +482,24 @@ Linux kernel scheduler algorithms (Listing \ref{lst:shield_kernel}).
 \lstset{
     language=bash,
     basicstyle=\footnotesize\ttfamily,
-    linewidth=7in,
+    linewidth=6in,
+    frame=single,
     showstringspaces=false,
     keywordstyle=\ttfamily
 }
+\begin{minipage}{\linewidth}
 \begin{adjustwidth}{0.0in}{0.0in}
 \begin{lstlisting}[caption={Shielding CPUs at at kernel boot command-line},
 label={lst:shield_kernel}]
 
 # Typical kernel boot command-line specifying isolated CPUs 1-6
+#
 acpi_enforce_resources=lax intel_iommu=on cma=800M nousb isolcpus=1-6
+
 
 \end{lstlisting}
 \end{adjustwidth}
+\end{minipage}
 \vspace{0.8cm}
 
 To shield CPUs anytime after kernel boot the \emph{cset} command can be used
@@ -461,7 +509,7 @@ To shield CPUs anytime after kernel boot the \emph{cset} command can be used
 \lstset{
     language=bash,
     basicstyle=\footnotesize\ttfamily,
-    linewidth=7in,
+    linewidth=6in,
     showstringspaces=false,
     keywordstyle=\ttfamily
 }
@@ -470,13 +518,19 @@ To shield CPUs anytime after kernel boot the \emph{cset} command can be used
 label={lst:shield_cmd}]
 
 # Create a cpuset for signal processing named "sigproc" on CPU 1-6
+#
 $ cset set --cpu=1-6 --set=sigproc
 
+
 # Create a cpuset named "system" on CPU 0, 7, 8
+#
 $ cset set --cpu=0,7-8 --set=system
 
+
 # Assign operating system tasks to "system"
+#
 $ cset proc --move --fromset=root --toset=system
+
 
 \end{lstlisting}
 \end{adjustwidth}
@@ -491,7 +545,7 @@ To pin a process onto a particular cpu or cpuset, instead of using the RedHawk
 \lstset{
     language=bash,
     basicstyle=\footnotesize\ttfamily,
-    linewidth=7in,
+    linewidth=6in,
     showstringspaces=false,
     keywordstyle=\ttfamily
 }
@@ -500,11 +554,16 @@ To pin a process onto a particular cpu or cpuset, instead of using the RedHawk
 label={lst:taskset_cmd}]
 
 # In RedHawk, run a program on CPU 5 or 6 (-b stands for "bias")
+#
 $ run -b 5,6 ./mycommand
+
 
 # The equivalent of above in conventional Linux
 # This command will run the /bin/my-app application on CPU 5 or 6:
+#
 $ taskset -c 5,6 /bin/my-app
+
+
 
 \end{lstlisting}
 \end{adjustwidth}
@@ -523,30 +582,33 @@ the functions \emph{pthread\_setaffinity\_np()} or
 \section{Creating the Linux operating system image}
 \label{sec:image_creation}
 
-\subsection{Creating the Linux operating system image in K3}
+\subsection{RedHawk Architect in K2}
+
+\subsection{Compiling the Linux kernel from source using Raytheon NE tools}
+
 
 
 %%%%%%%%%%%%%%%%% Hardening %%%%%%%%%%%%%%%%%%%%%%%%
 %
 \newpage
-\section{Hardening the Linux operating system image}
+\section{Hardening the Linux operating system}
 \label{sec:image_hardening}
 
-\subsection{Hardening the Linux operating system image in K3}
+\subsection{Hardening the Linux operating system in K2}
+
+\subsection{Using DevSecOps tools for hardening}
+
 
 
 %%%%%%%%%%%%%%%%% Migrating to Red Hat %%%%%%%%%%%%%%%%%%%%%%%%
 %
-%\newpage
-%\section{Migrating to Red Hat Real-Time in K3}
-%\label{sec:redhat_migration}
-
-
-\subsection{Build artifact changes}
-
+\newpage
+\section{Migrating to Red Hat Real-Time in K3}
+\label{sec:redhat_migration}
 
 \subsection{Source code changes}
 
+\subsection{Build artifact changes}
 
 \subsection{License costs}
 
@@ -576,10 +638,10 @@ Table \ref{tab:license_costs} summarizes license costs (see References
 \end{table}
 
 
-%%%%%%%%%%%%%%%%% Appendix A: Merge to mainline %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% Appendix A: Merge of RT Patch to mainline %%%%%%%%%%%%%%%%%%%%
 %
 \newpage
-\section{Appendix A: July 2019 Merge of RT to Linux mainline}
+\section{Appendix A: July 2019 Merge of RT Patch to Linux mainline}
 
 The git commit message from Linus Torvalds merging the real-time patch
 into the Linux mainline on July 20, 2019 is below (Reference \ref{ref:commit}).
@@ -639,6 +701,74 @@ Pull CONFIG_PREEMPT_RT stub config from Thomas Gleixner:
   tool if nothing else"
 \end{verbatim}
 
+
+%%%%%%%%%%%%%%%%% Appendix B: STIG sample for telnet-server %%%%%%%%%%%%%%%%%%%%
+%
+\newpage
+\section{Appendix B: STIG sample for telnet-server}
+
+\lstset{
+    language=xml,
+    basicstyle=\footnotesize\ttfamily,
+    linewidth=7.6in,
+    frame=single,
+    showstringspaces=false
+}
+\begin{adjustwidth}{-0.5in}{0.0in}
+\begin{lstlisting}[caption={STIG XML sample},
+label={lst:stig_xml}]
+<Group id="V-72077">
+    <title>SRG-OS-000095-GPOS-00049</title>
+    <description>&lt;GroupDescription&gt;&lt;/GroupDescription&gt;</description>
+    <Rule id="SV-86701r2\_rule" severity="high" weight="10.0">
+        <version>RHEL-07-021710</version>
+        <title>The Red Hat Enterprise Linux operating system must not have the
+telnet-server package installed.</title>
+        <description> ooo </description>
+        <reference>
+            <dc:title>DPMS Target Red Hat 7</dc:title>
+            <dc:publisher>DISA</dc:publisher>
+            <dc:type>DPMS Target</dc:type>
+            <dc:subject>Red Hat 7</dc:subject>
+            <dc:identifier>2777</dc:identifier>
+        </reference>
+        <ident system="http://iase.disa.mil/cci">CCI-000381</ident>
+        <fixtext fixref="F-78429r1\_fix">Configure the operating system to
+disable non-essential capabilities by removing the telnet-server package from
+the system with the following command:
+
+# yum remove telnet-server</fixtext>
+        <fix id="F-78429r1\_fix" />
+        <check system="C-72309r2\_chk">
+            <check-content-ref name="M"
+                href="DPMS\_XCCDF\_Benchmark\_RHEL\_7\_STIG.xml" />
+            <check-content>Verify the operating system is configured to disable
+non-essential capabilities. The most secure way of ensuring a non-essential
+capability is disabled is to not have the capability installed.
+
+The telnet service provides an unencrypted remote access service that does not
+provide for the confidentiality and integrity of user passwords or the remote
+session.
+
+If a privileged user were to log on using this service, the privileged user
+password could be compromised.
+
+Check to see if the telnet-server package is installed with the following
+command:
+
+# yum list installed telnet-server
+
+If the telnet-server package is installed, this is a finding.</check-content>
+        </check>
+    </Rule>
+</Group>
+
+\end{lstlisting}
+\end{adjustwidth}
+\vspace{0.8cm}
+
+
+% %%%%%
 
 \end{document}
 

@@ -1,0 +1,72 @@
+https://github.com/ansible-lockdown/RHEL7-STIG
+
+Ansible is owned by Red Hat.
+
+
+A STIG is specific technology implementation guidance to follow when hardening a piece of technology. They are specific to the system, operating system, software, or function being hardened. SCAP is a program that will scan a system using a STIG as the benchmark, however not every STIG check can be preformed via SCAP and not every STIG can be imported into SCAP. So SCAP is a timesaver if you have a lot of devices that need to be tested and there is a benchmark available. But it doesn't eliminate the need for manual testing of each device.
+
+From RHEL STIG
+
+
+
+
+
+STIG
+-----
+
+
+https://public.cyber.mil/stigs/scap/
+
+
+        <rpminfo_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" check="all" check_existence="none_exist" comment="package telnet-server is removed" id="oval:mil.disa.stig.rhel7:tst:1293" version="1">
+          <object object_ref="oval:mil.disa.stig.rhel7:obj:3007" />
+        </rpminfo_test>
+
+
+        <xccdf:Rule id="xccdf_mil.disa.stig_rule_SV-86701r2_rule" severity="high" weight="10.0">
+          <xccdf:version update="http://iase.disa.mil/stigs">RHEL-07-021710</xccdf:version>
+          <xccdf:title>The Red Hat Enterprise Linux operating system must not have the telnet-server package installed.</xccdf:title>
+          <xccdf:description>&lt;VulnDiscussion&gt;It is detrimental for operating systems to provide, or install by default, functionality exceeding requirements or mission objectives. These unnecessary capabilities or services are often overlooked and therefore may remain unsecured. They increase the risk to the platform by providing additional attack vectors.
+
+Operating systems are capable of providing a wide variety of functions and services. Some of the functions and services, provided by default, may not be necessary to support essential organizational operations (e.g., key missions, functions).
+
+Examples of non-essential capabilities include, but are not limited to, games, software packages, tools, and demonstration software not related to requirements or providing a wide array of functionality not required for every mission, but which cannot be disabled.&lt;/VulnDiscussion&gt;&lt;FalsePositives&gt;&lt;/FalsePositives&gt;&lt;FalseNegatives&gt;&lt;/FalseNegatives&gt;&lt;Documentable&gt;false&lt;/Documentable&gt;&lt;Mitigations&gt;&lt;/Mitigations&gt;&lt;SeverityOverrideGuidance&gt;&lt;/SeverityOverrideGuidance&gt;&lt;PotentialImpacts&gt;&lt;/PotentialImpacts&gt;&lt;ThirdPartyTools&gt;&lt;/ThirdPartyTools&gt;&lt;MitigationControl&gt;&lt;/MitigationControl&gt;&lt;Responsibility&gt;&lt;/Responsibility&gt;&lt;IAControls&gt;&lt;/IAControls&gt;</xccdf:description>
+          <xccdf:reference>
+            <dc:title>DPMS Target Red Hat 7</dc:title>
+            <dc:publisher>DISA</dc:publisher>
+            <dc:type>DPMS Target</dc:type>
+            <dc:subject>Red Hat 7</dc:subject>
+            <dc:identifier>2777</dc:identifier>
+          </xccdf:reference>
+          <xccdf:ident system="http://cce.mitre.org">CCE-27165-0</xccdf:ident>
+          <xccdf:ident system="http://iase.disa.mil/cci">CCI-000381</xccdf:ident>
+          <xccdf:fixtext fixref="F-78429r1_fix">Configure the operating system to disable non-essential capabilities by removing the telnet-server package from the system with the following command:
+
+# yum remove telnet-server</xccdf:fixtext>
+          <xccdf:fix id="F-78429r1_fix" />
+          <xccdf:check system="http://oval.mitre.org/XMLSchema/oval-definitions-5">
+            <xccdf:check-content-ref name="oval:mil.disa.stig.rhel7:def:1292" href="U_RHEL_7_V2R8_STIG_SCAP_1-2_Benchmark-oval.xml" />
+          </xccdf:check>
+        </xccdf:Rule>
+
+
+
+        <definition class="compliance" id="oval:mil.disa.stig.rhel7:def:1292" version="2">
+          <metadata>
+            <title>Package telnet-server Removed</title>
+            <affected family="unix">
+              <platform>multi_platform_rhel</platform>
+            </affected>
+            <description>The RPM package telnet-server should be removed.</description>
+            <reference ref_id="package_telnet-server_removed" source="ssg" />
+            <reference ref_id="CCE-27165-0" source="http://cce.mitre.org" />
+          </metadata>
+          <criteria>
+            <criterion comment="package telnet-server is removed" test_ref="oval:mil.disa.stig.rhel7:tst:1293" />
+          </criteria>
+        </definition>
+
+
+        <rpminfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" id="oval:mil.disa.stig.rhel7:obj:3007" version="1">
+          <name>telnet-server</name>
+        </rpminfo_object>

@@ -1,0 +1,10 @@
+
+STIG ipv4
+
+      <xccdf:Value id="xccdf_mil.disa.stig_value_sysctl_net_ipv4_icmp_echo_ignore_broadcasts_value" operator="equals" type="number">
+        <xccdf:title xml:lang="en-US">net.ipv4.icmp_echo_ignore_broadcasts</xccdf:title>
+        <xccdf:description xml:lang="en-US">Ignore all ICMP ECHO and TIMESTAMP requests sent to it via broadcast/multicast</xccdf:description>
+        <xccdf:value>1</xccdf:value>
+        <xccdf:value selector="enabled">1</xccdf:value>
+        <xccdf:value selector="disabled">0</xccdf:value>
+      </xccdf:Value>
