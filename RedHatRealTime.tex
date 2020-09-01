@@ -11,6 +11,7 @@
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{listings} % Code listings
+\usepackage{lmodern} % better tt fonts
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{textcomp}
@@ -429,17 +430,14 @@ feature (below) to support NightStar debugging) \\
     \hline
         \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
     \hline
-Kernel Preemption & (Yes,built-in) & Though Kernel Preemption is listed as a
-Concurrent RedHawk feature, it obviously is sourced from the RT Patch (and now
-the Linux mainline, see Appendix A). \\[4.5mm]
+Kernel Preemption & (Yes,built-in) & Kernel Preemption is from the RT Patch \\[4.5mm]
 Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default
 Completely Fair Scheduler (CFS) like priority-based SCHED\_FIFO and SCHED\_RR
 (round-robin) have been part of the RT Patch since 2007.  SCHED\_DEADLINE is
 available in Linux 3.6 (Red Hat 7.6) and later. \\[4.5mm]
-Low Latency Enhancements & (Yes,built-in) & Some kernel tuning derived from Red
-Hat's TUNA and SuSE Linux tools have been added as default. \\[4.5mm]
-Priority Inheritance & (Yes,built-in) & This has been part of SuSE Linux and the
-RT Patch since 2007.  \\[4.5mm]
+Low Latency Enhancements & (Yes,built-in) & Some kernel tuning configuration
+have been compiled in as defaults. \\[4.5mm]
+Priority Inheritance & (Yes,built-in) & From the RT Patch. \\[4.5mm]
 High Resolution Process Accounting & No & This feature follows from the use of
 the RCIM card and driver (above).\\[4.5mm]
 Capabilities Support & No & Permission files (\emph{capabilities} files) for
@@ -461,7 +459,7 @@ Support in mainline Linux for hyper-threading and symmetric multi-processing
 (SMP) has been since 2004.  \\[4.5mm]
 XFS Journaling File System & (Yes,built-in) & %
 The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been
-available for the Linux kernel since 2001.%
+available for mainline Linux since 2001.%
 \\
     \hline
     \end{tabular}%
