@@ -1,3 +1,61 @@
+Greg review
+-----
+1. shielding is available in Red Hat
+2. shielding is for low-level interrupts.  explain that this is a refinement on underlying cpuset in standard linux
+4. is the real-time response cited by Red Hawk needed?  I think not enough technical info on Red Hat
+5. Nightstar debugging tools make Concurrent attractive
+6. RCIM feature Anytime you work embedded a real-time clock feature is a good thing. Do the other two have anything like that?  The SuSE feature actually uses a board made by Concurrent RTI (the make of Red Hawk)
+Fix the Concurrent description?
+7. It looks like SuSE and RedHawk are more tailored to work in a real-time Linux environment. 
+ok, then that is a wash. All things equal, I'd give the nod to the following in order of priority 1) Vendor support (Probably Red Hat), and 2) Tool support (Probably Red Hawk) Now that I understand the kernels are nearly the same, that changes my opinion to be Red Hat
+
+
+"After allowing both SuSE and subsequently Concurrent to use Red Hat's contribution in their products ..."
+
+Bryan review
+-----
+
+Basically, SuSE and Concurrent are using the RT Patch from Red Hat without any attribution at all; they kind of stole it.
+SuSE re-packaged the CPU loading from the RT Patch as *shield* which is a python script on top of the Linux commands *cpuset* and *set_affinity()*
+The Concurrent Nightstar tools are pretty nice and are their real value-add to this domain
+Red Hat originally worked on real-time extensions to Linux to run on the IBM Bladeserver for the Zumwalt project at Raytheon IDS in the building I’m sitting in right now
+
+To me the overview subtlely implies that there’s little reason to use RedHawk or any of the other RT Linux flavors over the latest RT kernel supported by the Linux mainline, with the notable exception that tools offered by those flavors might still be advantageous (of course, that depends upon whether they’re used, which I haven’t seen that we are in the case of RedHawk’s NightStar Tools).  It also implies that we should be privy to the RedHawk source code, since we’re one of their customers.
+
+So, based on the overview, I’d definitely want to re-evaluate using RedHawk’s implementation against just using the mainline Linux.  I’d be asking the question – do we use the value added tools enough to justify the added expense?
+
+After reading the rest of the document, I might revise the re-evaluation statement to include Red Hat RT.
+
+
+
+
+
+
+
+My review
+-----
+3. Red Hat is ignoring customers interested in real-time without the enterprise components, for example, embedded system developers
+
+Bryan review
+-----
+
+
+Architect alternatives
+-----
+USB burner like Balena Etcher
+
+https://www.tecmint.com/create-an-iso-from-a-bootable-usb-in-linux/
+
+LiveCD Creator
+https://docs.fedoraproject.org/en-US/quick-docs/creating-and-using-a-live-installation-image/index.html
+
+
+SuSE Appliance Builder
+https://arstechnica.com/information-technology/2009/07/hands-on-linux-appliances-made-easy-with-suse-studio/
+
+
+
+
 History
 -----
 

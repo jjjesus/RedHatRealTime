@@ -151,6 +151,33 @@ maintained separately from the mainline Linux source code over the last 15 years
 by teams led by these same developers and has been downloaded and incorporated
 in thousands of systems and other Linux software distributions.
 
+CPUs can be shielded from interrupt processing and operating system background
+tasks so that they can be dedicated to real-time processing
+assigning lower-priority kernel tasks to separate CPUs from
+higher-priority tasks.
+
+\subsubsection{Red Hat Real-Time Products}
+The first announcement of Red Hat using their RT Patch work in their own
+products was in February 2007 when IBM and Raytheon IDS of Tewksbury, MA
+announced at the Boston 2007 Red Hat Summit that Red Hat real-time kernels were
+running on IBM Blade Server computing clusters for the DDG 1000 Zumwalt Class
+Destroyer Program.%
+\footnote{https://www-03.ibm.com/press/us/en/pressrelease/21033.wss}
+
+Later in 2007, RedHat announced their RedHat Messaging-Real-time-Grid (MRG)
+product which bundled the real-time kernel with low-latency messaging components
+and grid computing (\emph{grid computing} allows Linux to automatically spread
+workload across any available CPU in a distributed cluster of machines).  In
+this MRG product, Red Hat seemed to be ignoring customers who were interested in
+real-time but did not need the enterprise cluster computing features, namely,
+embedded systems developers.
+
+When Red Hat released Red Hat Enterprise Linux 7 (RHEL7) in 2014, the MRG
+product was deprecated, and \emph{Red Hat for Real-Time} was introduced as a
+separate product.  Red Hat RT includes the standard Linux kernel with the RT
+patch plus the Red Hat \emph{Tuna} tuning tool and other miscellaneous tools and
+documentation, aiming this product at the embedded systems market.
+
 \subsubsection{SuSE Linux Enterprise Real Time}
 Soon after IBM and Red Hat released the original Linux RT Patch in the early
 2000s, German firm \emph{Software und System-Entwicklung} (SuSE) released
@@ -158,9 +185,9 @@ Soon after IBM and Red Hat released the original Linux RT Patch in the early
 some features:
 
 \begin{enumerate}
-\item CPU shielding - in multiprocessing systems, CPUs can be shielded from
-interrupt processing and operaing system background tasks so that they can be
-dedicated to real-time processing
+\item Shield command - SuSE introduced a small python script to simplify the use
+of the Linux \emph{cpuset} command for confining kernel and user processes to
+certain processors (this script eventually moved to the main RT Patch)
 \item Support for a Real-Time Clock and Interrupt Module (RCIM) - a PCI card
 that provided programmable timers and 12 input and output external interrupt
 lines to synchronize clocks across systems.  SuSE provided Linux device drivers
@@ -174,7 +201,8 @@ slice of the scheduler.
 \label{ref:suse_rt_features}
 
 Although SuSE implied that they had implemented the real-time kernel features,
-Red Hat remarked of the SuSE offering:
+they were simply including the RT Patch code from Red Hat; Red Hat remarked of
+the SuSE offering:
 
 \begin{quote}
 "With their latest release, (SuSE) has moved to the Red Hat-developed real-time
@@ -199,18 +227,14 @@ Concurrent's refinements include kernel-level priority inheritance support,
 a Frequency Based Scheduler (FBS), process and IRQ shielding extensions,
 user-level real-time Hyper-Treading control for Intel Xeon platforms,
 user-level spin locks, significant real-time performance tuning and
-many additional improvements. A prime example of RedHawk's real-time
-superiority is its guaranteed interrupt response time of less than
-30 microseconds on a shielded
-processor.%
+many additional improvements.%
 \footnote{\url{https://www.businesswire.com/news/home/20040427005101/en/Concurrent-Announces-Version-2.1-RedHawk-Real-Time-Linux}}
 \end{quote}
 
-It seems fairly obvious that this list of \emph{Concurrent's refinements}
-are inherited from SuSE Real-Time which was derived from the RT Patch from IBM
-and RedHat, and, this comment from the Linux Weekly News online was
-representative of many in the
-Linux community to Concurrent's product announcement:
+It seems fairly obvious that this list of so-called \emph{Concurrent's refinements}
+are simply features inherited from SuSE Real-Time, and, this comment from the Linux
+Weekly News online was representative of many in the Linux community to
+Concurrent's product announcement:
 
 \begin{quote}
 Parent article: Concurrent releases RedHawk Linux 2.1
@@ -224,9 +248,9 @@ whose code they've customized.%
 \footnote{\url{https://lwn.net/Articles/82589/}}
 \end{quote}
 
-At the same time as the kernel changes, Concurrent released an impressive set of
-tools called \emph{NightStar} that are especially good in tracing the processing
-of data as it travels between boards and over networks:
+At the same time as the kernel changes, Concurrent released a set of tools
+called \emph{NightStar} that are especially good in tracing the processing of
+data as it travels between boards and over networks:
 
 \begin{quote}
 The RedHawk NightStar Tools allow users on an iHawk system running
@@ -248,32 +272,40 @@ application.%
 0898008-2.2}, March 2005}
 \end{quote}
 
-
-\subsubsection{Red Hat Real-Time Products}
-The first announcement of Red Hat using their RT Patch work in their own
-products was in February 2007 when IBM and Raytheon IDS of Tewksbury, MA
-announced at the Boston 2007 Red Hat Summit that Red Hat real-time kernels were
-running on IBM Blade Server computing clusters for the DDG 1000 Zumwalt Class
-Destroyer Program.%
-\footnote{https://www-03.ibm.com/press/us/en/pressrelease/21033.wss}
-Later in 2007, RedHat announced their RedHat Messaging-Real-time-Grid (MRG)
-product which bundled the real-time kernel with low-latency messaging components
-and grid computing (\emph{grid computing} allows Linux to automatically spread
-workload across any available CPU in a distributed cluster of machines).  In
-this MRG product, Red Hat seemed to be ignoring customers who did not need the
-enterprise cluster computing features.
-
-When Red Hat released Red Hat Enterprise Linux 7 (RHEL7) in 2014, the MRG
-product was deprecated, and \emph{Red Hat for Real-Time} was introduced as a
-separate product.  Red Hat RT includes the standard Linux kernel with the RT
-patch plus the Red Hat \emph{Tuna} tuning tool and other miscellaneous tools and
-documentation.
+Note that the Concurrent RedHawk product offering has not changed in the fifteen
+years since the product announcement above except to continue to merge in RT
+Patch improvements and to continually improve their NightStar tool suite.
 
 \subsubsection{Merge of RT Patch to Linux mainline in July 2019}
 In July 2019, Linux Torvalds merged the RT Patch into the Linux mainline and the
 latest Linux kernel can now be made real-time using a configuration option.%
 \footnote{Linus Torvald's commit message is included in its entirety in Appendix
 A}
+This merge means that anyone can download the latest Linux kernel source and
+build it to include all of the real-time features.
+
+\subsubsection{Summary of Linux real-time options}
+
+\begin{enumerate}
+    \item Each of the real-time kernels offered from Red Hat, RedHawk, and SuSE
+is the same as the others, merged from the RT Patch originally contributed and
+currently maintained by Red Hat developers
+    \item Though it has not changed its Red Hawk or Nightstar feature set in 15
+years, Concurrent's Nightstar tools are very useful for distributed real-time
+systems
+    \item Red Hat has always had a real-time kernel product, but, it was
+obscured by the enterprise cluster features with which it was packaged within
+the Red Hat's MRG product, effectively hiding Red Hat's real-time kernel from
+embedded systems developers.
+    \item When Red Hat released Red Hat Enterprise Linux 7 (RHEL7) in 2014, the
+MRG product was deprecated, and \emph{Red Hat for Real-Time} was introduced as a
+separate product.  Red Hat RT includes the standard Linux kernel with the RT
+patch plus the Red Hat \emph{Tuna} tuning tool and other miscellaneous tools and
+documentation, aiming this product at the embedded systems market.
+    \item The RT Patch was merged into mainline in July 2019 and thus available
+to anyone who downloads and builds the kernel source code
+\end{enumerate}
+
 
 
 \subsection{Document purpose}
