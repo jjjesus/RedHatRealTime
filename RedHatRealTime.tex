@@ -136,6 +136,7 @@ running programs and used a \emph{completely fair scheduler} (CFS) to insure
 equality among the running processes.
 
 \subsubsection{Real-time patch (RT Patch) for the Linux operating system}
+\label{section:rt_patch}
 In the early 2000s, engineers at IBM and Red Hat were working on modifying the
 Linux kernel source code to support real-time applications.  In a real-time
 system like a radar, some processing has deadlines, for example, transmitting
@@ -275,9 +276,9 @@ application.%
 0898008-2.2}, March 2005}
 \end{quote}
 
-Note that the Concurrent RedHawk product offering has not changed in the fifteen
-years since the product announcement above except to continue to merge in RT
-Patch improvements and to continually improve their NightStar tool suite.
+Though the excerpt above was over fifteen years ago, the product features have
+not changed, the products instead progressing by moving along with the mainline
+kernel version and RT Patch and porting to new boards/platforms.
 
 \subsubsection{Merge of RT Patch to Linux mainline in July 2019}
 In July 2019, Linux Torvalds merged the RT Patch into the Linux mainline and the
@@ -293,8 +294,8 @@ build it to include all of the real-time features.
     \item Each of the real-time kernels offered from Red Hat, RedHawk, and SuSE
 is the same as the others, merged from the RT Patch originally contributed and
 currently maintained by Red Hat developers
-    \item Though it has not changed its Red Hawk or Nightstar feature set in 15
-years, Concurrent's Nightstar tools are very useful for distributed real-time
+    \item Though it has not changed its Red Hawk or NightStar feature set in 15
+years, Concurrent's NightStar tools are very useful for distributed real-time
 systems
     \item Red Hat has always had a real-time kernel product, but, it was
 obscured by the enterprise cluster features with which it was packaged within
@@ -356,6 +357,20 @@ The structure of this document:
 \section{Real-time features from RedHawk in KRFS}
 \label{sec:redhawk_features}
 
+KRFS presently is on the Concurrent RedHawk Linux platform. Table
+\ref{tab:redhawk_features_1} and Table \ref{tab:redhawk_features_2} list the
+Concurrent RedHawk features in the order they appear in Reference
+\ref{ref:red_hawk_guide} even though not all of the features are actually
+real-time Linux kernel features; for example, hyper-threading is a hardware
+setting in Intel CPU and the RCIM card is a piece of hardware and the XFS
+filesystem originally from SGI is technically outside the kernel.  All of the
+real-time kernel features are inherited from the RT Patch described in Section
+\ref{section:rt_patch} except for those based on the RCIM card (device driver,
+scheduler, process accounting).
+
+Only the first two features from the list are explicitly used by KRFS source
+code.
+
 \begin{table}[H]
     \captionsetup{width=.9\linewidth}
     \caption{RedHawk real-time feature list (Part 1)}
@@ -373,9 +388,9 @@ User-level Preemption Control & No & User control of preemption of userspace syn
 Fast Block/Wake Services & No & A preemptible semaphore in the kernel available from RT Patch since 2007. \\
 RCIM Driver & No & Concurrent sells a PCI card called the Real-time Clock Interface Module (RCIM).  The card can provide a 400ns clock signal to the operating system through an interrupt handler to enable a high-resolution timer feature. \\
 Frequency-Based Scheduler (FBS) & No & Source code for the FBS provided by Concurrent is actually copied without attribution from the original SuSE Linux Real-Time Extensions released in 2006. \\
-/proc Modifications & No & This feature is part of the \emph{usermap} feature (see below) that can be used by Nightstar or even regular users.\\
-Kernel Trace Facility & No & This feature is combined with the standard kernel debuggers to support enhanced kernel debugging features using Nightstar \\
-ptrace Extensions & No & This feature is combined with the \emph{usermap} feature (below) to support Nightstar debugging) \\
+/proc Modifications & No & This feature is part of the \emph{usermap} feature (see below) that can be used by NightStar or even regular users.\\
+Kernel Trace Facility & No & This feature is combined with the standard kernel debuggers to support enhanced kernel debugging features using NightStar \\
+ptrace Extensions & No & This feature is combined with the \emph{usermap} feature (below) to support NightStar debugging) \\
     \hline
     \end{tabular}%
     }
@@ -391,16 +406,16 @@ ptrace Extensions & No & This feature is combined with the \emph{usermap} featur
     \hline
         \textbf{Feature} & \textbf{Used in KRFS} & \textbf{Description} \\
     \hline
-Kernel Preemption & (Yes,built-in) & The RT Patch is listed as a Concurrent RedHawk feature though it obviously is sourced from the RT Patch (and now the Linux mainline, see Appendix A). \\[4.5mm]
+Kernel Preemption & (Yes,built-in) & Though Kernel Preemption is listed as a Concurrent RedHawk feature, it obviously is sourced from the RT Patch (and now the Linux mainline, see Appendix A). \\[4.5mm]
 Real-Time Scheduler & (Yes,built-in) & Alternatives to the Linux default Completely Fair Scheduler (CFS) like priority-based SCHED\_FIFO and SCHED\_RR (round-robin) have been part of the RT Patch since 2007.  SCHED\_DEADLINE is available in Linux 3.6 (Red Hat 7.6) and later. \\[4.5mm]
 Low Latency Enhancements & (Yes,built-in) & Some kernel tuning derived from Red Hat's TUNA and SuSE Linux tools have been added as default. \\[4.5mm]
 Priority Inheritance & (Yes,built-in) & This has been part of SuSE Linux and the RT Patch since 2007.  \\[4.5mm]
 High Resolution Process Accounting & No & This feature follows from the use of the RCIM card and driver (above).\\[4.5mm]
 Capabilities Support & No & Permission files (\emph{capabilities} files) for features like the \emph{usermap} and \emph{/proc mmap} features (below). \\[4.5mm]
-Kernel Debuggers & (Yes,built-in) & The built-in kernel debuggers \emph{kdb} and \emph{kgdb} can be configured to work with Nightstar. \\[4.5mm]
-Kernel Core Dumps/Crash and Live Analysis & (Yes,built-in) &  This feature supports Nightstar, allowing it to directly map and introspect kernel memory. \\[4.5mm]
+Kernel Debuggers & (Yes,built-in) & The built-in kernel debuggers \emph{kdb} and \emph{kgdb} can be configured to work with NightStar. \\[4.5mm]
+Kernel Core Dumps/Crash and Live Analysis & (Yes,built-in) &  This feature supports NightStar, allowing it to directly map and introspect kernel memory. \\[4.5mm]
 User-level Spin Locks & No &  User control of preemption of spinlocks in the kernel provided by a special system function call \emph{resched\_cntl}.  Makes kernel space preemption mechanism invocable from userspace. \\[4.5mm]
-usermap and /proc mmap & No & This feature supports Nightstar, allowing it to directly map and introspect any user process.  \\[4.5mm]
+usermap and /proc mmap & No & This feature supports NightStar, allowing it to directly map and introspect any user process.  \\[4.5mm]
 Hyper-threading & (Yes,built-in) & This is a setting in the CPU hardware that is controlled in the BIOS or bootloader that allows in-core multi-processing.  Support in mainline Linux for hyper-threading and symmetric multi-processing (SMP) has been since 2004.  \\[4.5mm]
 XFS Journaling File System & (Yes,built-in) & %
 The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been available for the Linux kernel since 2001.%
@@ -411,7 +426,61 @@ The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been a
     \label{tab:redhawk_features_2}
 \end{table}
 
-\subsection{Equivalent real-time features from RedHat RT for K3}
+\subsection{KRFS source code changes for a non-RedHawk Linux}
+
+
+\subsubsection{Shielding CPUs from low-priority system tasks}
+
+CPUs can be shielded from the kernel command-line by using the \emph{isolcpus}
+kernel boot parameter to specify one or more CPUs to isolate from the general
+Linux kernel scheduler algorithms (Listing \ref{lst:shield_kernel}).
+
+
+\lstset{
+    language=bash,
+    basicstyle=\footnotesize\ttfamily,
+    linewidth=7in,
+    showstringspaces=false,
+    keywordstyle=\ttfamily
+}
+\begin{adjustwidth}{0.0in}{0.0in}
+\begin{lstlisting}[caption={Shielding CPUs at at kernel boot command-line},
+label={lst:shield_kernel}]
+
+# Typical kernel boot command-line specifying isolated CPUs 1-6
+acpi_enforce_resources=lax intel_iommu=on cma=800M nousb isolcpus=1-6
+
+\end{lstlisting}
+\end{adjustwidth}
+
+To shield CPUs anytime after kernel boot the \emph{cset} command can be used
+(Listing \ref{lst:shield_cmd}).
+
+\lstset{
+    language=bash,
+    basicstyle=\footnotesize\ttfamily,
+    linewidth=7in,
+    showstringspaces=false,
+    keywordstyle=\ttfamily
+}
+\begin{adjustwidth}{0.0in}{0.0in}
+\begin{lstlisting}[caption={Shielding CPUs at command-line},
+label={lst:shield_cmd}]
+
+# Create a cpuset for signal processing named "sigproc" on CPU 1-6
+$ cset set --cpu=1-6 --set=sigproc
+
+# Create a cpuset named "system" on CPU 0, 7, 8
+$ cset set --cpu=0,7-8 --set=system
+
+# Assign operating system tasks to "system"
+$ cset proc --move --fromset=root --toset=system
+
+\end{lstlisting}
+\end{adjustwidth}
+
+\subsubsection{CPU affinity for processes and threads}
+
 
 %%%%%%%%%%%%%%%%% Image creation %%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -446,7 +515,8 @@ The XFS filesystem was invented at Silicon Graphics (SGI) in 1996 and has been a
 
 \subsection{License costs}
 
-Table \ref{tab:license_costs} summarizes license costs (see References \ref{ref:karl} and \ref{ref:lynn}).
+Table \ref{tab:license_costs} summarizes license costs (see References
+\ref{ref:karl} and \ref{ref:lynn}).
 
 \begin{table}[H]
 \captionsetup{width=.9\linewidth}
