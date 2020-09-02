@@ -35,9 +35,8 @@
 
 % Header
 \pagestyle{fancy}
-%\lhead{K3 Migration to Red Hat Real-Time Linux}
-\lhead{Working title}
-\rhead{August 28, 2020}
+\lhead{K3 Migration to Red Hat Real-Time Linux}
+\rhead{September 3, 2020}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
@@ -50,10 +49,9 @@
 \begin{center}
         \vspace*{1cm}
 
-        %\LARGE{Ku Band Radio Frequency System Version 3 (K3) \\
-        %Migration from Concurrent RedHawk Linux to \\
-        %Red Hat Real-Time Linux}
-        \LARGE{Working Title}
+        \LARGE{Ku Band Radio Frequency System Version 3 (K3) \\
+        Migration from Concurrent RedHawk Linux to \\
+        Red Hat Real-Time Linux}
 
         \vspace{0.5cm}
         \LARGE
@@ -64,7 +62,7 @@
         \normalsize
 
         John Jesus \\
-        August 28, 2020
+        September 3, 2020
 
         \vfill
 
@@ -496,15 +494,10 @@ Linux kernel scheduler algorithms (Listing \ref{lst:shield_kernel}).
 }
 \begin{minipage}{\linewidth}
 \begin{adjustwidth}{0.0in}{0.0in}
-\begin{lstlisting}[caption={Shielding CPUs at at kernel boot command-line},
-label={lst:shield_kernel}]
+\begin{lstinputlisting}[caption={Shielding CPUs at at kernel boot command-line},
+label={lst:shield_kernel}]{bootparam.sh}
 
-# Typical kernel boot command-line specifying isolated CPUs 1-6
-#
-acpi_enforce_resources=lax intel_iommu=on cma=800M nousb isolcpus=1-6
-
-
-\end{lstlisting}
+\end{lstinputlisting}
 \end{adjustwidth}
 \end{minipage}
 \vspace{0.8cm}
@@ -521,25 +514,10 @@ To shield CPUs anytime after kernel boot the \emph{cset} command can be used
     keywordstyle=\ttfamily
 }
 \begin{adjustwidth}{0.0in}{0.0in}
-\begin{lstlisting}[caption={Shielding CPUs at command-line},
-label={lst:shield_cmd}]
+\begin{lstinputlisting}[caption={Shielding CPUs at command-line},
+label={lst:shield_cmd}]{shield.sh}
 
-# Create a cpuset for signal processing named "sigproc" on CPU 1-6
-#
-$ cset set --cpu=1-6 --set=sigproc
-
-
-# Create a cpuset named "system" on CPU 0, 7, 8
-#
-$ cset set --cpu=0,7-8 --set=system
-
-
-# Assign operating system tasks to "system"
-#
-$ cset proc --move --fromset=root --toset=system
-
-
-\end{lstlisting}
+\end{lstinputlisting}
 \end{adjustwidth}
 \vspace{0.8cm}
 
@@ -557,22 +535,10 @@ To pin a process onto a particular cpu or cpuset, instead of using the RedHawk
     keywordstyle=\ttfamily
 }
 \begin{adjustwidth}{0.0in}{0.0in}
-\begin{lstlisting}[caption={Use taskset instead of run},
-label={lst:taskset_cmd}]
+\begin{lstinputlisting}[caption={Use taskset instead of run},
+label={lst:taskset_cmd}]{taskset.sh}
 
-# In RedHawk, run a program on CPU 5 or 6 (-b stands for "bias")
-#
-$ run -b 5,6 ./mycommand
-
-
-# The equivalent of above in conventional Linux
-# This command will run the /bin/my-app application on CPU 5 or 6:
-#
-$ taskset -c 5,6 /bin/my-app
-
-
-
-\end{lstlisting}
+\end{lstinputlisting}
 \end{adjustwidth}
 \vspace{0.8cm}
 
@@ -601,10 +567,49 @@ the functions \emph{pthread\_setaffinity\_np()} or
 \section{Hardening the Linux operating system}
 \label{sec:image_hardening}
 
-\subsection{Hardening the Linux operating system in K2}
+To harden an operating system is to minimize vulnerabilities to malicious
+outside access; requiring a password for login is a basic hardening mechanism.
 
-\subsection{Using DevSecOps tools for hardening}
+The Defense Information Systems Agency (DISA) publishes guidance for hardening
+specific operating systems called Security Technology Implementation Guidance
+(STIG).  For Linux distributions, DISA publishes a STIG for only these Linux
+Distributions:
+\begin{enumerate}
+    \item RedHat Linux
+    \item Oracle Linux
+    \item SuSE Linux
+\end{enumerate}
 
+The STIG is published in an unconventional format: as an XML file.  An excerpt
+from the \emph{Red Hat Enterprise Linux 7 STIG} is in Appendix B.  The XML file
+contains hundreds of elements each specifying a security item to be checked
+and even contains instructions for remedying the item.  This XML file can be
+parsed by tools that generate reports or maintain a vulnerability database.
+
+A different government agency (National Institute of Standards and Technology)
+publishes the DISA STIG in a slightly different XML format called Security
+Content Automation Protocol (SCAP) that provides a better interface for security
+tools that check systems and generate reports or even automate the remedies.
+The most popular open-source SCAP tool is OpenSCAP and the most used SCAP tool
+in the defense community is the SCAP Compliance Checker (SCC) from Space and
+Naval Warfare Systems Center (SPAWAR).
+
+\subsection{Hardening with home-grown bash scripts in K2}
+On KRFS K2, the SPAWAR SCC tool is installed onto an SBC card running an initial
+Linux image released from KRFS.  The SCC tool is invoked to produce a report
+listing any vulnerabilities and assigning a score to the Linux image on that
+card.  KRFS source code includes bash scripts whose content is extracted from
+the STIG or SCAP files, and, these bash scripts are run on the SBC card to
+execute the STIG-prescribed remedies.  The SPAWAR SCC tool is run again to
+produce another report and score, and, this process repeats until an acceptable
+security posture is achieved.  This hardened Linux filesystem image is then
+captured and becomes the new master Linux image.
+
+\subsection{Using DevSecOps tools for hardening in K3}
+For the Linux image produced for K3, instead of using the home-grown bash
+scripts to apply the STIG remedies, DevSecOps tools based on Ansible produced by
+the founders of the Ansible team (now part of Red Hat) will automatically harden
+the operating system as part of the DevSecOps build-deploy process.
 
 
 %%%%%%%%%%%%%%%%% Migrating to Red Hat %%%%%%%%%%%%%%%%%%%%%%%%
@@ -722,55 +727,9 @@ Pull CONFIG_PREEMPT_RT stub config from Thomas Gleixner:
     showstringspaces=false
 }
 \begin{adjustwidth}{-0.5in}{0.0in}
-\begin{lstlisting}[caption={STIG XML sample},
-label={lst:stig_xml}]
-<Group id="V-72077">
-    <title>SRG-OS-000095-GPOS-00049</title>
-    <description>&lt;GroupDescription&gt;&lt;/GroupDescription&gt;</description>
-    <Rule id="SV-86701r2\_rule" severity="high" weight="10.0">
-        <version>RHEL-07-021710</version>
-        <title>The Red Hat Enterprise Linux operating system must not have the
-telnet-server package installed.</title>
-        <description> ooo </description>
-        <reference>
-            <dc:title>DPMS Target Red Hat 7</dc:title>
-            <dc:publisher>DISA</dc:publisher>
-            <dc:type>DPMS Target</dc:type>
-            <dc:subject>Red Hat 7</dc:subject>
-            <dc:identifier>2777</dc:identifier>
-        </reference>
-        <ident system="http://iase.disa.mil/cci">CCI-000381</ident>
-        <fixtext fixref="F-78429r1\_fix">Configure the operating system to
-disable non-essential capabilities by removing the telnet-server package from
-the system with the following command:
-
-# yum remove telnet-server</fixtext>
-        <fix id="F-78429r1\_fix" />
-        <check system="C-72309r2\_chk">
-            <check-content-ref name="M"
-                href="DPMS\_XCCDF\_Benchmark\_RHEL\_7\_STIG.xml" />
-            <check-content>Verify the operating system is configured to disable
-non-essential capabilities. The most secure way of ensuring a non-essential
-capability is disabled is to not have the capability installed.
-
-The telnet service provides an unencrypted remote access service that does not
-provide for the confidentiality and integrity of user passwords or the remote
-session.
-
-If a privileged user were to log on using this service, the privileged user
-password could be compromised.
-
-Check to see if the telnet-server package is installed with the following
-command:
-
-# yum list installed telnet-server
-
-If the telnet-server package is installed, this is a finding.</check-content>
-        </check>
-    </Rule>
-</Group>
-
-\end{lstlisting}
+\begin{lstinputlisting}[caption={STIG XML sample},
+label={lst:stig_xml}]{stig.xml}
+\end{lstinputlisting}
 \end{adjustwidth}
 \vspace{0.8cm}
 

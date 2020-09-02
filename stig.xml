@@ -1,0 +1,46 @@
+<Group id="V-72077">
+    <title>SRG-OS-000095-GPOS-00049</title>
+    <description>&lt;GroupDescription&gt;&lt;/GroupDescription&gt;</description>
+    <Rule id="SV-86701r2\_rule" severity="high" weight="10.0">
+        <version>RHEL-07-021710</version>
+        <title>The Red Hat Enterprise Linux operating system must not have the
+telnet-server package installed.</title>
+        <description> ooo </description>
+        <reference>
+            <dc:title>DPMS Target Red Hat 7</dc:title>
+            <dc:publisher>DISA</dc:publisher>
+            <dc:type>DPMS Target</dc:type>
+            <dc:subject>Red Hat 7</dc:subject>
+            <dc:identifier>2777</dc:identifier>
+        </reference>
+        <ident system="http://iase.disa.mil/cci">CCI-000381</ident>
+        <fixtext fixref="F-78429r1\_fix">Configure the operating system to
+disable non-essential capabilities by removing the telnet-server package from
+the system with the following command:
+
+# yum remove telnet-server</fixtext>
+        <fix id="F-78429r1\_fix" />
+        <check system="C-72309r2\_chk">
+            <check-content-ref name="M"
+                href="DPMS\_XCCDF\_Benchmark\_RHEL\_7\_STIG.xml" />
+            <check-content>Verify the operating system is configured to disable
+non-essential capabilities. The most secure way of ensuring a non-essential
+capability is disabled is to not have the capability installed.
+
+The telnet service provides an unencrypted remote access service that does not
+provide for the confidentiality and integrity of user passwords or the remote
+session.
+
+If a privileged user were to log on using this service, the privileged user
+password could be compromised.
+
+Check to see if the telnet-server package is installed with the following
+command:
+
+# yum list installed telnet-server
+
+If the telnet-server package is installed, this is a finding.</check-content>
+        </check>
+    </Rule>
+</Group>
+
