@@ -143,24 +143,33 @@ In the early 2000s, engineers at IBM and Red Hat were working on modifying the
 Linux kernel source code to support real-time applications.  In a real-time
 system like a radar, some processing has deadlines, for example, transmitting
 pulses or processing signal returns, where instead of emphasizing fair
-scheduling among all processes, a real-time operaing system (RTOS) must assign
+scheduling among all processes, a real-time operating system (RTOS) must assign
 priorities to tasks and interrupt (preempt) not only the currently running task
 but even its own internal mechanisms (spinlocks, semaphores, and interrupt
 handling) to meet the real-time deadlines.  This patch was originally named
-\emph{PREMPT\_RT} or \emph{CONFIG\_PREEMPT\_RT} and authored by some of the most
+\emph{PREEMPT\_RT} or \emph{CONFIG\_PREEMPT\_RT} and authored by some of the most
 important Linux kernel developers, Ingo Molnar and Thomas Gleixner of Red Hat
 and Paul McKenny of IBM.  The source code for the RT Patch has been actively
 maintained separately from the mainline Linux source code over the last 15 years
 by teams led by these same developers and has been downloaded and incorporated
 in thousands of systems and other Linux software distributions.
 
-%CPUs can be shielded from interrupt processing and operating system background
-%tasks so that they can be dedicated to real-time processing
-%assigning lower-priority kernel tasks to separate CPUs from
-%higher-priority tasks.
-% The term and mechanisms for \emph{shielded CPU} comes from the SuSE Linux Enterprise Real Time release of April 2008 for constaining the running of operating system threads on certain CPUs in a multicore/multiprocessor system. KRFS uses this feature to protect or \emph{shield} certain CPUs from running Linux kernel lower-priority operations and lower-priority interrupts (such as disk I/O) so that the shielded CPUs can be dedicated to real-time application (radar processing) code.  The standard Linux kernel equivalent is named \emph{cpuset} and works in a similar way.
-%
-% This feature enables application workload to be spread among multiple CPUs to exploit concurrent processing.  This assignment of application processes to \emph{cpusets} is specified in userspace (that is, the application programmer decides this partitioning).  In KRFS, signal processing application threads can be distributed among shielded CPUs so dedicated and network communications can be partitioned onto other cores/CPUs.
+Some other features of the RT Patch besides kernel-level preemption:
+
+\begin{enumerate}
+\item CPU shielding - this mechanism constrains the running of operating system
+threads to certain CPUs in a multicore/multiprocessor system.  KRFS uses this
+feature to protect or \emph{shield} certain CPUs from running Linux kernel
+lower-priority operations and lower-priority interrupts (such as disk I/O) so
+that the shielded CPUs can be dedicated to real-time application (radar
+processing) code.
+\item CPU affinity - this mechanism enables application workload to be spread
+among multiple CPUs to exploit concurrent processing.  This assignment of
+application processes to \emph{cpusets} is specified in userspace (that is, the
+application programmer decides this partitioning).  In KRFS, signal processing
+application threads can be distributed among shielded CPUs so dedicated and
+network communications can be partitioned onto other cores/CPUs.
+\end{enumerate}
 
 \subsubsection{Red Hat Real-Time Products}
 The first announcement of Red Hat using their RT Patch work in their own
@@ -170,7 +179,7 @@ running on IBM Blade Server computing clusters for the DDG 1000 Zumwalt Class
 Destroyer Program.%
 \footnote{https://www-03.ibm.com/press/us/en/pressrelease/21033.wss}
 
-Later in 2007, RedHat announced their RedHat Messaging-Real-time-Grid (MRG)
+Later in 2007, Red Hat announced their Red Hat Messaging-Real-time-Grid (MRG)
 product which bundled the real-time kernel with low-latency messaging components
 and grid computing (\emph{grid computing} allows Linux to automatically spread
 workload across any available CPU in a distributed cluster of machines).  In
