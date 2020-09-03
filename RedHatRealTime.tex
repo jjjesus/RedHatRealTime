@@ -621,7 +621,7 @@ is installed in the local SSD and boot from it.
 \subsection{RedHawk Architect in K2}
 RedHawk provides an Architect tool that helps to create the artifacts of Figure
 \ref{fig:pxe_install}. Figure \ref{fig:architect_screenshot} is a sample
-screenshot from Architect.  We use Architect to create items from Table
+screenshot from Architect.  KRFS uses Architect to create items from Table
 \ref{tab:architect_artifacts}.
 
 \begin{table}[H]
@@ -641,8 +641,9 @@ screenshot from Architect.  We use Architect to create items from Table
                             & other PXE config files & $ < 1.0$  \\
     \hline
         Target system image &  & \\
-                            & image.tgz                      & 700.0  \\
-                            & partition info, fstab, other config files & $ < 1.0$  \\
+                            & image.tgz                    & 700.0  \\
+                            & partition info, fstab, other %
+                              config files               & $ < 1.0$  \\
     \hline
     \end{tabular}%
     }
