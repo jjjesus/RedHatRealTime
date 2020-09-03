@@ -555,10 +555,33 @@ the functions \emph{pthread\_setaffinity\_np()} or
 \section{Creating the Linux operating system image}
 \label{sec:image_creation}
 
+%%%%%%%%%%%%%%%%% RedHawk Architect in K2 %%%%%%%%%%%%%%%%%%%%%%%%
+%
 \subsection{RedHawk Architect in K2}
 
-\subsection{Compiling the Linux kernel from source using Raytheon NE tools}
+\subsubsection{Kernel binary from RedHawk}
 
+\subsubsection{XES BSP kernel objects}
+
+\subsubsection{KRFS kernel objects and device drivers}
+
+\subsubsection{Initial ramdisk image}
+
+
+
+
+
+%%%%%%%%%%%%%%%%% Create Linux in K3 %%%%%%%%%%%%%%%%%%%%%%%%
+%
+\subsection{DevSecOps in K3}
+
+\subsubsection{Compiling the Linux kernel from source}
+
+\subsubsection{XES BSP kernel objects}
+
+\subsubsection{KRFS kernel objects and device drivers}
+
+\subsubsection{Initial ramdisk image}
 
 
 %%%%%%%%%%%%%%%%% Hardening %%%%%%%%%%%%%%%%%%%%%%%%
@@ -607,10 +630,11 @@ captured and becomes the new master Linux image.
 
 \subsection{Using DevSecOps tools for hardening in K3}
 For the Linux image produced for K3, instead of using the home-grown bash
-scripts to apply the STIG remedies, DevSecOps tools based on Ansible produced by
-the founders of the Ansible team (now part of Red Hat) will automatically harden
-the operating system as part of the DevSecOps build-deploy process.
-
+scripts to apply the STIG remedies, a DevSecOps
+tool\footnote{https://github.com/ansible-lockdown/RHEL7-STIG} based on
+Ansible\footnote{https://www.ansible.com/} (now part of Red Hat) will be used to
+automatically harden the operating system as part of the DevSecOps build-deploy
+process.
 
 %%%%%%%%%%%%%%%%% Migrating to Red Hat %%%%%%%%%%%%%%%%%%%%%%%%
 %
