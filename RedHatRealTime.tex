@@ -1,7 +1,6 @@
 \documentclass[12pt]{article}
 
 \usepackage{array} % table right-justify
-%\usepackage{beramono} % listing monospace font
 \usepackage{caption}
 \usepackage{changepage} % adjustwidth
 \usepackage{colortbl} %
@@ -20,7 +19,6 @@
 \usepackage{etoolbox}
 
 \AtBeginEnvironment{quote}{\singlespacing\small}
-%\AtBeginEnvironment{quote}{\small}
 
 \usepackage[utf8]{inputenc}
 \usepackage{setspace}
@@ -36,7 +34,7 @@
 % Header
 \pagestyle{fancy}
 \lhead{K3 Migration to Red Hat Real-Time Linux}
-\rhead{September 3, 2020}
+\rhead{September 4, 2020}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 
@@ -62,7 +60,7 @@
         \normalsize
 
         John Jesus \\
-        September 3, 2020
+        September 4, 2020
 
         \vfill
 
@@ -359,6 +357,8 @@ Computer Corporation, May 2014) \label{ref:nightstar}
 Hat Corporation, November 6, 2015) \label{ref:rhel7_ref}
     \item \textit{Red Hat Enterprise Linux for Real Time 7 Installation Guide}
 (Red Hat Corporation, November 6, 2015) \label{ref:rhel7_install}
+    \item \textit{Preboot Execution Environment (PXE) Specification Version 2.1}
+(Intel Corporation, September 20, 1999) \label{ref:pxe_boot}
     \item Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl
 Weis, Global Supply Chain Program Lead, Raytheon \label{ref:karl}
     \item Source for Red Hat Real-Time costs in Table \ref{tab:license_costs}
@@ -560,6 +560,21 @@ the functions \emph{pthread\_setaffinity\_np()} or
 \subsection{RedHawk Boot in K2}
 
 \subsubsection{Normal Boot with RedHawk in K2}
+The normal boot of RedHawk Linux is depicted in Figure \ref{fig:normal_boot}.
+On reset, the Xeon-D jumps into the boot flash (bottom of diagram) where two
+components called CoreBoot and SeaBIOS are installed.  Both CoreBoot and SeaBIOS
+come not from RedHawk but from the board vendor X-ES.  The Xeon-D begins
+booting from CoreBoot (Item 1) and  CoreBoot loads its payload called SeaBIOS which
+is a small piece of software that decides the Linux boot method (Item 2).
+
+The RedHawk Linux kernel is in the local SSD flash (upper-right of diagram) on
+the 7672 with a Linux root filesystem.  SeaBIOS accesses the Master Boot Record
+(MBR) in the local SSD flash (upper-right) and checks for a magic number at the
+end which was previously inserted by KRFS software (Item 3).  The magic number
+is an indicator that the local SSD contains the normal boot contents, and,
+SeaBIOS continues to boot from the local SSD if it finds the magic number there;
+if the magic number is not found, SeaBIOS will advance to the next boot option,
+which is a network boot over Ethernet (Item 4).
 
 \begin{figure}[H]
     \begin{center}
@@ -569,11 +584,34 @@ the functions \emph{pthread\_setaffinity\_np()} or
     \end{center}
 \end{figure}
 
-\subsubsection{PXE Install Boot with RedHawk in K2}
+\subsubsection{PXE Boot to Install RedHawk in K2}
+To install RedHawk onto the local SSD flash, a technique depicted
+in Figure \ref{fig:pxe_install} combines a network boot (called \emph{PXE Boot})
+with an embedded installation script.  A full description of PXE Boot is in
+Reference \ref{ref:pxe_boot}.
+
+To force a PXE boot, the magic number in the Master Boot Record of the local SSD
+(upper-right of diagram) is invalidated.  Erasing the SSD will invalidate the
+MBR, or, KRFS provides a special tool to erase the magic number.  With the MBR
+magic number invalidated, when the system is rebooted, SeaBIOS will detect that
+local SSD is not bootable (Item 3) and will advance to the next boot option
+which is a PXE Boot (Item 4).  SeaBIOS will broadcast PXE boot requests on the
+Ethernet which will be detected and serviced by a maintenance laptop plugged
+into the same Ethernet network (Item 5).  The laptop provides a small Linux
+kernel image (called \emph{vmlinux}) and a tiny root file system (called an
+initial ramdisk or \emph{initrd0.img}) over the network which SeaBIOS loads into
+RAM and then has the Xeon-D jump into this Linux kernel in RAM (Item 6).
+Embedded within the initial ramdisk is an installation script, which pulls a
+tarball called \emph{image.tgz} from the laptop and installs it onto the local
+SSD (Item 7).  This tarball contains the tactical RedHawk Linux Kernel and root
+filesystem.  After a successful install, the installation script inserts the
+magic number into the Master Boot Record and the local SSD is ready to be
+booted.  The next time the system boots, SeaBIOS will detect that a good image
+is installed in the local SSD and boot from it.
 
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.7\textwidth]{img/pxe_install}
+    \includegraphics[width=0.8\textwidth]{img/pxe_install}
     \caption{PXE Install of SBC with RedHawk in K2}
     \label{fig:pxe_install}
     \end{center}
@@ -581,17 +619,50 @@ the functions \emph{pthread\_setaffinity\_np()} or
 
 %
 \subsection{RedHawk Architect in K2}
+RedHawk provides an Architect tool that helps to create the artifacts of Figure
+\ref{fig:pxe_install}. Figure \ref{fig:architect_screenshot} is a sample
+screenshot from Architect.  We use Architect to create items from Table
+\ref{tab:architect_artifacts}.
 
-\subsubsection{Artifacts}
+\begin{table}[H]
+    \captionsetup{width=1.0\linewidth}
+    \caption{Artifacts created with RedHawk Architect}
+    \resizebox{1.0\textwidth}{!}{%
+    \begin{tabular}{%
+    >{\raggedright\arraybackslash}p{1.6in}%
+    >{\raggedright\arraybackslash}p{2.8in}%
+    >{\raggedleft\arraybackslash}p{1.0in}}
+    \hline
+                            & \textbf{Artifact Name} & \textbf{Size (MB)} \\
+    \hline
+        PXE Boot files      &  & \\
+                            & vmlinuz                &     5.3 \\
+                            & initrd.img             &     7.0  \\
+                            & other PXE config files & $ < 1.0$  \\
+    \hline
+        Target system image &  & \\
+                            & image.tgz                      & 700.0  \\
+                            & partition info, fstab, other config files & $ < 1.0$  \\
+    \hline
+    \end{tabular}%
+    }
+    \label{tab:architect_artifacts}
+\end{table}
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=1.0\textwidth]{img/architect_screenshot}
+    \caption{Screenshot from the RedHawk Architect Tool}
+    \label{fig:architect_screenshot}
+    \end{center}
+\end{figure}
 
 
 
 
-
-
-%%%%%%%%%%%%%%%%% Create Linux in K3 %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% DevSecOps in K3 %%%%%%%%%%%%%%%%%%%%%%%%
 %
-\subsection{DevSecOps in K3}
+\subsection{DevSecOps Linux in K3}
 
 \subsubsection{Compiling the Linux kernel from source}
 
@@ -599,7 +670,8 @@ the functions \emph{pthread\_setaffinity\_np()} or
 
 \subsubsection{KRFS kernel objects and device drivers}
 
-\subsubsection{Initial ramdisk image}
+\subsubsection{DevSecOps deployment in K3}
+
 
 
 %%%%%%%%%%%%%%%%% Hardening %%%%%%%%%%%%%%%%%%%%%%%%
@@ -609,14 +681,15 @@ the functions \emph{pthread\_setaffinity\_np()} or
 \label{sec:image_hardening}
 
 To harden an operating system is to minimize vulnerabilities to malicious
-outside access; requiring a password for login is a basic hardening mechanism.
+outside access; for example, requiring a password for login is a basic hardening
+mechanism.
 
 The Defense Information Systems Agency (DISA) publishes guidance for hardening
 specific operating systems called Security Technology Implementation Guidance
 (STIG).  For Linux distributions, DISA publishes a STIG for only these Linux
 Distributions:
 \begin{enumerate}
-    \item RedHat Linux
+    \item Red Hat Linux
     \item Oracle Linux
     \item SuSE Linux
 \end{enumerate}
