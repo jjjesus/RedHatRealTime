@@ -622,7 +622,23 @@ is installed in the local SSD and boot from it.
 \subsection{RedHawk Architect in K2}
 RedHawk provides a build system called Architect to build the artifacts of Figure
 \ref{fig:pxe_install}. RedHawk Architect requires an entire Red Hat Linux
-machine dedicated to host it as depicted in Figure \ref{fig:architect_host}.
+machine dedicated to host it as depicted in Figure \ref{fig:architect_host}. A
+dedicated host is required because as stated in Chapter 11 of Reference
+\ref{ref:red_hawk_guide}:
+
+\begin{quote}
+It is often necessary to build driver modules for use with either one of the pre-existing
+kernels supplied by Concurrent Real-Time or a custom kernel.
+To build driver modules for a kernel, the following conditions must be met:
+
+\textbf{The desired kernel must be the currently running kernel.}
+
+The -c option to ccur-config can be used to ensure that the kernel source
+directory is properly configured. This option automatically detects the running
+kernel and configures the source tree to properly match the running kernel.
+Driver modules can then be properly compiled for use with the running kernel.
+\end{quote}
+
 The KRFS Linux device drivers and scripts are copied onto this machine and are
 built against the RedHawk kernel headers and RedHawk kernel libraries.
 
