@@ -619,7 +619,7 @@ is installed in the local SSD and boot from it.
 \end{figure}
 
 %
-\subsection{RedHawk Architect in K2}
+\subsection{RedHawk Architect kernel module build in K2}
 RedHawk provides a build system called Architect to build the artifacts of Figure
 \ref{fig:pxe_install}. RedHawk Architect requires an entire Red Hat Linux
 machine dedicated to host it as depicted in Figure \ref{fig:architect_host}. A
@@ -636,19 +636,25 @@ To build driver modules for a kernel, the following conditions must be met:
 The -c option to ccur-config can be used to ensure that the kernel source
 directory is properly configured. This option automatically detects the running
 kernel and configures the source tree to properly match the running kernel.
-Driver modules can then be properly compiled for use with the running kernel.
+\textbf{Driver modules can then be properly compiled for use with the running
+kernel}.
 \end{quote}
-
-The KRFS Linux device drivers and scripts are copied onto this machine and are
-built against the RedHawk kernel headers and RedHawk kernel libraries.
 
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.8\textwidth]{img/architect_host}
+    \includegraphics[width=0.6\textwidth]{img/architect_host}
     \caption{RedHawk Architect host machine}
     \label{fig:architect_host}
     \end{center}
 \end{figure}
+
+The KRFS Linux device drivers and scripts must be copied onto this machine and
+can only be built for the RedHawk kernel headers and libraries currently running
+on that machine.
+
+\subsubsection{RedHawk method for building device drivers is outdated}
+
+\subsubsection{Artifacts of RedHawk Architect build}
 
 The build is invoked from a privileged user from the Architect GUI (Figure
 \ref{fig:architect_screenshot}) to produce the build artifacts specified in Table
