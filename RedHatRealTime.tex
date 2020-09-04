@@ -336,7 +336,7 @@ The structure of this document:
     \item Real-time features from RedHawk used in current KRFS software
     \item Creating the Linux operating system image
     \item Hardening the Linux operating system image
-    %\item Migrating to Red Hat Real-Time in K3
+    \item Migrating to Red Hat Real-Time in K3
 \end{enumerate}
 
 
@@ -560,12 +560,13 @@ the functions \emph{pthread\_setaffinity\_np()} or
 \subsection{RedHawk Boot in K2}
 
 \subsubsection{Normal Boot with RedHawk in K2}
-The normal boot of RedHawk Linux is depicted in Figure \ref{fig:normal_boot}.
+The normal boot of RedHawk Linux in K2 is depicted in Figure \ref{fig:normal_boot}.
 On reset, the Xeon-D jumps into the boot flash (bottom of diagram) where two
-components called CoreBoot and SeaBIOS are installed.  Both CoreBoot and SeaBIOS
+components called CoreBoot and SeaBIOS are installed; both CoreBoot and SeaBIOS
 come not from RedHawk but from the board vendor X-ES.  The Xeon-D begins
-booting from CoreBoot (Item 1) and  CoreBoot loads its payload called SeaBIOS which
-is a small piece of software that decides the Linux boot method (Item 2).
+booting CoreBoot (Item 1) and CoreBoot subsequently loads its payload called
+SeaBIOS which is a small piece of software that decides the Linux boot method
+(Item 2).
 
 The RedHawk Linux kernel is in the local SSD flash (upper-right of diagram) on
 the 7672 with a Linux root filesystem.  SeaBIOS accesses the Master Boot Record
@@ -591,15 +592,15 @@ with an embedded installation script.  A full description of PXE Boot is in
 Reference \ref{ref:pxe_boot}.
 
 To force a PXE boot, the magic number in the Master Boot Record of the local SSD
-(upper-right of diagram) is invalidated.  Erasing the SSD will invalidate the
-MBR, or, KRFS provides a special tool to erase the magic number.  With the MBR
+(upper-right of diagram) is invalidated.  Erasing the SSD will also invalidate the
+MBR as will using a special KRFS tool to erase the magic number.  With the MBR
 magic number invalidated, when the system is rebooted, SeaBIOS will detect that
 local SSD is not bootable (Item 3) and will advance to the next boot option
 which is a PXE Boot (Item 4).  SeaBIOS will broadcast PXE boot requests on the
 Ethernet which will be detected and serviced by a maintenance laptop plugged
 into the same Ethernet network (Item 5).  The laptop provides a small Linux
-kernel image (called \emph{vmlinux}) and a tiny root file system (called an
-initial ramdisk or \emph{initrd0.img}) over the network which SeaBIOS loads into
+kernel image (called \emph{vmlinuz}) and a tiny root file system (called an
+initial ramdisk or \emph{initrd.img}) over the network which SeaBIOS loads into
 RAM and then has the Xeon-D jump into this Linux kernel in RAM (Item 6).
 Embedded within the initial ramdisk is an installation script, which pulls a
 tarball called \emph{image.tgz} from the laptop and installs it onto the local
@@ -619,10 +620,31 @@ is installed in the local SSD and boot from it.
 
 %
 \subsection{RedHawk Architect in K2}
-RedHawk provides an Architect tool that helps to create the artifacts of Figure
-\ref{fig:pxe_install}. Figure \ref{fig:architect_screenshot} is a sample
-screenshot from Architect.  KRFS uses Architect to create items from Table
+RedHawk provides a build system called Architect to build the artifacts of Figure
+\ref{fig:pxe_install}. RedHawk Architect requires an entire Red Hat Linux
+machine dedicated to host it as depicted in Figure \ref{fig:architect_host}.
+The KRFS Linux device drivers and scripts are copied onto this machine and are
+built against the RedHawk kernel headers and RedHawk kernel libraries.
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{img/architect_host}
+    \caption{RedHawk Architect host machine}
+    \label{fig:architect_host}
+    \end{center}
+\end{figure}
+
+The build is invoked from a privileged user from the Architect GUI (Figure
+\ref{fig:architect_screenshot}) to produce the build artifacts specified in Table
 \ref{tab:architect_artifacts}.
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=1.0\textwidth]{img/architect_screenshot}
+    \caption{Screenshot from the RedHawk Architect Tool}
+    \label{fig:architect_screenshot}
+    \end{center}
+\end{figure}
 
 \begin{table}[H]
     \captionsetup{width=1.0\linewidth}
@@ -650,15 +672,9 @@ screenshot from Architect.  KRFS uses Architect to create items from Table
     \label{tab:architect_artifacts}
 \end{table}
 
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=1.0\textwidth]{img/architect_screenshot}
-    \caption{Screenshot from the RedHawk Architect Tool}
-    \label{fig:architect_screenshot}
-    \end{center}
-\end{figure}
-
-
+The artifacts are then installed into the tftpboot area of the Maintenance
+Laptop so that they can be installed using the PXE Boot mechanism of Figure
+\ref{fig:pxe_install}.
 
 
 %%%%%%%%%%%%%%%%% DevSecOps in K3 %%%%%%%%%%%%%%%%%%%%%%%%
