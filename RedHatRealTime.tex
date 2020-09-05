@@ -749,7 +749,12 @@ contains hundreds of elements each specifying a security item to be checked
 and even contains instructions for remedying the item.  This XML file can be
 parsed by tools that generate reports or maintain a vulnerability database.
 
-\subsubsection{Sample STIG XML record}
+\subsubsection{Sample STIG XML record for \emph{telnet-server}}
+
+Excerpts from the STIG XML record for \emph{telnet-server} illustrate how the
+STIG can be used in tools to report and fix vulnerabilities.  From Listing
+\ref{lst:stig_xml_title}, the \emph{title} identifies the item to be detected and
+the \emph{rule} specifies the severity.
 
 \lstset{
     language=xml,
@@ -759,26 +764,12 @@ parsed by tools that generate reports or maintain a vulnerability database.
     showstringspaces=false
 }
 \begin{adjustwidth}{0.5in}{0.0in}
-\begin{lstlisting}[caption={STIG record \emph{title}},
+\begin{lstlisting}[caption={STIG record \emph{title} and \emph{rule}},
 label={lst:stig_xml_title}]
 <title>
   The Red Hat Enterprise Linux operating system must not
   have the telnet-server package installed.
 </title>
-\end{lstlisting}
-\end{adjustwidth}
-\vspace{0.8cm}
-
-\lstset{
-    language=xml,
-    basicstyle=\footnotesize\ttfamily,
-    linewidth=5.0in,
-    frame=single,
-    showstringspaces=false
-}
-\begin{adjustwidth}{0.5in}{0.0in}
-\begin{lstlisting}[caption={STIG record \emph{rule} and \emph{severity}},
-label={lst:stig_xml_rule}]
 <Rule id="SV-86701r2\_rule"
       severity="high"
       weight="10.0">
@@ -786,26 +777,9 @@ label={lst:stig_xml_rule}]
 \end{adjustwidth}
 \vspace{0.8cm}
 
-\lstset{
-    language=xml,
-    basicstyle=\footnotesize\ttfamily,
-    linewidth=5.0in,
-    frame=single,
-    showstringspaces=false
-}
-\begin{adjustwidth}{0.5in}{0.0in}
-\begin{lstlisting}[caption={STIG record \emph{fixtext}},
-label={lst:stig_xml_fixtext}]
-<fixtext fixref="F-78429r1\_fix">
-    Configure the operating system to
-    disable non-essential capabilities by removing the
-    telnet-server package from the system with the
-    following command:
-    # yum remove telnet-server
-</fixtext>
-\end{lstlisting}
-\end{adjustwidth}
-\vspace{0.8cm}
+The STIG record specifies how to detect the item and how to remedy it in the
+\emph{check-content} and \emph{fixtext} elements (Listing
+\ref{lst:stig_xml_check}).
 
 \lstset{
     language=xml,
@@ -815,7 +789,8 @@ label={lst:stig_xml_fixtext}]
     showstringspaces=false
 }
 \begin{adjustwidth}{0.5in}{0.0in}
-\begin{lstlisting}[caption={STIG record \emph{check-content}},
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption={STIG record \emph{check-content} and \emph{fixtext}},
 label={lst:stig_xml_check}]
 <check-content>
     o o o
@@ -825,12 +800,21 @@ label={lst:stig_xml_check}]
     If the telnet-server package is installed,
     this is a finding.
 </check-content>
+
+<fixtext fixref="F-78429r1\_fix">
+    Configure the operating system to
+    disable non-essential capabilities by removing the
+    telnet-server package from the system with the
+    following command:
+    # yum remove telnet-server
+</fixtext>
 \end{lstlisting}
+\end{minipage}
 \end{adjustwidth}
 \vspace{0.8cm}
 
-A different government agency National Institute of Standards and Technology
-(NIST) publishes the DISA STIG in a slightly different XML format called
+A different government agency, National Institute of Standards and Technology
+(NIST), re-publishes the DISA STIG in a slightly different XML format called
 Security Content Automation Protocol (SCAP) that provides a better interface for
 security tools that check systems and generate reports or even automate the
 remedies.  The most popular open-source SCAP tool is OpenSCAP and the most used
@@ -842,11 +826,11 @@ On KRFS K2, the SPAWAR SCC tool is installed onto an SBC card running an initial
 Linux image released from KRFS.  The SCC tool is invoked to produce a report
 listing any vulnerabilities and assigning a score to the Linux image on that
 card.  KRFS source code includes bash scripts whose content is extracted from
-the STIG or SCAP files, and, these bash scripts are run on the SBC card to
-execute the STIG-prescribed remedies.  The SPAWAR SCC tool is run again to
-produce another report and score, and, this process repeats until an acceptable
-security posture is achieved.  This hardened Linux filesystem image is then
-captured and becomes the new master Linux image.
+the \emph{fixtext} of the STIG or SCAP files, and, these bash scripts are run on
+the SBC card to execute the STIG-prescribed remedies.  The SPAWAR SCC tool is
+run again to produce another report and score, and, this process repeats until
+an acceptable security posture is achieved.  This hardened Linux filesystem
+image is then captured and becomes the new master Linux image.
 
 \subsection{Using DevSecOps instead of home-grown tools for hardening in K3}
 For the Linux image produced for K3, instead of using the home-grown bash
