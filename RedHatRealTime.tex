@@ -648,17 +648,27 @@ kernel}.
     \end{center}
 \end{figure}
 
-The KRFS Linux device drivers and scripts must be copied onto this machine and
-can only be built for the RedHawk kernel headers and libraries currently running
-on that machine.
+The KRFS Linux device drivers and scripts and the XES Board Support Package
+(BSP) modules must be copied onto this machine and can only be built for the RedHawk kernel headers and libraries currently running on that machine.
 
-\subsubsection{RedHawk method for building device drivers is outdated}
+\subsubsection{RedHawk build method is unusual and outdated}
+That a kernel module for RedHawk can be built only against the running kernel is
+an unusual and outdated requirement from the early days of Linux development.
+Developers typically build RPMs (Red Hat Package Manager) from their home
+directory against kernel development packages that are also installed in their
+home directory.%
+\footnote{Many documents cover building RPM and kernel modules,
+the Red Hat procedure for Red Hat Enterprise Linux 8 is at
+\url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/packaging_and_distributing_software/packaging-software_packaging-and-distributing-software}}%
+These kernel development packages can be for a different version from the
+running kernel or even for a different machine architecture (can cross-compile
+ARM on x86).
+
 
 \subsubsection{Artifacts of RedHawk Architect build}
-
-The build is invoked from a privileged user from the Architect GUI (Figure
-\ref{fig:architect_screenshot}) to produce the build artifacts specified in Table
-\ref{tab:architect_artifacts}.
+Building for RedHawk can only be performed by a privileged user from the
+Architect GUI (Figure \ref{fig:architect_screenshot}) to produce the build
+artifacts specified in Table \ref{tab:architect_artifacts}.
 
 \begin{figure}[H]
     \begin{center}
@@ -694,8 +704,8 @@ The build is invoked from a privileged user from the Architect GUI (Figure
     \label{tab:architect_artifacts}
 \end{table}
 
-The artifacts are then installed into the tftpboot area of the Maintenance
-Laptop so that they can be installed using the PXE Boot mechanism of Figure
+The artifacts are then deployed into the tftpboot area of the Maintenance
+Laptop for installation on the target using the PXE Boot mechanism of Figure
 \ref{fig:pxe_install}.
 
 
@@ -705,9 +715,9 @@ Laptop so that they can be installed using the PXE Boot mechanism of Figure
 
 \subsubsection{Compiling the Linux kernel from source}
 
-\subsubsection{XES BSP kernel objects}
+\subsubsection{XES BSP kernel modules}
 
-\subsubsection{KRFS kernel objects and device drivers}
+\subsubsection{KRFS kernel modules and device drivers}
 
 \subsubsection{DevSecOps deployment in K3}
 
@@ -758,7 +768,7 @@ produce another report and score, and, this process repeats until an acceptable
 security posture is achieved.  This hardened Linux filesystem image is then
 captured and becomes the new master Linux image.
 
-\subsection{Using DevSecOps tools for hardening in K3}
+\subsection{Using DevSecOps instead of home-grown tools for hardening in K3}
 For the Linux image produced for K3, instead of using the home-grown bash
 scripts to apply the STIG remedies, a DevSecOps
 tool\footnote{https://github.com/ansible-lockdown/RHEL7-STIG} based on
@@ -769,14 +779,12 @@ process.
 %%%%%%%%%%%%%%%%% Migrating to Red Hat %%%%%%%%%%%%%%%%%%%%%%%%
 %
 \newpage
-\section{Migrating to Red Hat Real-Time in K3}
-\label{sec:redhat_migration}
+\section{Development and maintenance costs and opportunities}
+\label{sec:costs_opportunities}
 
-\subsection{Source code changes}
-
-\subsection{Build artifact changes}
 
 \subsection{License costs}
+
 
 Table \ref{tab:license_costs} summarizes license costs (see References
 \ref{ref:karl} and \ref{ref:lynn}).
@@ -802,6 +810,10 @@ Table \ref{tab:license_costs} summarizes license costs (see References
 }
 \label{tab:license_costs}
 \end{table}
+
+\subsection{Technology readiness}
+
+\subsection{Leveraging other Raytheon and open-source resources}
 
 
 %%%%%%%%%%%%%%%%% Appendix A: Merge of RT Patch to mainline %%%%%%%%%%%%%%%%%%%%
