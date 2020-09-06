@@ -18,7 +18,7 @@
 \usepackage{setspace}
 \usepackage{etoolbox}
 
-\AtBeginEnvironment{quote}{\singlespacing\small}
+\AtBeginEnvironment{quote}{\singlespacing\small\itshape}
 
 \usepackage[utf8]{inputenc}
 \usepackage{setspace}
@@ -248,7 +248,8 @@ Weekly News online was representative of many in the Linux community to
 Concurrent's product announcement:
 
 \begin{quote}
-Parent article: Concurrent releases RedHawk Linux 2.1
+(Parent article: Concurrent releases RedHawk Linux 2.1)
+
 They do not have to release source to the world, but,
 they certainly do have the obligation to make source
 available to those to whom they're distributing these
@@ -306,7 +307,7 @@ years, Concurrent's NightStar tools are very useful for distributed real-time
 systems
     \item Red Hat has always had a real-time kernel product, but, it was
 obscured by the enterprise cluster features with which it was packaged within
-the Red Hat's MRG product, effectively hiding Red Hat's real-time kernel from
+Red Hat's MRG product, effectively hiding Red Hat's real-time kernel from
 consideration by embedded systems developers.
     \item When Red Hat released Red Hat Enterprise Linux 7 (RHEL7) in 2014, the
 MRG product was deprecated, and \emph{Red Hat for Real-Time} was introduced as a
@@ -359,6 +360,10 @@ Hat Corporation, November 6, 2015) \label{ref:rhel7_ref}
 (Red Hat Corporation, November 6, 2015) \label{ref:rhel7_install}
     \item \textit{Preboot Execution Environment (PXE) Specification Version 2.1}
 (Intel Corporation, September 20, 1999) \label{ref:pxe_boot}
+    \item \textit{Red Hat Enterprise Linux 7 (RHEL 7) Security Technical
+Implementation Guide (STIG) Version 2, Release 8} (Defense Information Systems
+Agency (DISA), July 24, 2020) \label{ref:stig}
+was Lynn Bonenfant, IT Program Lead, Raytheon \label{ref:lynn}
     \item Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl
 Weis, Global Supply Chain Program Lead, Raytheon \label{ref:karl}
     \item Source for Red Hat Real-Time costs in Table \ref{tab:license_costs}
@@ -381,7 +386,7 @@ KRFS presently is on the Concurrent RedHawk Linux platform. Table
 Concurrent RedHawk features in the order they appear in Reference
 \ref{ref:red_hawk_guide} even though not all of the features are actually
 real-time Linux kernel features; for example, hyper-threading is a hardware
-setting in Intel CPU and the RCIM card is a piece of hardware and the XFS
+setting in the Intel processor, the RCIM card is a piece of hardware and the XFS
 filesystem originally from SGI is technically outside the kernel.  All of the
 real-time kernel features are inherited from the RT Patch described in Section
 \ref{section:rt_patch} except for those based on the RCIM card (device driver,
@@ -478,9 +483,9 @@ available for mainline Linux since 2001.%
 
 \subsubsection{Shielding CPUs from low-priority system tasks}
 
-CPUs can be shielded from the kernel command-line by using the \emph{isolcpus}
-kernel boot parameter to specify one or more CPUs to isolate from the general
-Linux kernel scheduler algorithms (Listing \ref{lst:shield_kernel}).
+CPUs can be shielded by using the \emph{isolcpus} kernel boot parameter to
+specify one or more CPUs to isolate from the general Linux kernel scheduler
+algorithms (Listing \ref{lst:shield_kernel}).
 
 
 \vspace{0.8cm}
@@ -962,6 +967,9 @@ Pull CONFIG_PREEMPT_RT stub config from Thomas Gleixner:
 %
 \newpage
 \section{Appendix B: STIG sample for telnet-server}
+
+The STIG record for \emph{telnet-server} is excerpted from Reference
+\ref{ref:stig}.
 
 \lstset{
     language=xml,
