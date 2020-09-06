@@ -718,6 +718,12 @@ Laptop for installation on the target using the PXE Boot mechanism of Figure
 %
 \subsection{Red Hat RT Build}
 
+With Red Hat RT, each individual developer or the Continuous Integration (CI)
+server (like Jenkins) can install his own copy of the kernel source code or
+kernel development tools and build his own copy of the kernel, BSP, and device
+drivers (Figure \ref{fig:red_hat_dev}.  The Red Hat LiveMedia Creator package
+can be used for creating the target Linux filesystem and the PXE boot tools.
+
 \begin{figure}[H]
     \begin{center}
     \includegraphics[width=0.6\textwidth]{img/red_hat_dev}
@@ -730,6 +736,8 @@ Laptop for installation on the target using the PXE Boot mechanism of Figure
 %
 \subsection{DevSecOps Linux in K3}
 
+The K3 DevSecOps Red Hat RT Linux and target filesystem are created and deployed
+using a DevSecOps facility as depicted in Figure \ref{fig:dev_sec_ops}.
 
 \begin{figure}[H]
     \begin{center}
