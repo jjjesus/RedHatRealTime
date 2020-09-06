@@ -552,7 +552,7 @@ KRFS source code already uses the POSIX \emph{pthreads} to set affinity for
 threads, either in the thread attributes object used at thread creation or using
 the functions \emph{pthread\_setaffinity\_np()} or
 \emph{pthread\_attr\_setaffinity\_np()}.%
-\footnote{\url{https://man7.org/linux/man-pages//man3/pthread_attr_setaffinity_np.3.html}}
+\footnote{\url{https://man7.org/linux/man-pages/man3/pthread_attr_setaffinity_np.3.html}}
 
 
 %%%%%%%%%%%%%%%%% Image creation %%%%%%%%%%%%%%%%%%%%%%%%
@@ -862,7 +862,7 @@ run again to produce another report and score, and, this process repeats until
 an acceptable security posture is achieved.  This hardened Linux filesystem
 image is then captured and becomes the new master Linux image.
 
-\subsection{Using DevSecOps instead of home-grown tools for hardening in K3}
+\subsection{Open-source DevSecOps instead of home-grown tools in K3}
 For the Linux image produced for K3, instead of using the home-grown bash
 scripts to apply the STIG remedies, a DevSecOps
 tool\footnote{https://github.com/ansible-lockdown/RHEL7-STIG} based on
@@ -873,11 +873,11 @@ process.
 %%%%%%%%%%%%%%%%% Migrating to Red Hat %%%%%%%%%%%%%%%%%%%%%%%%
 %
 \newpage
-\section{Development and maintenance costs and opportunities}
+\section{Costs, readiness, and opportunities}
 \label{sec:costs_opportunities}
 
 
-\subsection{License costs}
+\subsection{Maintenance and development license costs}
 
 
 Table \ref{tab:license_costs} summarizes license costs (see References
