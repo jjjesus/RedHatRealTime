@@ -47,7 +47,8 @@
 \begin{center}
         \vspace*{1cm}
 
-        \LARGE{Ku Band Radio Frequency System Version 3 (K3) \\
+        \LARGE{Ku Band Radio Frequency System (KRFS) \\
+        Version 3 (K3) \\
         Migration from Concurrent RedHawk Linux to \\
         Red Hat Real-Time Linux}
 
@@ -262,7 +263,7 @@ whose code they've customized.%
 
 At the same time as its repackaging of RT Patch, Concurrent released a set of
 tools called \emph{NightStar} that are especially good in tracing the processing
-of data as it travels between boards and over networks:
+of data as it travels among boards and over networks:
 
 \begin{quote}
 The RedHawk NightStar Tools allow users on an iHawk system running
@@ -284,9 +285,9 @@ application.%
 0898008-2.2}, March 2005}
 \end{quote}
 
-Though the excerpt above was over fifteen years ago, the product features have
-not changed, the products instead progressing by moving along with the mainline
-kernel version and RT Patch and porting to new boards/platforms.
+Though the excerpt above was over fifteen years ago, the RedHawk product
+features have not changed, the product instead progressing by moving along with
+the mainline kernel version and RT Patch and porting to new boards/platforms.
 
 \subsubsection{Merge of RT Patch to Linux mainline in July 2019}
 In July 2019, Linux Torvalds merged the RT Patch into the Linux mainline and the
@@ -610,10 +611,11 @@ RAM and then has the Xeon-D jump into this Linux kernel in RAM (Item 6).
 Embedded within the initial ramdisk is an installation script, which pulls a
 tarball called \emph{image.tgz} from the laptop and installs it onto the local
 SSD (Item 7).  This tarball contains the tactical RedHawk Linux Kernel and root
-filesystem.  After a successful install, the installation script inserts the
-magic number into the Master Boot Record and the local SSD is ready to be
-booted.  The next time the system boots, SeaBIOS will detect that a good image
-is installed in the local SSD and boot from it.
+filesystem, which is called the \emph{target filesystem}.  After a successful
+install, the installation script inserts the magic number into the Master Boot
+Record and the local SSD is ready to be booted.  The next time the system boots,
+SeaBIOS will detect that a good image is installed in the local SSD and boot
+from it.
 
 \begin{figure}[H]
     \begin{center}
@@ -719,10 +721,11 @@ Laptop for installation on the target using the PXE Boot mechanism of Figure
 \subsection{Red Hat RT Build}
 
 With Red Hat RT, each individual developer or the Continuous Integration (CI)
-server (like Jenkins) can install his own copy of the kernel source code or
-kernel development tools and build his own copy of the kernel, BSP, and device
-drivers (Figure \ref{fig:red_hat_dev}.  The Red Hat LiveMedia Creator package
-can be used for creating the target Linux filesystem and the PXE boot tools.
+server (\textit{e.g.}, Jenkins) can install its own copy of the kernel source
+code or kernel development tools and build a local copy of the kernel, BSP, or
+device drivers (Figure \ref{fig:red_hat_dev}.  The Red Hat LiveMedia Creator
+package can be used for creating the target Linux filesystem and the PXE boot
+tools.
 
 \begin{figure}[H]
     \begin{center}
