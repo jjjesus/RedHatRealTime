@@ -115,9 +115,9 @@ software within the SCU runs in its SBC card (Figure \ref{fig:scu}).
     \end{center}
 \end{figure}
 
-In KRFS K2, the SBC Processor is a Extreme Engineering (XES) Xpedite7672 card
+In KRFS K2, the SBC processor is a Extreme Engineering (XES) Xpedite7672 card
 based on the Xeon-D System-on-a-Chip (SOC) running the Linux operating system.
-In KRFS K3, the SBC Processor is a very similar Extreme Engineering (XES)
+In KRFS K3, the SBC processor is a very similar Extreme Engineering (XES)
 Xpedite7674 card also based on the Xeon-D SOC and running the Linux operating
 system.
 
@@ -320,13 +320,9 @@ and thus available to anyone who downloads and builds the kernel source code
 \end{enumerate}
 
 
-
 \subsection{Document purpose}
-%To integrate NE software, we need to be able to build Linux from source.  NE
-%currently uses Red Hat Real-Time.  We use Red Hawk from Concurrent RTI.  NE
-%builds from source using tools from Red Hat.  We do not build from source.
-%
-%Produce a document that helps us decide how to get our Linux image created.
+This document enables a software engineer or architect to reason about migrating
+the KRFS Linux operating system to Red Hat Real-Time.
 
 
 \subsection{Document overview}
@@ -337,8 +333,8 @@ The structure of this document:
     \item References
     \item Real-time features from RedHawk used in current KRFS software
     \item Creating the Linux operating system image
-    \item Hardening the Linux operating system image
-    \item Migrating to Red Hat Real-Time in K3
+    \item Hardening the Linux operating system
+    \item Costs, readiness, and opportunities
 \end{enumerate}
 
 
@@ -361,10 +357,16 @@ Hat Corporation, November 6, 2015) \label{ref:rhel7_ref}
 (Red Hat Corporation, November 6, 2015) \label{ref:rhel7_install}
     \item \textit{Preboot Execution Environment (PXE) Specification Version 2.1}
 (Intel Corporation, September 20, 1999) \label{ref:pxe_boot}
+    \item \textit{Packaging software for Red Hat Enterprise Linux 8} online
+document at
+\url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/packaging_and_distributing_software/packaging-software_packaging-and-distributing-software}
+\label{ref:rpm}
     \item \textit{Red Hat Enterprise Linux 7 (RHEL 7) Security Technical
 Implementation Guide (STIG) Version 2, Release 8} (Defense Information Systems
 Agency (DISA), July 24, 2020) \label{ref:stig}
-was Lynn Bonenfant, IT Program Lead, Raytheon \label{ref:lynn}
+    \item \textit{Ansible role for Red Hat 7 STIG Baseline} (MindPoint Group,
+June 21, 2020) at \url{https://github.com/ansible-lockdown/RHEL7-STIG}
+\label{ref:ansible_stig}
     \item Source for Red Hawk costs in Table \ref{tab:license_costs} was Karl
 Weis, Global Supply Chain Program Lead, Raytheon \label{ref:karl}
     \item Source for Red Hat Real-Time costs in Table \ref{tab:license_costs}
@@ -575,7 +577,7 @@ SeaBIOS which is a small piece of software that decides the Linux boot method
 (Item 2).
 
 The RedHawk Linux kernel is in the local SSD flash (upper-right of diagram) on
-the 7672 with a Linux root filesystem.  SeaBIOS accesses the Master Boot Record
+the 7672 with a Linux target filesystem.  SeaBIOS accesses the Master Boot Record
 (MBR) in the local SSD flash (upper-right) and checks for a magic number at the
 end which was previously inserted by KRFS software (Item 3).  The magic number
 is an indicator that the local SSD contains the normal boot contents, and,
@@ -610,12 +612,11 @@ initial ramdisk or \emph{initrd.img}) over the network which SeaBIOS loads into
 RAM and then has the Xeon-D jump into this Linux kernel in RAM (Item 6).
 Embedded within the initial ramdisk is an installation script, which pulls a
 tarball called \emph{image.tgz} from the laptop and installs it onto the local
-SSD (Item 7).  This tarball contains the tactical RedHawk Linux Kernel and root
-filesystem, which is called the \emph{target filesystem}.  After a successful
-install, the installation script inserts the magic number into the Master Boot
-Record and the local SSD is ready to be booted.  The next time the system boots,
-SeaBIOS will detect that a good image is installed in the local SSD and boot
-from it.
+SSD (Item 7).  This tarball contains the tactical RedHawk Linux Kernel and
+target filesystem.  After a successful install, the installation script inserts
+the magic number into the Master Boot Record and the local SSD is ready to be
+booted.  The next time the system boots, SeaBIOS will detect that a good image
+is installed in the local SSD and boot from it.
 
 \begin{figure}[H]
     \begin{center}
@@ -625,7 +626,6 @@ from it.
     \end{center}
 \end{figure}
 
-%
 \subsection{RedHawk Architect kernel module build in K2}
 RedHawk provides a build system called Architect to build the artifacts of Figure
 \ref{fig:pxe_install}. RedHawk Architect requires an entire Red Hat Linux
@@ -665,8 +665,7 @@ Developers typically build RPMs (Red Hat Package Manager) from their home
 directory against kernel development packages that are also installed in their
 home directory.%
 \footnote{Many documents cover building RPM and kernel modules,
-the Red Hat procedure for Red Hat Enterprise Linux 8 is at
-\url{https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/packaging_and_distributing_software/packaging-software_packaging-and-distributing-software}}%
+the Red Hat procedure for Red Hat Enterprise Linux 8 is Reference \ref{ref:rpm}.}
 These kernel development packages can be for a different version from the
 running kernel or even for a different machine architecture (can cross-compile
 ARM on x86).
@@ -864,11 +863,10 @@ image is then captured and becomes the new master Linux image.
 
 \subsection{Open-source DevSecOps instead of home-grown tools in K3}
 For the Linux image produced for K3, instead of using the home-grown bash
-scripts to apply the STIG remedies, a DevSecOps
-tool\footnote{https://github.com/ansible-lockdown/RHEL7-STIG} based on
-Ansible\footnote{https://www.ansible.com/} (now part of Red Hat) will be used to
-automatically harden the operating system as part of the DevSecOps build-deploy
-process.
+scripts to apply the STIG remedies, a DevSecOps tool (Reference
+\ref{ref:ansible_stig}) based on Ansible\footnote{https://www.ansible.com/} (now
+part of Red Hat) will be used to automatically harden the operating system as
+part of the DevSecOps build-deploy process.
 
 %%%%%%%%%%%%%%%%% Migrating to Red Hat %%%%%%%%%%%%%%%%%%%%%%%%
 %
