@@ -1,3 +1,13 @@
+Red Hat for Real-Time
+-----
+Subscription
+~]# subscription-manager repos --enable rhel-7-server-rt-rpms
+Install the Red Hat Enterprise Linux for Real Time package group:
+~]# yum groupinstall RT
+
+
+
+
 Greg review
 -----
 1. shielding is available in Red Hat
