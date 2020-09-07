@@ -722,12 +722,12 @@ Laptop for installation on the target using the PXE Boot mechanism of Figure
 \subsection{Red Hat RT Build}
 \label{sec:red_hat_build}
 
-With Red Hat RT, each individual developer or the Continuous Integration (CI)
-server (\textit{e.g.}, Jenkins) can install its own copy of the kernel source
-code or kernel development tools and build a local copy of the kernel, BSP, or
-device drivers (Figure \ref{fig:red_hat_dev}.  The open-source Red Hat LiveMedia
-Creator package can be used for creating the target Linux filesystem and the PXE
-boot tools.
+With Red Hat RT, each individual developer or the Continuous Integration (CI) /
+Continuous Deployment (CD) server (\textit{e.g.}, Jenkins) can install its own
+copy of the kernel source code or kernel development tools and build a local
+copy of the kernel, BSP, or device drivers (Figure \ref{fig:red_hat_dev}.  The
+open-source Red Hat LiveMedia Creator package can be used for creating the
+target Linux filesystem and the PXE boot tools.
 
 \begin{figure}[H]
     \begin{center}
@@ -747,12 +747,15 @@ using a DevSecOps facility as depicted in Figure \ref{fig:dev_sec_ops}.
 
 \begin{figure}[H]
     \begin{center}
-    \includegraphics[width=0.6\textwidth]{img/dev_sec_ops}
+    \includegraphics[width=0.4\textwidth]{img/dev_sec_ops}
     \caption{DevSecOps Linux deployment in K3}
     \label{fig:dev_sec_ops}
     \end{center}
 \end{figure}
 
+The DevSecOps facility combines Red Hat RT Linux and target filesystem with the
+KRFS application and the XES BSP and deploys directly to the bootflash and local
+SSD of the SBC.
 
 
 
@@ -935,13 +938,29 @@ of a new platform and process as depicted in Figure
 
 \subsection{Leveraging other Raytheon and open-source resources}
 
-\subsubsection{Red Hat Ansible and STIG Playbook}
+\subsubsection{Reusing Raytheon DevSecOps with Red Hat RT on XES SBC}
+The DevSecOps infrastructure from another Raytheon group is based
+on Red Hat RT running on a similar XES card.  This infrastructure can be
+leveraged by KRFS when running Red Hat RT on the KRFS SBC.
+
+\subsubsection{Leverage conventional builds for developers and CI/CD}
+By eliminating the proprietary RedHawk Architect build requirements, individual
+developers can turn through their build/test/deploy cycles more frequently and
+using conventional build system can be integrated into CI/CD to enable frequent
+and rapid deployment.
+
+\subsubsection{DevSecOps with open-source Ansible and STIG Playbook}
+The Raytheon DevSecOps infrastructure includes hardening tools based on
+Ansible and an open source Ansible STIG playbook whose future
+development and ongoing maintenance by the open-source community can be
+leveraged by KRFS.
 
 \subsubsection{Red Hat LiveMedia Creator}
+The Red Hat LiveMedia Creator can be used to create PXE-boot images and DVD
+installation images directly from source code by any developer or CI/CD machine.
+The Raytheon DevSecOps includes tools and a process for using LiveMedia Creator
+that can be leveraged for KRFS.
 
-\subsubsection{Red Hat RT Kernel Build}
-
-\subsubsection{Raytheon DevSecOps with Red Hat RT on Extreme}
 
 
 %%%%%%%%%%%%%%%%% Appendix A: Merge of RT Patch to mainline %%%%%%%%%%%%%%%%%%%%
