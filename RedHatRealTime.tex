@@ -483,6 +483,7 @@ available for mainline Linux since 2001.%
 \end{table}
 
 \subsection{KRFS source code changes for a non-RedHawk Linux}
+\label{sec:source_code_changes}
 
 \subsubsection{Shielding CPUs from low-priority system tasks}
 
@@ -656,7 +657,8 @@ kernel}.
 \end{figure}
 
 The KRFS Linux device drivers and scripts and the XES Board Support Package
-(BSP) modules must be copied onto this machine and can only be built for the RedHawk kernel headers and libraries currently running on that machine.
+(BSP) modules must be copied onto this machine and can only be built for the
+RedHawk kernel headers and libraries currently running on that machine.
 
 \subsubsection{RedHawk build method is unusual and outdated}
 That a kernel module for RedHawk can be built only against the running kernel is
@@ -718,13 +720,14 @@ Laptop for installation on the target using the PXE Boot mechanism of Figure
 %%%%%%%%%%%%%%%%% Red Hat RT Build %%%%%%%%%%%%%%%%%%%%%%%%
 %
 \subsection{Red Hat RT Build}
+\label{sec:red_hat_build}
 
 With Red Hat RT, each individual developer or the Continuous Integration (CI)
 server (\textit{e.g.}, Jenkins) can install its own copy of the kernel source
 code or kernel development tools and build a local copy of the kernel, BSP, or
-device drivers (Figure \ref{fig:red_hat_dev}.  The Red Hat LiveMedia Creator
-package can be used for creating the target Linux filesystem and the PXE boot
-tools.
+device drivers (Figure \ref{fig:red_hat_dev}.  The open-source Red Hat LiveMedia
+Creator package can be used for creating the target Linux filesystem and the PXE
+boot tools.
 
 \begin{figure}[H]
     \begin{center}
@@ -737,6 +740,7 @@ tools.
 %%%%%%%%%%%%%%%%% DevSecOps in K3 %%%%%%%%%%%%%%%%%%%%%%%%
 %
 \subsection{DevSecOps Linux in K3}
+\label{sec:dev_sec_ops}
 
 The K3 DevSecOps Red Hat RT Linux and target filesystem are created and deployed
 using a DevSecOps facility as depicted in Figure \ref{fig:dev_sec_ops}.
@@ -875,8 +879,7 @@ part of the DevSecOps build-deploy process.
 \label{sec:costs_opportunities}
 
 
-\subsection{Maintenance and development license costs}
-
+\subsection{Development and maintenance license costs}
 
 Table \ref{tab:license_costs} summarizes license costs (see References
 \ref{ref:karl} and \ref{ref:lynn}).
@@ -903,7 +906,32 @@ Table \ref{tab:license_costs} summarizes license costs (see References
 \label{tab:license_costs}
 \end{table}
 
+
 \subsection{Technology readiness}
+
+\subsubsection{Limited source code changes required to migrate K3 to Red Hat RT}
+Because so much of the Concurrent RedHawk product is derived from the RT Patch
+and none of the RedHawk proprietary features are used (Section
+\ref{sec:redhawk_features}), the only source code changes are to use the
+standard Linux syntax for CPU affinity instead of the SuSE/RedHawk shield
+syntax (Section \ref{sec:source_code_changes}).  Similarly, the build method
+will change to the more conventional open-source Red Hat tools (kernel
+development packages and LiveMedia Creator of Section \ref{sec:red_hat_build}).
+
+\subsubsection{Development cost to switch DevSecOps build to RedHawk}
+The DevSecOps process planned for K3 is based on Red Hat RT on a similar XES
+SBC as described in Section \ref{sec:dev_sec_ops} and Figure
+\ref{fig:dev_sec_ops}.  To switch the DevSecOps build to RedHawk requires development
+of a new platform and process as depicted in Figure
+\ref{fig:redhawk_dev_sec_ops}.
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{img/redhawk_dev_sec_ops}
+    \caption{New DevSecOps platform and process required to switch to RedHawk}
+    \label{fig:redhawk_dev_sec_ops}
+    \end{center}
+\end{figure}
 
 \subsection{Leveraging other Raytheon and open-source resources}
 
