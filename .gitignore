@@ -4,7 +4,6 @@
 *.gz
 *.html
 *.log
-*.pdf
 *.swp
 *.synctex.gz
 *.toc
